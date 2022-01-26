@@ -1,2 +1,0 @@
-# vocabApp
-Vocabulary/Dictionary app 
