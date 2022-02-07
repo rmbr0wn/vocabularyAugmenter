@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
+import { GoogleLogin } from 'react-google-login';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-export default class Auth extends Component {
-
+class Auth extends Component {
   constructor(props){
     super(props);
     this.state= {
       showPassword: false,
-      signedUp: false,
+      signedUp: true,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.handleShowPassword = this.handleShowPassword.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.googleSuccess = this.googleSuccess.bind(this);
+    this.googleFailure = this.googleFailure.bind(this);
   }
 
   onSubmit(e) {
@@ -26,6 +31,31 @@ export default class Auth extends Component {
 
   }
 
+  onClick(e) {
+    this.setState({
+      signedUp: !this.state.signedUp
+    });
+  }
+
+  async googleSuccess (res) {
+    console.log(res);
+    console.log("Success!");
+    const result = res?.profileObj;
+    const token = res?.tokenId;
+
+    try {
+      this.props.sendAuth(result, token);
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
+  googleFailure(error) {
+    console.log(error);
+    console.log('Google Sign In was unsuccessful. Try again later.');
+  }
+
 // Note: When refactoring, consider turning the repeated form div code below
 // into a function/class in an external file.
   render(){
@@ -35,6 +65,18 @@ export default class Auth extends Component {
         <form onSubmit={this.onSubmit}>
           {this.state.signedUp ?
             <div className="form-container">
+              <div>
+                <GoogleLogin
+                  clientId="272154925137-pkh6c6dhhm79hj8enundingvnsl8vbnl.apps.googleusercontent.com"
+                  render={(renderProps) => (
+                    <button onClick={renderProps.onClick} disabled={renderProps.disabled}>Google Login</button>
+                  )}
+                  onSuccess={this.googleSuccess}
+                  onFailure={this.googleFailure}
+                  buttonText="Login"
+                  cookiePolicy={'single_host_origin'}
+                />
+              </div>
               <div className="form-field">
                 <label>Username/E-mail: </label>
                 <input type="text"
@@ -46,6 +88,12 @@ export default class Auth extends Component {
                 <input type="text"
                   required
                 />
+              </div>
+              <div className="form-button-container">
+                <button type="button" onClick={this.onSubmit}> Submit </button>
+              </div>
+              <div>
+                <button type="button" onClick={this.onClick}> Create New Account </button>
               </div>
             </div>
             :
@@ -73,6 +121,13 @@ export default class Auth extends Component {
                   required
                 />
               </div>
+              <div className="form-button-container">
+                <button type="button" onClick={this.onSubmit}> Submit </button>
+              </div>
+              <div>
+                <label>Already have an account?  </label>
+                <button type="button" onClick={this.onClick}> Sign in </button>
+              </div>
             </div>
           }
         </form>
@@ -80,3 +135,11 @@ export default class Auth extends Component {
     )
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    sendAuth: (result, token) => { dispatch({type: 'AUTH', data: {result, token} }) }
+  }
+};
+
+export default connect(null, mapDispatchToProps)(Auth)
