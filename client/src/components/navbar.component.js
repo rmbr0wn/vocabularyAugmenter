@@ -1,50 +1,59 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import decode from 'jwt-decode';
 
-export default class Navbar extends Component {
-  constructor(props){
-    super(props);
-    this.state= {
-      userState: JSON.parse(localStorage.getItem('profile'))
-    };
+export default function Navbar() {
+  const[user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    this.getUser = this.getUser.bind(this);
-    // this.setUser = this.setUser.bind(this);
+  function logOut(){
+    dispatch({ type: 'LOGOUT' });
+    navigate('/');
+    setUser(null);
   }
 
-  getUser() {
-    console.log("Here is our userState: ");
-    console.log(this.state.userState);
-    console.log("Here is google's state: ");
-    console.log(JSON.parse(localStorage.getItem('profile')));
+  function logIn(){
+    navigate('/auth');
   }
 
-  componentDidMount() {
+  useEffect(() => {
+    const token = user?.token;
 
-  }
+    if(token) {
+      const decodedToken = decode(token);
 
-  componentDidUpdate() {
-    const token = this.state.userState?.token;
-    this.setState({
-      userState: JSON.parse(localStorage.getItem('profile'))
-    });
-  }
+      if(decodedToken.exp * 1000 < new Date().getTime()) {
+         logOut();
+      }
+    }
 
-  render(){
-    return(
-      <nav>
-        <div>
-          <ul>
-            <li>
-              <Link to='/' onClick={this.getUser}>Home</Link>
-            </li>
-            <li>
-              <Link to='/list'>Word List</Link>
-            </li>
-          </ul>
-          <button onClick={this.getUser}> Get Me </button>
-        </div>
-      </nav>
-    );
-  }
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, [user?.token, location]);
+
+  return(
+    <nav>
+      <div>
+        <ul>
+          <li>
+            <Link to='/'>Home</Link>
+          </li>
+          <li>
+            <Link to='/list'>Word List</Link>
+          </li>
+        </ul>
+        {user? (
+          <div>
+            <button onClick={logOut}> Logout</button>
+          </div>
+        ) : (
+          <div>
+            <button onClick={logIn}> Login/Signup </button>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
 }

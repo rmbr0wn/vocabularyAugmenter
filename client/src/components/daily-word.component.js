@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-export default class DailyWord extends Component {
-  render() {
+export default function DailyWord () {
     return (
       <div>
         <p> You are on the Daily Word component!</p>
       </div>
     );
-  }
 }

@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-export default class WordList extends Component {
-  render() {
+export default function WordList () {
     return (
       <div>
         <p> You are on the Word List component!</p>
       </div>
     );
-  }
 }
