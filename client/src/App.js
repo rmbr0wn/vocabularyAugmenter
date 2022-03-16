@@ -8,8 +8,8 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import Navbar from "./components/navbar.component";
 import DailyWord from "./components/daily-word.component";
 import Auth from "./components/auth.component";
-import CreateUser from "./components/create-user.component";
 import WordList from "./components/word-list.component";
+import Profile from "./components/profile.component"
 import { reducers } from "./reducers/index.reducer";
 
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
@@ -23,8 +23,8 @@ function App() {
             <Routes>
               <Route path="/" exact element={<DailyWord/>}/>
               <Route path="/auth" element={<Auth/>}/>
-              <Route path="/create-user" element={<CreateUser/>}/>
               <Route path="/list" element={<WordList/>}/>
+              <Route path="/profile" element={<Profile/>}/>
             </Routes>
           </div>
         </BrowserRouter>

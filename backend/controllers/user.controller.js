@@ -3,6 +3,15 @@ import jwt from 'jsonwebtoken';
 
 import User from '../models/user.model.js';
 
+function checkUsername (username) {
+  if(username){
+    return username;
+  }
+  else{
+    return "";
+  }
+}
+
 export const signIn = async (req, res) => {
   const { email, password } = req.body;
 
@@ -39,7 +48,10 @@ export const signUp = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const result = await User.create({ email, password: hashedPassword, username: `${username}` });
+    const result = await User.create({
+      email,
+      password: hashedPassword,
+      username: `${username}` });
 
     const token = jwt.sign({
       email: result.email,

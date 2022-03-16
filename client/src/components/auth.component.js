@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const initialState = { username: '', email: '', password: '', confirmPassword: '' };
 const API = axios.create({ baseURL: 'http://localhost:5000' });
+let errorMessage = "";
 
 const signIn = (formData, navigation) => async (dispatch) => {
   try {
@@ -19,6 +20,7 @@ const signIn = (formData, navigation) => async (dispatch) => {
   }
 }
 
+
 const signUp = (formData, navigation) => async (dispatch) => {
   try {
     const { data } = await API.post('/user/sign-up', formData);
@@ -27,18 +29,30 @@ const signUp = (formData, navigation) => async (dispatch) => {
 
     navigation('/');
   } catch (error) {
-    console.log("There was an error when signing up: " + error);
+    // console.log("There was an error when signing up: " + error);
+    // console.log(error.response.data.message);
+    // console.log("Status: " + error.response.status);
+    errorMessage = await error.response.data.message;
+    console.log("In signUp function: " + errorMessage);
+    return errorMessage;
   }
 }
+
 
 export default function Auth () {
   const [signedUp, setSignedUp] = useState(true);
   const [formData, setFormData] = useState(initialState);
+  const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
+    
+    setErrors({
+      ...errors,
+      email: errorMessage
+    })
 
     if(signedUp) {
       dispatch(signIn(formData, navigate))
@@ -47,7 +61,102 @@ export default function Auth () {
     }
   }
 
+  function validate(event, name, value) {
+    switch (name) {
+      case 'username':
+        if(value.length <= 3){
+          setErrors({
+            ...errors,
+            username: 'Username must be at least 4 characters long.'
+          })
+        } else {
+          setErrors({
+            ...errors,
+            username: ''
+          });
+        }
+        break;
+
+      case 'email':
+        if(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)){
+          setErrors({
+            ...errors,
+            email: ''
+          });
+        } else {
+          setErrors({
+            ...errors,
+            email: 'Invalid e-mail address.'
+          })
+        }
+        break;
+
+      case 'password':
+        let repeatPassword = document.getElementById("signupConfirmPassword").value;
+
+        if(repeatPassword){
+          if(value === repeatPassword){
+            setErrors({
+              ...errors,
+              confirmPassword: ''
+            })
+          } else{
+            setErrors({
+              ...errors,
+              confirmPassword: 'The two passwords are not equal.'
+            })
+          }
+        }
+
+        if(value.length < 8){
+          if(value.length === 0) {         // Clear message if they delete the password
+            setErrors({
+              ...errors,
+              password: ''
+            })
+          } else{
+            setErrors({
+              ...errors,
+              password: 'The password must be 8 characters or longer.'
+            })
+          }
+        } else{
+          setErrors({
+            ...errors,
+            password: ''
+          })
+        }
+        break;
+
+      case 'confirmPassword':
+        let formPassword = document.getElementById("signupPassword").value;
+
+        if(formPassword){
+          if(value === formPassword){
+            setErrors({
+              ...errors,
+              confirmPassword: ''
+            });
+          } else {
+            setErrors({
+              ...errors,
+              confirmPassword: 'The two passwords are not equal.'
+            })
+          }
+        }
+        break;
+
+      default:
+        break;
+    }
+
+  }
+
   function handleChange(e) {
+    e.persist();
+
+    validate(e, e.target.name, e.target.value);
+
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
@@ -96,10 +205,11 @@ export default function Auth () {
             </div>
             <div className="form-field">
               <label>E-mail: </label>
-              <input type="text"
+              <input type="email"
                 required
                 name="email"
                 onChange={handleChange}
+                placeholder="E-mail"
               />
             </div>
             <div className="form-field">
@@ -108,6 +218,7 @@ export default function Auth () {
                 required
                 name="password"
                 onChange={handleChange}
+                placeholder="Password"
               />
             </div>
             <div className="form-button-container">
@@ -120,19 +231,29 @@ export default function Auth () {
           :
           <div className="form-container-sign-up">
             <div className="form-field">
-              <label>Username (optional): </label>
+              <label>Username: </label>
               <input type="text"
+                required
                 name="username"
                 onChange={handleChange}
+                defaultValue=""
+                placeholder="Username"
               />
+              {
+                errors.username && <h3 className="form-error-message">{errors.username}</h3>
+              }
             </div>
             <div className="form-field">
               <label>Email: </label>
-              <input type="text"
+              <input type="email"
                 required
                 name="email"
                 onChange={handleChange}
+                placeholder="E-mail"
               />
+              {
+                errors.email && <h3 className="form-error-message">{errors.email}</h3>
+              }
             </div>
             <div className="form-field">
               <label>Password: </label>
@@ -140,15 +261,25 @@ export default function Auth () {
                 required
                 name="password"
                 onChange={handleChange}
+                placeholder="Password"
+                id="signupPassword"
               />
+              {
+                errors.password && <h3 className="form-error-message">{errors.password}</h3>
+              }
             </div>
             <div className="form-field">
-              <label>Repeat Password: </label>
+              <label>Confirm Password: </label>
               <input type="password"
                 required
                 name="confirmPassword"
                 onChange={handleChange}
+                placeholder="Confirm password"
+                id="signupConfirmPassword"
               />
+              {
+                errors.confirmPassword && <h3 className="form-error-message">{errors.confirmPassword}</h3>
+              }
             </div>
             <div className="form-button-container">
               <input type="submit"/>

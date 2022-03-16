@@ -8,6 +8,7 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const avatarPath = "../public/ava.png";
 
   function logOut(){
     dispatch({ type: 'LOGOUT' });
@@ -44,6 +45,9 @@ export default function Navbar() {
             <Link to='/list'>Word List</Link>
           </li>
         </ul>
+        <div>
+          <img src={avatarPath} alt="0"/>
+        </div>
         {user? (
           <div>
             <button onClick={logOut}> Logout</button>
