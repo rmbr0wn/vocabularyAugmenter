@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const initialState = { username: '', email: '', password: '', confirmPassword: '' };
+const initialLogin = { loginEmail: '', loginPassword: '' };
 const API = axios.create({ baseURL: 'http://localhost:5000' });
-let errorMessage = "";
 
 const signIn = (formData, navigation) => async (dispatch) => {
   try {
@@ -16,7 +16,10 @@ const signIn = (formData, navigation) => async (dispatch) => {
 
     navigation('/');
   } catch (error) {
-    console.log("There was an error when signing in: " + error);
+    // console.log("There was an error when signing in: " + error);
+    let returnErr = await error.response.data.message;
+    console.log(returnErr);
+    return returnErr;
   }
 }
 
@@ -29,35 +32,67 @@ const signUp = (formData, navigation) => async (dispatch) => {
 
     navigation('/');
   } catch (error) {
-    // console.log("There was an error when signing up: " + error);
-    // console.log(error.response.data.message);
-    // console.log("Status: " + error.response.status);
-    errorMessage = await error.response.data.message;
-    console.log("In signUp function: " + errorMessage);
-    return errorMessage;
+    let returnErr = await error.response.data.message;
+    // console.log("In signUp: " + error.response);
+    // console.log(returnErr);
+    return returnErr;
   }
 }
 
 
-export default function Auth () {
+export default function Auth() {
   const [signedUp, setSignedUp] = useState(true);
   const [formData, setFormData] = useState(initialState);
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    
-    setErrors({
-      ...errors,
-      email: errorMessage
-    })
 
     if(signedUp) {
-      dispatch(signIn(formData, navigate))
+      let loginCheck = await dispatch(signIn(formData, navigate));
+
+      if(loginCheck === undefined){
+        return;
+      }
+
+      if(loginCheck.includes("email")){
+        setErrors({
+          ...errors,
+          loginEmail: loginCheck,
+          loginPassword: ''
+        })
+      }
+
+      if(loginCheck.includes("credentials")){
+        setErrors({
+          ...errors,
+          loginPassword: loginCheck,
+          loginEmail: ''
+        })
+      }
+
     } else {
-      dispatch(signUp(formData, navigate))
+      let checkExists = await dispatch(signUp(formData, navigate));
+
+      if(checkExists === undefined){
+        return;
+      }
+
+      if(checkExists.includes("email")){
+        setErrors({
+          ...errors,
+          email: checkExists
+        })
+      }
+
+      if(checkExists.includes("username")){
+        setErrors({
+          ...errors,
+          username: checkExists
+        })
+      }
     }
   }
 
@@ -65,15 +100,22 @@ export default function Auth () {
     switch (name) {
       case 'username':
         if(value.length <= 3){
-          setErrors({
-            ...errors,
-            username: 'Username must be at least 4 characters long.'
-          })
+          if(value.length === 0){          // Clear error when field is empty
+            setErrors({
+              ...errors,
+              username: ''
+            })
+          } else {
+              setErrors({
+                ...errors,
+                username: 'Username must be at least 4 characters long.'
+              })
+          }
         } else {
-          setErrors({
-            ...errors,
-            username: ''
-          });
+            setErrors({
+              ...errors,
+              username: ''
+            })
         }
         break;
 
@@ -82,32 +124,24 @@ export default function Auth () {
           setErrors({
             ...errors,
             email: ''
-          });
-        } else {
-          setErrors({
-            ...errors,
-            email: 'Invalid e-mail address.'
           })
+        } else {
+            if(value.length === 0){       // Clear error when field is empty
+              setErrors({
+                ...errors,
+                email: ''
+              })
+            }
+            else{
+              setErrors({
+                ...errors,
+                email: 'Invalid e-mail address.'
+              })
+            }
         }
         break;
 
       case 'password':
-        let repeatPassword = document.getElementById("signupConfirmPassword").value;
-
-        if(repeatPassword){
-          if(value === repeatPassword){
-            setErrors({
-              ...errors,
-              confirmPassword: ''
-            })
-          } else{
-            setErrors({
-              ...errors,
-              confirmPassword: 'The two passwords are not equal.'
-            })
-          }
-        }
-
         if(value.length < 8){
           if(value.length === 0) {         // Clear message if they delete the password
             setErrors({
@@ -146,16 +180,43 @@ export default function Auth () {
         }
         break;
 
+        case 'loginEmail':
+          if(value.length === 0){
+            setErrors({
+              ...errors,
+              loginEmail: ''
+            })
+          }
+          break;
+
+        case 'loginPassword':
+          if(value.length === 0){
+            setErrors({
+              ...errors,
+              loginPassword: ''
+            })
+          }
+          break;
+
       default:
         break;
     }
-
   }
 
   function handleChange(e) {
     e.persist();
 
     validate(e, e.target.name, e.target.value);
+
+    if(e.target.name === "loginEmail"){
+      setFormData({ ...formData, "email": e.target.value });
+      return;
+    }
+
+    if(e.target.name === "loginPassword"){
+      setFormData({ ...formData, "password": e.target.value });
+      return;
+    }
 
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -207,19 +268,29 @@ export default function Auth () {
               <label>E-mail: </label>
               <input type="email"
                 required
-                name="email"
+                name="loginEmail"
+                // name="email"
                 onChange={handleChange}
                 placeholder="E-mail"
+                id="loginEmail"
               />
+              {
+                errors.loginEmail && <h3 className="form-error-message">{errors.loginEmail}</h3>
+              }
             </div>
             <div className="form-field">
               <label>Password: </label>
               <input type="password"
                 required
-                name="password"
+                name="loginPassword"
+                // name="password"
                 onChange={handleChange}
                 placeholder="Password"
+                id="loginPassword"
               />
+              {
+                errors.loginPassword && <h3 className="form-error-message">{errors.loginPassword}</h3>
+              }
             </div>
             <div className="form-button-container">
               <input type="submit" value="Log In"/>

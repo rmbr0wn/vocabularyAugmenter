@@ -8,7 +8,7 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const avatarPath = "../public/ava.png";
+  const defaultAvatar = "/ava.png";
 
   function logOut(){
     dispatch({ type: 'LOGOUT' });
@@ -46,7 +46,7 @@ export default function Navbar() {
           </li>
         </ul>
         <div>
-          <img src={avatarPath} alt="0"/>
+          <img src={defaultAvatar} alt="0" width="25" height="25"/>
         </div>
         {user? (
           <div>

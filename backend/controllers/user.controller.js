@@ -3,33 +3,26 @@ import jwt from 'jsonwebtoken';
 
 import User from '../models/user.model.js';
 
-function checkUsername (username) {
-  if(username){
-    return username;
-  }
-  else{
-    return "";
-  }
-}
-
 export const signIn = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const existingUser = await User.findOne({ email });
+    const existingAccount = await User.findOne({ email });
 
-    if(!existingUser) return res.status(404).json({ message: "User doesn't exist."});
+    if(!existingAccount) return res.status(404).json({ message: "There is no account associated with that email."});
 
-    const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
+    const isPasswordCorrect = await bcrypt.compare(password, existingAccount.password);
 
-    if(!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials."});
+    if(!isPasswordCorrect) {
+      return res.status(400).json({ message: "Invalid login credentials."});
+    }
 
     const token = jwt.sign({
-      email: existingUser.email,
-      id: existingUser._id}, 'testToken',
+      email: existingAccount.email,
+      id: existingAccount._id}, 'testToken',
     { expiresIn: "1h" });
 
-    res.status(200).json({ result: existingUser, token });
+    res.status(200).json({ result: existingAccount, token });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong.' });
   }
@@ -40,9 +33,13 @@ export const signUp = async (req, res) => {
   const { email, password, confirmPassword, username } = req.body;
 
   try{
-    const existingUser = await User.findOne({ email });
+    const existingAccount = await User.findOne({ email });
 
-    if(existingUser) return res.status(400).json({ message: "An account with that email already exists."});
+    if(existingAccount) return res.status(400).json({ message: "An account with that email already exists."});
+
+    const usernameExists = await User.findOne({ username });
+
+    if(usernameExists) return res.status(400).json({ message: "That username is already taken."});
 
     if(password !== confirmPassword) return res.status(400).json({ message: "The passwords don't match."});
 
