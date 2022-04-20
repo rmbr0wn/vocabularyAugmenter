@@ -2,43 +2,10 @@ import React, { useState } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+
+import { signIn, signUp } from '../actions/auth.actions.js';
 
 const initialState = { username: '', email: '', password: '', confirmPassword: '' };
-const initialLogin = { loginEmail: '', loginPassword: '' };
-const API = axios.create({ baseURL: 'http://localhost:5000' });
-
-const signIn = (formData, navigation) => async (dispatch) => {
-  try {
-    const { data } = await API.post('/user/sign-in', formData);
-
-    dispatch({ type: 'AUTH', data });
-
-    navigation('/');
-  } catch (error) {
-    // console.log("There was an error when signing in: " + error);
-    let returnErr = await error.response.data.message;
-    console.log(returnErr);
-    return returnErr;
-  }
-}
-
-
-const signUp = (formData, navigation) => async (dispatch) => {
-  try {
-    const { data } = await API.post('/user/sign-up', formData);
-
-    dispatch({ type: 'AUTH', data });
-
-    navigation('/');
-  } catch (error) {
-    let returnErr = await error.response.data.message;
-    // console.log("In signUp: " + error.response);
-    // console.log(returnErr);
-    return returnErr;
-  }
-}
-
 
 export default function Auth() {
   const [signedUp, setSignedUp] = useState(true);
@@ -52,45 +19,47 @@ export default function Auth() {
 
     if(signedUp) {
       let loginCheck = await dispatch(signIn(formData, navigate));
+      let loginError = loginCheck?.response.data.message
 
-      if(loginCheck === undefined){
+      if(loginError === undefined){
         return;
       }
 
-      if(loginCheck.includes("email")){
+      if(loginError.includes("email")){
         setErrors({
           ...errors,
-          loginEmail: loginCheck,
+          loginEmail: loginError,
           loginPassword: ''
         })
       }
 
-      if(loginCheck.includes("credentials")){
+      if(loginError.includes("credentials")){
         setErrors({
           ...errors,
-          loginPassword: loginCheck,
+          loginPassword: loginError,
           loginEmail: ''
         })
       }
 
     } else {
-      let checkExists = await dispatch(signUp(formData, navigate));
+      let registerCheck = await dispatch(signUp(formData, navigate));
+      let registerError = registerCheck?.response.data.message;
 
-      if(checkExists === undefined){
+      if(registerError === undefined){
         return;
       }
 
-      if(checkExists.includes("email")){
+      if(registerError.includes("email")){
         setErrors({
           ...errors,
-          email: checkExists
+          email: registerError
         })
       }
 
-      if(checkExists.includes("username")){
+      if(registerError.includes("username")){
         setErrors({
           ...errors,
-          username: checkExists
+          username: registerError
         })
       }
     }
@@ -205,7 +174,6 @@ export default function Auth() {
 
   function handleChange(e) {
     e.persist();
-
     validate(e, e.target.name, e.target.value);
 
     if(e.target.name === "loginEmail"){
@@ -221,15 +189,22 @@ export default function Auth() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
-  function onClick(e) {
+  function switchSignup(e) {
     setSignedUp(!signedUp);
   }
 
   async function googleSuccess (res) {
-    console.log(res);
-    console.log("Success!");
+    // console.log(res);
+    // console.log("Success!");
     const result = res?.profileObj;
     const token = res?.tokenId;
+
+    // Automatically generating a username for google OAuth users   ** NOT CURRENTLY BEING USED **
+    // let strippedEmail = res?.profileObj.email.split('@');
+    // let strippedId = res?.profileObj.googleId;
+    // strippedId = strippedId.substr(0, 5);
+    // let generatedUsername = strippedEmail[0] + strippedId;
+    // console.log(generatedUsername);
 
     try {
       dispatch({ type: 'AUTH', data: { result, token } });
@@ -244,8 +219,6 @@ export default function Auth() {
     console.log('Google Sign In was unsuccessful. Try again later.');
   }
 
-// Note: When refactoring, consider turning the repeated form div code below
-// into a function/class in an external file.
   return(
     <div>
       <h3> {signedUp ? "Sign In" : "Sign up"} </h3>
@@ -269,7 +242,6 @@ export default function Auth() {
               <input type="email"
                 required
                 name="loginEmail"
-                // name="email"
                 onChange={handleChange}
                 placeholder="E-mail"
                 id="loginEmail"
@@ -283,7 +255,6 @@ export default function Auth() {
               <input type="password"
                 required
                 name="loginPassword"
-                // name="password"
                 onChange={handleChange}
                 placeholder="Password"
                 id="loginPassword"
@@ -296,7 +267,7 @@ export default function Auth() {
               <input type="submit" value="Log In"/>
             </div>
             <div>
-              <button type="button" onClick={onClick}> Create New Account </button>
+              <button type="button" onClick={switchSignup}> Create New Account </button>
             </div>
           </div>
           :
@@ -357,7 +328,7 @@ export default function Auth() {
             </div>
             <div>
               <label>Already have an account?  </label>
-              <button type="button" onClick={onClick}> Sign in </button>
+              <button type="button" onClick={switchSignup}> Sign in </button>
             </div>
           </div>
         }

@@ -6,9 +6,9 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
 
 import Navbar from "./components/navbar.component";
-import DailyWord from "./components/daily-word.component";
+import DailyWord from "./components/dailyWord.component";
 import Auth from "./components/auth.component";
-import WordList from "./components/word-list.component";
+import WordList from "./components/wordList.component";
 import Profile from "./components/profile.component"
 import { reducers } from "./reducers/index.reducer";
 

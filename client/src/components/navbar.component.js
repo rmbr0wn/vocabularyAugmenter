@@ -8,15 +8,15 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const defaultAvatar = "/ava.png";
+  const defaultAvatar = "./icons/human-blob.png";
 
-  function logOut(){
+  function logOut() {
     dispatch({ type: 'LOGOUT' });
     navigate('/');
     setUser(null);
   }
 
-  function logIn(){
+  function logIn() {
     navigate('/auth');
   }
 
@@ -30,8 +30,7 @@ export default function Navbar() {
          logOut();
       }
     }
-
-    setUser(JSON.parse(localStorage.getItem('profile')));
+    setUser(JSON.parse(localStorage.getItem('account')));
   }, [user?.token, location]);
 
   return(
@@ -45,12 +44,14 @@ export default function Navbar() {
             <Link to='/list'>Word List</Link>
           </li>
         </ul>
-        <div>
-          <img src={defaultAvatar} alt="0" width="25" height="25"/>
-        </div>
         {user? (
           <div>
-            <button onClick={logOut}> Logout</button>
+            <div>
+              <button onClick={logOut}> Logout</button>
+            </div>
+            <Link to='/profile'>
+              <img src={defaultAvatar} alt="0" width="25" height="25"/>
+            </Link>
           </div>
         ) : (
           <div>
