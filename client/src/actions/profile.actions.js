@@ -1,14 +1,11 @@
 import { instance } from '../apis/axios.api.js'
 
-export const generateProfile = (userData) => async (dispatch) => {
-  try {
-    const { data } = await instance.post('/profile/generate', userData);
-    dispatch({ type: 'GENERATE', data });
-  } catch (error) {
+export const changeUsername = (newUsername, userType, userEmail) => async (dispatch) => {
+  try{
+    const formData = { newUsername, userType, userEmail };
+    const { data } = await instance.put('/profile/change-name', formData);
+    dispatch({ type: 'CHANGE_USERNAME', data });
+  } catch(error) {
     return error;
   }
 }
-
-export const changeUsername = () => async (dispatch) => {}
-
-export const changeImage = () => async (dispatch) => {}

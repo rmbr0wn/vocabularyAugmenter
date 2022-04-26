@@ -1,12 +1,9 @@
 import express from "express";
 
-import { generateProfile, changeImage, changeUsername } from "../controllers/profile.controller.js";
-import Profile from "../models/profile.model.js";
+import { changeUsername } from "../controllers/profile.controller.js";
 
 var router = express.Router();
 
-router.post("/generate", generateProfile);
-router.post("/upload", changeImage);
-router.post("/change-name", changeUsername);
+router.put("/change-name", changeUsername);
 
 export default router;

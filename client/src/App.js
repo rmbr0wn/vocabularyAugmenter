@@ -6,10 +6,10 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
 
 import Navbar from "./components/navbar.component";
-import DailyWord from "./components/dailyWord.component";
+import HomePage from "./components/homePage.component";
 import Auth from "./components/auth.component";
 import WordList from "./components/wordList.component";
-import Profile from "./components/profile.component"
+import ProfilePage from "./components/profilePage.component"
 import { reducers } from "./reducers/index.reducer";
 
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
@@ -21,10 +21,10 @@ function App() {
           <div>
             <Navbar />
             <Routes>
-              <Route path="/" exact element={<DailyWord/>}/>
+              <Route path="/" exact element={<HomePage/>}/>
               <Route path="/auth" element={<Auth/>}/>
               <Route path="/list" element={<WordList/>}/>
-              <Route path="/profile" element={<Profile/>}/>
+              <Route path="/profile" element={<ProfilePage/>}/>
             </Routes>
           </div>
         </BrowserRouter>

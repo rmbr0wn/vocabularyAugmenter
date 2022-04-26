@@ -19,7 +19,7 @@ export default function Auth() {
 
     if(signedUp) {
       let loginCheck = await dispatch(signIn(formData, navigate));
-      let loginError = loginCheck?.response.data.message
+      let loginError = loginCheck?.response.data.message;
 
       if(loginError === undefined){
         return;
@@ -65,7 +65,7 @@ export default function Auth() {
     }
   }
 
-  function validate(event, name, value) {
+  function validate(name, value) {
     switch (name) {
       case 'username':
         if(value.length <= 3){
@@ -174,7 +174,7 @@ export default function Auth() {
 
   function handleChange(e) {
     e.persist();
-    validate(e, e.target.name, e.target.value);
+    validate(e.target.name, e.target.value);
 
     if(e.target.name === "loginEmail"){
       setFormData({ ...formData, "email": e.target.value });
@@ -194,17 +194,8 @@ export default function Auth() {
   }
 
   async function googleSuccess (res) {
-    // console.log(res);
-    // console.log("Success!");
     const result = res?.profileObj;
     const token = res?.tokenId;
-
-    // Automatically generating a username for google OAuth users   ** NOT CURRENTLY BEING USED **
-    // let strippedEmail = res?.profileObj.email.split('@');
-    // let strippedId = res?.profileObj.googleId;
-    // strippedId = strippedId.substr(0, 5);
-    // let generatedUsername = strippedEmail[0] + strippedId;
-    // console.log(generatedUsername);
 
     try {
       dispatch({ type: 'AUTH', data: { result, token } });
