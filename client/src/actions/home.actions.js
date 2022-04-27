@@ -20,8 +20,6 @@ export const createGoogleUsername = (user) => {
 export const getGoogleProfile = (googleId) => async (dispatch) => {
   try{
     const { data } = await instance.get(`/${googleId}`);
-    console.log("Home action getGoog data: ");
-    console.log(data);
     dispatch({ type: 'SET_LOCAL_PROFILE', data });
   } catch (error) {
     return error;

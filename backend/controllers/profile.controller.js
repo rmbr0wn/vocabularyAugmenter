@@ -4,8 +4,6 @@ import User from "../models/user.model.js"
 export const changeUsername = async (req, res) => {
   const { newUsername, userType, userEmail } = req.body;
 
-  console.log(req.body);
-
   try {
     const updatedUsername = { username: newUsername.username };
     const emailFilter = { email: userEmail };
