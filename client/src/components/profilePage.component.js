@@ -7,48 +7,37 @@ import { changeUsername } from '../actions/profile.actions.js'
 const initialState = { username: ''};
 
 export default function ProfilePage () {
-  const[allowUsernameChange, setAllowUsernameChange] = useState(false);
-  const[newUsername, setNewUsername] = useState(initialState);
-  const[error, setError] = useState(initialState);
-  const[displayedUsername, setDisplayedUsername] = useState(false);
-  const[updateSuccessful, setUpdateSuccessful] = useState('');
   const regularUser = JSON.parse(localStorage.getItem('account'));
   const googleUser = JSON.parse(localStorage.getItem('profile'));
   const dispatch = useDispatch();
+  const initialUsername = (googleUser) ? googleUser?.result.username : regularUser?.result.username;
   let navigate = useNavigate();
+  const[allowUsernameChange, setAllowUsernameChange] = useState(false);
+  const[newUsername, setNewUsername] = useState(initialState);
+  const[error, setError] = useState(initialState);
+  const[displayedUsername, setDisplayedUsername] = useState(initialUsername);
+  const[updateSuccessful, setUpdateSuccessful] = useState('');
 
   async function handleSubmit(e){
     e.preventDefault();
+    let userType = (googleUser) ? 'Google' : 'Regular';
+    let userEmail = (googleUser) ? googleUser.result.email : regularUser.result.email;
+    let storageType = (googleUser) ? 'profile' : 'account';
 
-    if(googleUser){
-      let changeRequest = await dispatch(
-        changeUsername(newUsername, 'Google', googleUser.result.email)
-      );
-      let changeError = changeRequest?.response.data.message;
-      if(changeError) {
-        setError({ username: changeError});
-        setUpdateSuccessful('');
-      }
-      if(!changeError) {
-        setError({ username: ''});
-        let fetchedMessage = JSON.parse(localStorage.getItem('profile')).message;
-        setUpdateSuccessful(fetchedMessage);
-      }
+    let changeUsernameRequest = await dispatch(
+      changeUsername(newUsername, userType, userEmail)
+    );
+    let changeUsernameError = changeUsernameRequest?.response.data.message;
+
+    if(changeUsernameError) {
+      setError({ username: changeUsernameError});
+      setUpdateSuccessful('');
     }
-    else{
-      let changeRequest = await dispatch(
-        changeUsername(newUsername, 'Regular', regularUser.result.email)
-      );
-      let changeError = changeRequest?.response.data.message;
-      if(changeError) {
-        setError({ username: changeError});
-        setUpdateSuccessful('');
-      }
-      if(!changeError) {
-        setError({ username: ''});
-        let fetchedMessage = JSON.parse(localStorage.getItem('account')).message;
-        setUpdateSuccessful(fetchedMessage);
-      }
+
+    if(!changeUsernameError) {
+      setError({ username: ''});
+      let fetchedMessage = JSON.parse(localStorage.getItem(storageType)).message;
+      setUpdateSuccessful(fetchedMessage);
     }
     navigate('/profile');
   }
@@ -66,23 +55,18 @@ export default function ProfilePage () {
     setAllowUsernameChange(!allowUsernameChange);
   }
 
-  function displayWelcomeName(){
-    if(googleUser){
-      setDisplayedUsername(googleUser.result.username);
-    }
-
-    else{
-      setDisplayedUsername(regularUser.result.username);
-    }
-  }
-
   function validate(username){
     if(username.length < 4){
       setError({ username: 'The new username must be 4 characters or longer.' });
-    }
-    else{
+    } else {
       setError({ username: ''});
     }
+  }
+
+  async function updateDisplayedUsername(){
+    let storageType = (googleUser) ? 'profile' : 'account';
+    let currentUser = JSON.parse(localStorage.getItem(storageType));
+    setDisplayedUsername(currentUser?.result.username);
   }
 
   useEffect(() => {
@@ -90,19 +74,18 @@ export default function ProfilePage () {
       navigate("/");
       return;
     }
-    else{
-      displayWelcomeName();       // Might not need this
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    displayWelcomeName();
+    updateDisplayedUsername();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [googleUser?.result.username, regularUser?.result.username]);
 
     return (
       <div className="profile-container">
         <form onSubmit={handleSubmit}>
-          {googleUser?
+          {googleUser ?
               <div className="profile-welcome">
                 <h2> Welcome to your profile {displayedUsername}!</h2>
                 <button type="button" onClick={showInputField}> Change Username </button>

@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 
 import { generateGoogleProfile, createGoogleUsername, getGoogleProfile } from '../actions/home.actions.js';
 
-// Could maybe get rid of profileChcked and just actually check if the profile exists
 export default function HomePage () {
   const user = JSON.parse(localStorage.getItem('account'));
   const profile = JSON.parse(localStorage?.getItem('profile'));
@@ -20,6 +19,7 @@ export default function HomePage () {
           checkForProfile();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -37,6 +37,7 @@ export default function HomePage () {
         return;
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profileChecked]);
 
     return (

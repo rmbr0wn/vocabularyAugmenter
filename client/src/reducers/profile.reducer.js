@@ -3,7 +3,8 @@ const profileReducer = (state = { profileData: null}, action) => {
     case 'CHANGE_USERNAME':
 
       /* There is no 'profile' collection for regular users, so we have to
-         check the user type to see what localStorage we need to update. */
+       * check the user type to see what localStorage we need to update.
+       */
       if(action?.data.result.googleId){
         localStorage.setItem('profile', JSON.stringify({ ...action?.data }));
         return { ...state, profileData: action?.data };

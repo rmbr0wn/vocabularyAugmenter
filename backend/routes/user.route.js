@@ -1,8 +1,6 @@
 import express from "express";
 
-import { signIn, signUp} from "../controllers/user.controller.js";
-import User from "../models/user.model.js";
-import auth from "../middleware/auth.middleware.js";
+import { signIn, signUp } from "../controllers/user.controller.js";
 
 var router = express.Router();
 

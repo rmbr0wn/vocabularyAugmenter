@@ -31,6 +31,7 @@ export default function Navbar() {
       }
     }
     setUser(JSON.parse(localStorage.getItem('account')));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.token, location]);
 
   return(

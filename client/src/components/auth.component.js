@@ -180,12 +180,10 @@ export default function Auth() {
       setFormData({ ...formData, "email": e.target.value });
       return;
     }
-
     if(e.target.name === "loginPassword"){
       setFormData({ ...formData, "password": e.target.value });
       return;
     }
-
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
@@ -210,24 +208,21 @@ export default function Auth() {
     console.log('Google Sign In was unsuccessful. Try again later.');
   }
 
+  /* To ensure that when the user has entered their login info, it selects
+   * the correct button. Previously it was selecting GoogleLogin.
+   */
+  const handleEnterKey = e => {
+    if (e.keyCode === 13){
+      handleSubmit();
+    }
+  }
+
   return(
     <div>
       <h3> {signedUp ? "Sign In" : "Sign up"} </h3>
       <form onSubmit={handleSubmit}>
         {signedUp ?
           <div className="form-container-sign-in">
-            <div>
-              <GoogleLogin
-                clientId="272154925137-pkh6c6dhhm79hj8enundingvnsl8vbnl.apps.googleusercontent.com"
-                render={(renderProps) => (
-                  <button onClick={renderProps.onClick} disabled={renderProps.disabled}>Google Login</button>
-                )}
-                onSuccess={googleSuccess}
-                onFailure={googleFailure}
-                buttonText="Login"
-                cookiePolicy={'single_host_origin'}
-              />
-            </div>
             <div className="form-field">
               <label>E-mail: </label>
               <input type="email"
@@ -253,9 +248,21 @@ export default function Auth() {
               {
                 errors.loginPassword && <h3 className="form-error-message">{errors.loginPassword}</h3>
               }
-            </div>
-            <div className="form-button-container">
-              <input type="submit" value="Log In"/>
+              <div className="form-button-container">
+                <input type="submit" value="Log In" id="loginButton"/>
+              </div>
+              <div>
+                <GoogleLogin
+                clientId="272154925137-pkh6c6dhhm79hj8enundingvnsl8vbnl.apps.googleusercontent.com"
+                render={(renderProps) => (
+                  <button onClick={renderProps.onClick} disabled={renderProps.disabled}>Google Login</button>
+                )}
+                onSuccess={googleSuccess}
+                onFailure={googleFailure}
+                buttonText="Login"
+                cookiePolicy={'single_host_origin'}
+                />
+              </div>
             </div>
             <div>
               <button type="button" onClick={switchSignup}> Create New Account </button>

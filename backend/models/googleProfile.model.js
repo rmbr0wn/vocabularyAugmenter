@@ -20,9 +20,9 @@ const profileSchema = new Schema({
 		type: String,
 		required: true,
 		unique: true
-	},
+	}
 }, {
-	timestamps: true,
+	timestamps: true
 });
 
 const GoogleProfile = mongoose.model("GoogleProfile", profileSchema);

@@ -10,9 +10,9 @@ export const generateGoogleProfile = async (req, res) => {
 
     const result = await GoogleProfile.create({ username, email, googleId });
 
-    res.status(201).json({ message: 'Profile successfully created.', result: result });
+    res.status(201).json({ message: "Profile successfully created.", result: result });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong with generateProfile: ", error});
+    res.status(500).json({ message: "Something went wrong with generateProfile: ", error });
   }
 };
 
@@ -22,7 +22,7 @@ export const getGoogleProfile = async (req, res) => {
 	try {
     const existingProfile = await GoogleProfile.findOne(searchId).exec();
 
-		if(!existingProfile) return res.status(404).json({ message: "There is no profile associated with that id."});
+		if(!existingProfile) return res.status(404).json({ message: "There is no profile associated with that id." });
 
 		res.status(200).json({ result: existingProfile });
 	} catch (error) {
