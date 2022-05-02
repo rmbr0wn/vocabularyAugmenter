@@ -8,7 +8,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import Navbar from "./components/navbar.component";
 import HomePage from "./components/homePage.component";
 import Auth from "./components/auth.component";
-import WordList from "./components/wordList.component";
+import WordExplorer from "./components/wordExplorer.component";
 import ProfilePage from "./components/profilePage.component"
 import { reducers } from "./reducers/index.reducer";
 
@@ -23,7 +23,7 @@ function App() {
             <Routes>
               <Route path="/" exact element={<HomePage/>}/>
               <Route path="/auth" element={<Auth/>}/>
-              <Route path="/list" element={<WordList/>}/>
+              <Route path="/explore" element={<WordExplorer/>}/>
               <Route path="/profile" element={<ProfilePage/>}/>
             </Routes>
           </div>

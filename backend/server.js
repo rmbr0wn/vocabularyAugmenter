@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import userRouter from "./routes/user.route.js";
 import profileRouter from "./routes/profile.route.js";
 import homeRouter from "./routes/home.route.js";
+import exploreRouter from "./routes/wordExplorer.route.js";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/", homeRouter);
 app.use("/user", userRouter);
 app.use("/profile", profileRouter);
+app.use("/explore", exploreRouter)
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true });

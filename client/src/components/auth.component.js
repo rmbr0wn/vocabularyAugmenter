@@ -208,15 +208,6 @@ export default function Auth() {
     console.log('Google Sign In was unsuccessful. Try again later.');
   }
 
-  /* To ensure that when the user has entered their login info, it selects
-   * the correct button. Previously it was selecting GoogleLogin.
-   */
-  const handleEnterKey = e => {
-    if (e.keyCode === 13){
-      handleSubmit();
-    }
-  }
-
   return(
     <div>
       <h3> {signedUp ? "Sign In" : "Sign up"} </h3>

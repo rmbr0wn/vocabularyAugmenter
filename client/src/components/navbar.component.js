@@ -44,6 +44,9 @@ export default function Navbar() {
           <li>
             <Link to='/list'>Word List</Link>
           </li>
+          <li>
+            <Link to='/explore'>Word Explorer</Link>
+          </li>
         </ul>
         {user? (
           <div>
