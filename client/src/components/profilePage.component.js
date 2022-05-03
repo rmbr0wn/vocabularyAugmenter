@@ -83,7 +83,7 @@ export default function ProfilePage () {
   }, [googleUser?.result.username, regularUser?.result.username]);
 
     return (
-      <div className="profile-container">
+      <div id="profile-container">
         <form onSubmit={handleSubmit}>
           {googleUser ?
               <div className="profile-welcome">
@@ -111,7 +111,7 @@ export default function ProfilePage () {
               <div className="profile-welcome">
                 <h2> Welcome to your profile {displayedUsername}!</h2>
                 <button type="button" id="tester" onClick={showInputField}> Change Username </button>
-                {allowUsernameChange?
+                {allowUsernameChange ?
                   <div className="name-change-container">
                     <label> New Username: </label>
                     <input type="text"
