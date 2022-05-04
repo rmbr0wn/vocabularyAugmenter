@@ -4,7 +4,8 @@ import { useDispatch } from 'react-redux';
 import decode from 'jwt-decode';
 
 export default function Navbar() {
-  const[user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const[user, setUser] = useState(JSON.parse(localStorage.getItem('account')));
+  const googleUser = useState(JSON.parse(localStorage.getItem('profile')));
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,6 +34,12 @@ export default function Navbar() {
     setUser(JSON.parse(localStorage.getItem('account')));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.token, location]);
+
+  useEffect(() => {
+    if(location.pathname !== '/explore' && localStorage.getItem('thesaurus')){
+      localStorage.removeItem('thesaurus');
+    }
+  }, [location]);
 
   return(
     <nav>

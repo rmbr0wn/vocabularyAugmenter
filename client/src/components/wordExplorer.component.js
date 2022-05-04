@@ -14,11 +14,6 @@ const initialState = {
   antonyms: ''
 };
 
-
-/* Need to reset localStorage for thesaurus on navigation/page refresh, as well
- * as setting the handleSubmit var thing to false
- *
- */
 export default function WordExplorer () {
   const regularUser = JSON.parse(localStorage.getItem('account'));
   const googleUser = JSON.parse(localStorage.getItem('profile'));
@@ -40,6 +35,7 @@ export default function WordExplorer () {
     e.preventDefault();
 
     let thesaurusQuery = await dispatch(queryThesaurus(searchWord));
+
     setQueryResult(thesaurusQuery);
     setWordSubmitted(true);
   }
@@ -51,10 +47,46 @@ export default function WordExplorer () {
   }
 
   useEffect(() => {
-    if(queryResult){
-      console.log(queryResult);
+    if(queryResult.word !== ""){
+      dynamicListCreation(queryResult.relatedWords, "related words", "related-words-ul");
+      dynamicListCreation(queryResult.synonyms, "synonyms", "synonyms-ul");
+      dynamicListCreation(queryResult.antonyms, "antonyms", "antonyms-ul");
     }
   }, [queryResult]);
+
+  async function dynamicListCreation(list, listType, htmlId){
+    if(!list) return;
+
+    document.getElementById(htmlId).innerHTML = "";
+
+    if(list.length === 0) {
+      let node = document.createElement("li");
+      let notFound = document.createTextNode(`No ${listType} found.`);
+      node.appendChild(notFound);
+      document.getElementById(htmlId).appendChild(node);
+      return;
+    }
+
+    for(let i = 0; i < list.length; i++){
+      let node = document.createElement("li");
+      let word = document.createTextNode(list[i]);
+      node.appendChild(word);
+      document.getElementById(htmlId).appendChild(node);
+    }
+  }
+
+  const handleUnload = (e) => {
+    if(localStorage.getItem('thesaurus')){
+      localStorage.removeItem('thesaurus');
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleUnload);
+    };
+  }, []);
 
     return (
       <div id="word-explorer-container">
@@ -73,16 +105,21 @@ export default function WordExplorer () {
             <h2> {queryResult.word} </h2>
             <h3> Definition <i>({queryResult.partOfSpeech})</i>: </h3>
             <p> {queryResult.definition} </p>
-            <p> "{queryResult.exampleSentence}" </p>
+            <p> "{queryResult.exampleSentence ? queryResult.exampleSentence : "No example found." }" </p>
             <h3> Related Words: </h3>
-              <ul>
-              </ul>
+                <div>
+                  <ul id="related-words-ul"> </ul>
+                </div>
+
             <h3> Synonyms: </h3>
-              <ul>
-              </ul>
+              <div>
+                <ul id="synonyms-ul"> </ul>
+              </div>
             <h3> Antonyms: </h3>
-              <ul>
-              </ul>
+              <div>
+                <ul id="antonyms-ul"> </ul>
+              </div>
+
           </div>
           :
           <div id="query-error-container">

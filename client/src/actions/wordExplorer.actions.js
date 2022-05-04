@@ -4,11 +4,14 @@ export const queryThesaurus = (word) => async (dispatch) => {
   try {
     const { data } = await instance.get(`/explore/get-word?word=${word}`);
 
-    console.log(data);
-
     if(data.length === 0){
       localStorage?.removeItem('thesaurus');
       let errorObj = { error: `No results found for '${word}'.`}
+      return errorObj;
+    }
+
+    if(typeof data[0] !== 'object'){
+      let errorObj = { error: `Not currently handling suggested alternatives.`};
       return errorObj;
     }
 
@@ -26,24 +29,22 @@ function parseDesiredData(queryResult){
   /* NOTE: exampleSentence, relatedWordList, synonymList and antonymList only
    * sometimes exist depending on the word, hence the optional chaining below.
    */
-   console.log(queryResult);
-
   if(queryResult === "Word is required."){
     let errorObj = { error: "You must enter a word." };
     return errorObj;
   }
 
-  if(Array.isArray(queryResult)){
-    let errorObj = { error: "Not currently handling replacement/suggested words." };
-    return errorObj;
-  }
+  // if(Array.isArray(queryResult)){
+  //   let errorObj = { error: "Not currently handling replacement/suggested words." };
+  //   return errorObj;
+  // }
 
   let baseQuery = queryResult[0].def[0].sseq[0][0][1];
   let wordName = queryResult[0].hwi.hw;
   let partOfSpeech = queryResult[0].fl;
   let definition = baseQuery.dt[0][1];   // // NOTE: This only gets ONE definition
 
-  let exampleSentence = baseQuery?.dt[1][1][0].t;
+  let exampleSentence = baseQuery?.dt[1] ? baseQuery?.dt[1][1][0].t : null;
   if(exampleSentence){
     exampleSentence = exampleSentence.replace('{it}', '');
     exampleSentence = exampleSentence.replace('{/it}', '');
