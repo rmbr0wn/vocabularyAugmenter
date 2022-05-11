@@ -21,9 +21,7 @@ export default function Auth() {
       let loginCheck = await dispatch(signIn(formData, navigate));
       let loginError = loginCheck?.response.data.message;
 
-      if(loginError === undefined){
-        return;
-      }
+      if(loginError === undefined) return;
 
       if(loginError.includes("email")){
         setErrors({

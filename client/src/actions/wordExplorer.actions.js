@@ -10,6 +10,8 @@ export const queryThesaurus = (word) => async (dispatch) => {
       return errorObj;
     }
 
+    console.log(data);
+
     if(typeof data[0] !== 'object'){
       let errorObj = { error: `Not currently handling suggested alternatives.`};
       return errorObj;
@@ -26,18 +28,10 @@ export const queryThesaurus = (word) => async (dispatch) => {
 }
 
 function parseDesiredData(queryResult){
-  /* NOTE: exampleSentence, relatedWordList, synonymList and antonymList only
-   * sometimes exist depending on the word, hence the optional chaining below.
-   */
   if(queryResult === "Word is required."){
     let errorObj = { error: "You must enter a word." };
     return errorObj;
   }
-
-  // if(Array.isArray(queryResult)){
-  //   let errorObj = { error: "Not currently handling replacement/suggested words." };
-  //   return errorObj;
-  // }
 
   let baseQuery = queryResult[0].def[0].sseq[0][0][1];
   let wordName = queryResult[0].hwi.hw;
@@ -60,7 +54,6 @@ function parseDesiredData(queryResult){
     }
   }
 
-  // The synonymList declaration throws an error with optional chaining, hence the ugliness.
   let synonymList = baseQuery.syn_list ? baseQuery.syn_list[0] : null;
   let synonymArr = [];
   if(synonymList){

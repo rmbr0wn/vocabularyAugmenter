@@ -49,7 +49,7 @@ export default function Navbar() {
             <Link to='/'>Home</Link>
           </li>
           <li>
-            <Link to='/list'>Word List</Link>
+            <Link to='/lists'>Word Lists</Link>
           </li>
           <li>
             <Link to='/explore'>Word Explorer</Link>

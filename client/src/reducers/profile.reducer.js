@@ -1,7 +1,6 @@
 const profileReducer = (state = { profileData: null}, action) => {
   switch (action.type) {
     case 'CHANGE_USERNAME':
-
       /* There is no 'profile' collection for regular users, so we have to
        * check the user type to see what localStorage we need to update.
        */
