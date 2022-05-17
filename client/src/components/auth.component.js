@@ -185,7 +185,7 @@ export default function Auth() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
-  function switchSignup(e) {
+  function switchSignup() {
     setSignedUp(!signedUp);
   }
 

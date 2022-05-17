@@ -57,4 +57,5 @@ const listSchema = new Schema({
 
 const WordList = mongoose.model("WordList", listSchema);
 
+// export const Word = mongoose.model("Word", wordSchema);
 export default WordList;

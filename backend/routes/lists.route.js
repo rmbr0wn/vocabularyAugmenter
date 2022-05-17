@@ -1,15 +1,13 @@
 import express from "express";
 
-import { createList, getUserLists } from "../controllers/lists.controller.js";
+import { createList, getUserLists, changeListName } from "../controllers/lists.controller.js";
 
 var router = express.Router();
 
 router.post("/create-list", createList);
 router.get("/view-lists", getUserLists);
-// router.get("/:id", getUserLists);
+router.put("/change-list-name", changeListName);
 
-// router.put("/update-list", );
-// router.get("delete-list", );
 
 
 

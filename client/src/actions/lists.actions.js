@@ -33,3 +33,13 @@ export const getUserLists = (userEmail) => async (dispatch) => {
     return error;
   }
 }
+
+export const changeListName = (newName, listId) => async (dispatch) => {
+  try {
+    const payload = { newName, listId };
+    const { data } = await instance.put('/lists/change-list-name', payload);
+    console.log(payload);
+  } catch (error) {
+    return error;
+  }
+}

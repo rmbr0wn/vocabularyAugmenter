@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import ListPanel from './listPanel.component.js'
-import { createList, getUserLists } from '../actions/lists.actions.js'
+import { createList, getUserLists, changeListName } from '../actions/lists.actions.js'
 
 const initialListState = {
   email: '',
@@ -13,11 +13,16 @@ const initialListState = {
   words: ''
 }
 
+/* Need some major refactoring in this file, it's quite messy. Everything from
+ * names, to the way the logic is implemented for updates, etc.
+*/
 export default function ListsPage () {
   const[listTitlePrompt, setListTitlePrompt] = useState(false);
   const[newListTitle, setNewListTitle] = useState('');
   const[returnMessage, setReturnMessage] = useState({ title: '' });
   const[userLists, setUserLists] = useState(initialListState);
+  const[editPayload, setEditPayload] = useState({ beingEdited: false, id: '' });
+  const[updatedListName, setUpdatedListName] = useState('');
   const regularUser = JSON.parse(localStorage.getItem('account'));
   const googleUser = JSON.parse(localStorage.getItem('profile'));
   const userEmail = (googleUser) ? googleUser?.result.email : regularUser?.result.email;
@@ -73,9 +78,11 @@ export default function ListsPage () {
     setReturnMessage({ title: ''});
   }
 
+
   useEffect(() => {
     if(userLists && userLists.email !== ''){
       const result = userLists.result;
+
       console.log(result);
     }
   }, [userLists])
@@ -89,17 +96,43 @@ export default function ListsPage () {
     }
 
     for(let i = 0; i < list.length; i++){
+      let editButton = <button type="button" onClick={toggleEditing} listid={list[i]._id}> Edit </button>
+      // let deleteButton
+      // let cancelButton
       let myPanel = <ListPanel
-        email={list[i].email}
-        name={list[i].name}
-        privacy={list[i].private}
-        tags={list[i].tags}
-        words={list[i].words}
+        list={list[i]}
+        editButton={editButton}
+        editingPayload={editPayload}
+        submitHandler={listEditSubmitHandler}
+        changeHandler={listEditChangeHandler}
         key={list[i]._id}
-      />
-      myArr.push(myPanel);
+        />
+        myArr.push(myPanel);
     }
+
     return myArr;
+  }
+
+  async function toggleEditing(e) {
+    setEditPayload({
+      beingEdited: !editPayload.beingEdited,
+      id: e.target.attributes.listid.nodeValue,
+    })
+  }
+
+  async function listEditSubmitHandler(e){
+    e.preventDefault();
+
+    let updateListNameRequest = await dispatch(changeListName(updatedListName, e.target.attributes.listid.value));
+
+    // console.log(updatedListName);
+    // console.log(e.target.attributes.listid.value);
+  }
+
+  async function listEditChangeHandler(e){
+    e.preventDefault();
+
+    setUpdatedListName(e.target.value);
   }
 
     return (

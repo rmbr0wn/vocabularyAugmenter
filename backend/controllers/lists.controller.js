@@ -16,12 +16,9 @@ export const createList = async (req, res) => {
 
 export const getUserLists = async (req, res) => {
   const { email } = req.query;
-  // console.log(email);
 
   try{
     const result = await WordList.find({ email }).exec();
-
-    // console.log(result);
 
     res.status(200).json({ message: "Lists successfully returned.", result: result });
   } catch (error) {
@@ -29,6 +26,17 @@ export const getUserLists = async (req, res) => {
   }
 }
 
-export const addWordToList = async (req, res) => {
-  
+export const changeListName = async (req, res) => {
+  const { newName, listId } = req.body;
+
+  try{
+    const result = await WordList.findById(listId);
+
+    result.name = newName;
+    const updateName = await result.save();
+
+    res.status(200).json({ message: "List successfully updated." });
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong when updating the list name: ", error});
+  }
 }

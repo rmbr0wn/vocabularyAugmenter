@@ -10,8 +10,6 @@ export const queryThesaurus = (word) => async (dispatch) => {
       return errorObj;
     }
 
-    console.log(data);
-
     if(typeof data[0] !== 'object'){
       let errorObj = { error: `Not currently handling suggested alternatives.`};
       return errorObj;
@@ -22,6 +20,29 @@ export const queryThesaurus = (word) => async (dispatch) => {
     localStorage.setItem('thesaurus', JSON.stringify({result}));
 
     return result;
+  } catch (error) {
+    return error;
+  }
+}
+
+export const getListNames = (email) => async (dispatch) => {
+  try {
+    const { data } = await instance.get('/explore/list-names', {
+      params: { email: email } });
+
+    return data;
+
+  } catch (error) {
+    return error;
+  }
+}
+
+export const addToList = (newWord, listId) => async (dispatch) => {
+  try {
+    const payload = { newWord, listId };
+
+    const { data } = await instance.put('/explore/add-word', payload);
+
   } catch (error) {
     return error;
   }

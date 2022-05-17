@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { queryThesaurus } from "../actions/wordExplorer.actions.js";
+import { queryThesaurus, getListNames, addToList } from "../actions/wordExplorer.actions.js";
 
 const initialState = {
   word: '',
@@ -15,11 +15,15 @@ const initialState = {
 };
 
 export default function WordExplorer () {
-  const regularUser = JSON.parse(localStorage.getItem('account'));
-  const googleUser = JSON.parse(localStorage.getItem('profile'));
   const[searchWord, setSearchWord] = useState('');
   const[queryResult, setQueryResult] = useState(initialState);
   const[wordSubmitted, setWordSubmitted] = useState(false);
+  const[dropdownVisible, setDropdownVisible] = useState(false);
+  const[listNames, setListNames] = useState('');
+  const[dropdownButtonText, setDropdownButtonText] = useState('+ Add to list');
+  const regularUser = JSON.parse(localStorage.getItem('account'));
+  const googleUser = JSON.parse(localStorage.getItem('profile'));
+  const userEmail = (googleUser) ? googleUser?.result.email : regularUser?.result.email;
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -88,6 +92,64 @@ export default function WordExplorer () {
     };
   }, []);
 
+  async function toggleDropdown(){
+    setDropdownVisible(!dropdownVisible);
+
+    if(!dropdownVisible){
+      setDropdownButtonText('Close lists');
+      return;
+    }
+
+    setDropdownButtonText('+ Add to list');
+  }
+
+  useEffect(() => {
+    let unmounted = false;
+
+    async function queryListNames(){
+      let fetchUserLists = await dispatch(getListNames(userEmail));
+      const fetchData = await fetchUserLists;
+
+      if(!unmounted) setListNames(fetchData);
+    }
+    queryListNames();
+
+    return () => { unmounted = true };
+  }, [])
+
+  function dynamicListDisplay(list) {
+    let returnArr = [];
+
+    if(!list || list.length === 0){
+      returnArr.push("No lists to be found.");
+      return returnArr;
+    }
+
+    for(let i = 0; i < list.length; i++){
+      let listName = <a href='/' key={i} onClick={addNewWord} listid={list[i].id}>{list[i].name}</a>
+      returnArr.push(listName);
+    }
+
+    return returnArr;
+  }
+
+  async function addNewWord(e){
+    e.preventDefault();
+
+    let listId = e.target.attributes.getNamedItem("listid").value;
+
+    let wordResult = JSON.parse(localStorage.getItem('thesaurus')).result;
+    let newWord = {
+      wordName: wordResult.word,
+      definition: wordResult.definition,
+      partOfSpeech: wordResult.partOfSpeech,
+      synonyms: wordResult.synonyms,
+      relatedWords: wordResult.relatedWords
+    };
+
+    let addWordRequest = await dispatch(addToList(newWord, listId));
+  }
+
     return (
       <div id="word-explorer-container">
         <h1> You are on the Word Explorer component!</h1>
@@ -102,7 +164,19 @@ export default function WordExplorer () {
         </form>
         {(queryResult.word !== "" & !queryResult.error) ?
           <div id="proper-query-container">
-            <h2> {queryResult.word} </h2>
+            <div id="add-to-list-container">
+                <h2> {queryResult.word} </h2>
+                <div id="list-dropdown">
+                  <button type="button" onClick={toggleDropdown}> {dropdownButtonText} </button>
+                  {dropdownVisible ?
+                    <div className="dropdown-content">
+                      {dynamicListDisplay(listNames)}
+                    </div>
+                    :
+                    null
+                  }
+                </div>
+            </div>
             <h3> Definition <i>({queryResult.partOfSpeech})</i>: </h3>
             <p> {queryResult.definition} </p>
             <p> "{queryResult.exampleSentence ? queryResult.exampleSentence : "No example found." }" </p>
