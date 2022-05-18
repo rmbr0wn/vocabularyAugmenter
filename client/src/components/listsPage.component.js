@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import ListPanel from './listPanel.component.js'
-import { createList, getUserLists, changeListName } from '../actions/lists.actions.js'
+import { createList, getUserLists, changeListName, deleteList, deleteWord } from '../actions/lists.actions.js'
 
 const initialListState = {
   email: '',
@@ -83,7 +83,7 @@ export default function ListsPage () {
     if(userLists && userLists.email !== ''){
       const result = userLists.result;
 
-      console.log(result);
+      // console.log(result);
     }
   }, [userLists])
 
@@ -95,44 +95,64 @@ export default function ListsPage () {
       return myArr;
     }
 
+    let panelHandlers = {
+      toggleEditing: toggleEditing,
+      handleSubmit: listEditSubmitHandler,
+      handleChange: listEditChangeHandler,
+      deleteList: deleteListHandler,
+      deleteWord: deleteWordHandler
+     }
+
     for(let i = 0; i < list.length; i++){
-      let editButton = <button type="button" onClick={toggleEditing} listid={list[i]._id}> Edit </button>
-      // let deleteButton
-      // let cancelButton
       let myPanel = <ListPanel
         list={list[i]}
-        editButton={editButton}
         editingPayload={editPayload}
-        submitHandler={listEditSubmitHandler}
-        changeHandler={listEditChangeHandler}
+        handlers={panelHandlers}
         key={list[i]._id}
         />
         myArr.push(myPanel);
     }
-
     return myArr;
   }
 
   async function toggleEditing(e) {
     setEditPayload({
       beingEdited: !editPayload.beingEdited,
-      id: e.target.attributes.listid.nodeValue,
+      id: e.target.attributes.listid.value,
     })
   }
 
   async function listEditSubmitHandler(e){
     e.preventDefault();
 
-    let updateListNameRequest = await dispatch(changeListName(updatedListName, e.target.attributes.listid.value));
+    toggleEditing(e);
 
-    // console.log(updatedListName);
-    // console.log(e.target.attributes.listid.value);
+    let updateListNameRequest = await dispatch(changeListName(updatedListName, e.target.attributes.listid.value));
   }
 
   async function listEditChangeHandler(e){
     e.preventDefault();
 
     setUpdatedListName(e.target.value);
+  }
+
+  async function deleteListHandler(e){
+    e.preventDefault();
+
+    if(window.confirm("Are you sure you want to delete the list?") == true) {
+      let deleteRequest = await dispatch(deleteList(e.target.attributes.listid.value));
+    } else {
+      console.log("HOLD UP");
+    }
+  }
+
+  async function deleteWordHandler(e){
+    e.preventDefault();
+    let word = e.target.attributes.word.value;
+    let listId = e.target.attributes.listid.value;
+
+    console.log("Deleting word....");
+    let deleteWordRequest = await dispatch(deleteWord(word, listId));
   }
 
     return (

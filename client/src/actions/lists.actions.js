@@ -25,10 +25,7 @@ export const getUserLists = (userEmail) => async (dispatch) => {
         email: userEmail,
       },
     });
-
     return data;
-    // console.log(data);
-
   } catch (error) {
     return error;
   }
@@ -38,7 +35,29 @@ export const changeListName = (newName, listId) => async (dispatch) => {
   try {
     const payload = { newName, listId };
     const { data } = await instance.put('/lists/change-list-name', payload);
+
+  } catch (error) {
+    return error;
+  }
+}
+
+export const deleteList = (listId) => async (dispatch) => {
+  try {
+    console.log(listId);
+    const { data } = await instance.delete(`/lists/${listId}`);
+
+  } catch (error) {
+    return error;
+  }
+}
+
+export const deleteWord = (word, listId) => async (dispatch) => {
+  try {
+    const payload = { word, listId };
     console.log(payload);
+    const { data } = await instance.put('/lists/delete-word', payload);
+    console.log(data);
+
   } catch (error) {
     return error;
   }
