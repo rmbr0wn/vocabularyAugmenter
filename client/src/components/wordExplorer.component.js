@@ -15,12 +15,13 @@ const initialState = {
 };
 
 export default function WordExplorer () {
-  const[searchWord, setSearchWord] = useState('');
-  const[queryResult, setQueryResult] = useState(initialState);
-  const[wordSubmitted, setWordSubmitted] = useState(false);
-  const[dropdownVisible, setDropdownVisible] = useState(false);
-  const[listNames, setListNames] = useState('');
-  const[dropdownButtonText, setDropdownButtonText] = useState('+ Add to list');
+  const[searchWord, setSearchWord] = useState('');                                      // search bar (2)
+  const[thesaurusResponse, setThesaurusResponse] = useState(initialState);              // result container (3)
+  const[listDropdownVisible, setListDropdownVisible] = useState(false);                 // list dropdown (4)
+  const[listNames, setListNames] = useState('');                                        // list dropdown (4)
+  const[listDropdownButtonText, setListDropdownButtonText] = useState('+ Add to list'); // list dropdown (4)
+  const[addWordResponse, setAddWordResponse] = useState('');                            // list dropdown (4)
+
   const regularUser = JSON.parse(localStorage.getItem('account'));
   const googleUser = JSON.parse(localStorage.getItem('profile'));
   const userEmail = (googleUser) ? googleUser?.result.email : regularUser?.result.email;
@@ -40,8 +41,7 @@ export default function WordExplorer () {
 
     let thesaurusQuery = await dispatch(queryThesaurus(searchWord));
 
-    setQueryResult(thesaurusQuery);
-    setWordSubmitted(true);
+    setThesaurusResponse(thesaurusQuery);
   }
 
   function handleChange(e){
@@ -51,29 +51,29 @@ export default function WordExplorer () {
   }
 
   useEffect(() => {
-    if(queryResult.word !== ""){
-      dynamicListCreation(queryResult.relatedWords, "related words", "related-words-ul");
-      dynamicListCreation(queryResult.synonyms, "synonyms", "synonyms-ul");
-      dynamicListCreation(queryResult.antonyms, "antonyms", "antonyms-ul");
+    if(thesaurusResponse.word !== ""){
+      displayThesaurusResults(thesaurusResponse.relatedWords, "related words", "related-words-ul");
+      displayThesaurusResults(thesaurusResponse.synonyms, "synonyms", "synonyms-ul");
+      displayThesaurusResults(thesaurusResponse.antonyms, "antonyms", "antonyms-ul");
     }
-  }, [queryResult]);
+  }, [thesaurusResponse]);
 
-  async function dynamicListCreation(list, listType, htmlId){
-    if(!list) return;
+  async function displayThesaurusResults(propertyList, propertyType, htmlId){
+    if(!propertyList) return;
 
     document.getElementById(htmlId).innerHTML = "";
 
-    if(list.length === 0) {
+    if(propertyList.length === 0) {
       let node = document.createElement("li");
-      let notFound = document.createTextNode(`No ${listType} found.`);
+      let notFound = document.createTextNode(`No ${propertyType} found.`);
       node.appendChild(notFound);
       document.getElementById(htmlId).appendChild(node);
       return;
     }
 
-    for(let i = 0; i < list.length; i++){
+    for(let i = 0; i < propertyList.length; i++){
       let node = document.createElement("li");
-      let word = document.createTextNode(list[i]);
+      let word = document.createTextNode(propertyList[i]);
       node.appendChild(word);
       document.getElementById(htmlId).appendChild(node);
     }
@@ -92,15 +92,16 @@ export default function WordExplorer () {
     };
   }, []);
 
-  async function toggleDropdown(){
-    setDropdownVisible(!dropdownVisible);
+  async function toggleListDropdown(){
+    setListDropdownVisible(!listDropdownVisible);
 
-    if(!dropdownVisible){
-      setDropdownButtonText('Close lists');
+    if(!listDropdownVisible){
+      setListDropdownButtonText('Close lists');
       return;
     }
 
-    setDropdownButtonText('+ Add to list');
+    setListDropdownButtonText('+ Add to list');
+    setAddWordResponse('');
   }
 
   useEffect(() => {
@@ -115,9 +116,10 @@ export default function WordExplorer () {
     queryListNames();
 
     return () => { unmounted = true };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  function dynamicListDisplay(list) {
+  function userListDisplay(list) {
     let returnArr = [];
 
     if(!list || list.length === 0){
@@ -126,14 +128,14 @@ export default function WordExplorer () {
     }
 
     for(let i = 0; i < list.length; i++){
-      let listName = <a href='/' key={i} onClick={addNewWord} listid={list[i].id}>{list[i].name}</a>
+      let listName = <a href='/' key={i} onClick={addWordToList} listid={list[i].id}>{list[i].name}</a>
       returnArr.push(listName);
     }
 
     return returnArr;
   }
 
-  async function addNewWord(e){
+  async function addWordToList(e){
     e.preventDefault();
 
     let listId = e.target.attributes.getNamedItem("listid").value;
@@ -148,6 +150,7 @@ export default function WordExplorer () {
     };
 
     let addWordRequest = await dispatch(addToList(newWord, listId));
+    setAddWordResponse(addWordRequest.message);
   }
 
     return (
@@ -162,24 +165,25 @@ export default function WordExplorer () {
           />
           <input type="submit" value="Submit"/>
         </form>
-        {(queryResult.word !== "" & !queryResult.error) ?
+        {(thesaurusResponse.word !== "" & !thesaurusResponse.error) ?
           <div id="proper-query-container">
             <div id="add-to-list-container">
-                <h2> {queryResult.word} </h2>
+                <h2> {thesaurusResponse.word} </h2>
                 <div id="list-dropdown">
-                  <button type="button" onClick={toggleDropdown}> {dropdownButtonText} </button>
-                  {dropdownVisible ?
+                  <button type="button" onClick={toggleListDropdown}> {listDropdownButtonText} </button>
+                  {listDropdownVisible ?
                     <div className="dropdown-content">
-                      {dynamicListDisplay(listNames)}
+                      {userListDisplay(listNames)}
+                      {addWordResponse}
                     </div>
                     :
                     null
                   }
                 </div>
             </div>
-            <h3> Definition <i>({queryResult.partOfSpeech})</i>: </h3>
-            <p> {queryResult.definition} </p>
-            <p> "{queryResult.exampleSentence ? queryResult.exampleSentence : "No example found." }" </p>
+            <h3> Definition <i>({thesaurusResponse.partOfSpeech})</i>: </h3>
+            <p> {thesaurusResponse.definition} </p>
+            <p> "{thesaurusResponse.exampleSentence ? thesaurusResponse.exampleSentence : "No example found." }" </p>
             <h3> Related Words: </h3>
                 <div>
                   <ul id="related-words-ul"> </ul>
@@ -197,7 +201,7 @@ export default function WordExplorer () {
           </div>
           :
           <div id="query-error-container">
-            <h2> {queryResult.error} </h2>
+            <h2> {thesaurusResponse.error} </h2>
           </div>
         }
       </div>

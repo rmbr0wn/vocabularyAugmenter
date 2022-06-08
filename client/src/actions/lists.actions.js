@@ -5,14 +5,11 @@ export const createList = (listTitle, userEmail) => async (dispatch) => {
     const payload = { listTitle, userEmail };
     const { data } = await instance.post('/lists/create-list', payload);
 
+    console.log(data);
+
+    dispatch({ type: 'CREATE_LIST', data });
+
     return data;
-    /* Later, will want to create a reducer that updates the lists store
-     * so that we can view the user's lists on the page. That's when the below
-     * dispatch will be uncommented & filled in correctly.
-     */
-    // dispatch({ type: 'AUTH', data });
-    //
-    // navigation('/');
   } catch (error) {
     return error;
   }
@@ -25,6 +22,9 @@ export const getUserLists = (userEmail) => async (dispatch) => {
         email: userEmail,
       },
     });
+    console.log(data);
+    dispatch({ type: 'GET_LISTS', data });
+
     return data;
   } catch (error) {
     return error;
@@ -35,6 +35,8 @@ export const changeListName = (newName, listId) => async (dispatch) => {
   try {
     const payload = { newName, listId };
     const { data } = await instance.put('/lists/change-list-name', payload);
+    console.log(data);
+    dispatch({ type: 'UPDATE_LIST', data });
 
   } catch (error) {
     return error;
@@ -43,9 +45,11 @@ export const changeListName = (newName, listId) => async (dispatch) => {
 
 export const deleteList = (listId) => async (dispatch) => {
   try {
-    console.log(listId);
     const { data } = await instance.delete(`/lists/${listId}`);
+    console.log(data);
+    dispatch({ type: 'DELETE_LIST', data });
 
+    return data;
   } catch (error) {
     return error;
   }
@@ -54,9 +58,9 @@ export const deleteList = (listId) => async (dispatch) => {
 export const deleteWord = (word, listId) => async (dispatch) => {
   try {
     const payload = { word, listId };
-    console.log(payload);
     const { data } = await instance.put('/lists/delete-word', payload);
     console.log(data);
+    dispatch({ type: 'UPDATE_LIST', data });
 
   } catch (error) {
     return error;

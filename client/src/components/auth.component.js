@@ -185,7 +185,7 @@ export default function Auth() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
-  function switchSignup() {
+  function switchFormType() {
     setSignedUp(!signedUp);
   }
 
@@ -254,7 +254,7 @@ export default function Auth() {
               </div>
             </div>
             <div>
-              <button type="button" onClick={switchSignup}> Create New Account </button>
+              <button type="button" onClick={switchFormType}> Create New Account </button>
             </div>
           </div>
           :
@@ -315,7 +315,7 @@ export default function Auth() {
             </div>
             <div>
               <label>Already have an account?  </label>
-              <button type="button" onClick={switchSignup}> Sign in </button>
+              <button type="button" onClick={switchFormType}> Sign in </button>
             </div>
           </div>
         }

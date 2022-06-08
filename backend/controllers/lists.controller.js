@@ -37,7 +37,7 @@ export const changeListName = async (req, res) => {
     result.name = newName;
     const updateName = await result.save();
 
-    res.status(200).json({ message: "List successfully updated." });
+    res.status(200).json({ message: "List successfully updated.", result });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong when updating the list name: ", error});
   }
@@ -53,7 +53,7 @@ export const deleteList = async (req, res) => {
 
     if(!result) return res.status(404).send("No list found with that id.");
 
-    res.status(200).json({ message: "List successfully deleted." });
+    res.status(200).json({ message: "List successfully deleted.", id });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong when deleting the list: ", error});
   }
@@ -74,7 +74,7 @@ export const deleteWord = async (req, res) => {
 
     const updateWords = await result.save();
 
-    res.status(200).json({ message: "Word successfully deleted." });
+    res.status(200).json({ message: "Word successfully deleted.", result });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong when deleting the word: ", error});
   }

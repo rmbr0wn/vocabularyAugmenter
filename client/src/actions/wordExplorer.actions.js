@@ -43,6 +43,7 @@ export const addToList = (newWord, listId) => async (dispatch) => {
 
     const { data } = await instance.put('/explore/add-word', payload);
 
+    return data;
   } catch (error) {
     return error;
   }
