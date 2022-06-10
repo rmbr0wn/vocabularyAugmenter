@@ -1,22 +1,17 @@
-import './App.css';
+import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import React from 'react';
-import { Provider } from 'react-redux';
-// import thunk from 'redux-thunk';
-// import { createStore, applyMiddleware, compose } from 'redux';
+import React from "react";
+import { Provider } from "react-redux";
 
-import Navbar from "./components/navbar.component";
-import HomePage from "./components/homePage.component";
-import Auth from "./components/auth.component";
-import ProfilePage from "./components/profilePage.component"
-import WordExplorer from "./components/wordExplorer.component";
-import ListsPage from "./components/listsPage.component";
-// import { reducers } from "./reducers/index.reducer";
+import Navbar from "./components/Navbar";
+import HomePage from "./components/HomePage";
+import Auth from "./components/Auth/Auth";
+import Profile from "./components/Profile/Profile";
+import WordExplorer from "./components/WordExplorer/WordExplorer";
+import ListsPage from "./components/Lists/ListsPage";
 import store from "./reducers/store.js";
 
-// const store = createStore(reducers, compose(applyMiddleware(thunk)));
-
-function App() {
+function App () {
   return (
     <Provider store={store}>
         <BrowserRouter>
@@ -25,7 +20,7 @@ function App() {
             <Routes>
               <Route path="/" exact element={<HomePage/>}/>
               <Route path="/auth" element={<Auth/>}/>
-              <Route path="/profile" element={<ProfilePage/>}/>
+              <Route path="/profile" element={<Profile/>}/>
               <Route path="/explore" element={<WordExplorer/>}/>
               <Route path="/lists" element={<ListsPage/>}/>
             </Routes>

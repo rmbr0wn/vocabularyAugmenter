@@ -7,7 +7,6 @@ export const signIn = async (req, res) => {
 	const { email, password } = req.body;
 
 	try {
-
 		const existingAccount = await User.findOne({ email });
 
 		if(!existingAccount) return res.status(404).json({ message: "There is no account associated with that email." });

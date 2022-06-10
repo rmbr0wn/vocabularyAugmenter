@@ -20,8 +20,7 @@ export const getThesaurusWord = async (req, res) => {
       message: `The entered word '${word}' was not found. Please check the spelling.`
     });
 
-    return res.status(200).send(clientResponse.data);
-
+    res.status(200).send(clientResponse.data);
   } catch (error) {
     res.status(500).json({ message: "Something went wrong with fetching the thesaurus word: ", error });
   }
@@ -41,7 +40,7 @@ export const getListNames = async (req, res) => {
       returnArray.push(userList);
     }
 
-    return res.status(200).send(returnArray);
+    res.status(200).send(returnArray);
   } catch (error) {
     res.status(500).json({ message: "Something went wrong with fetching the user's list names: ", error});
   }
@@ -58,7 +57,6 @@ export const addToList = async (req, res) => {
     const updateList = await result.save();
 
     res.status(200).json({ message: "Word successfully added to the list." });
-
   } catch (error) {
     res.status(500).json({ message: "Something went wrong while adding a word to the list: ", error});
   }

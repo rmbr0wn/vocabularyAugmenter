@@ -2,16 +2,15 @@
   "dependencies": {
     "atom": "^1.4.1",
     "bcryptjs": "^2.4.3",
+    "eslint": "^8.17.0",
     "jsonwebtoken": "^8.5.1",
     "optionator": "^0.9.1"
   },
   "devDependencies": {
-    "eslint": "^8.13.0",
-    "eslint-plugin-react": "^7.29.4",
     "jest": "^27.5.1"
   },
   "scripts": {
-    "lint": "eslint ./"
+    "lint": "eslint ./",
     "test": "jest"
   }
 }

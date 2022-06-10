@@ -22,10 +22,7 @@ export const getGoogleProfile = async (req, res) => {
 	try {
     const existingProfile = await GoogleProfile.findOne(searchId).exec();
 
-		if(!existingProfile) {
-      console.log(existingProfile);
-      return res.status(404).json({ message: "There is no profile associated with that id." });
-    }
+		if(!existingProfile) return res.status(404).json({ message: "There is no profile associated with that id." });
 
 		res.status(200).json({ result: existingProfile });
 	} catch (error) {

@@ -1,0 +1,76 @@
+{
+    "env": {
+        "es2021": true,
+        "node": true,
+        "browser": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "react-hooks"
+    ],
+    "rules": {
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "comma-dangle": [
+            "error",
+            "never"
+        ],
+        "space-in-parens": [
+          "error",
+          "never"
+        ],
+        "space-before-blocks": [
+          "error",
+          "always"
+        ],
+        "space-before-function-paren": [
+          "error",
+          "always"
+        ],
+        "spaced-comment": [
+          "error",
+          "always"
+        ],
+        "brace-style": [
+          "error",
+          "1tbs"
+        ],
+        "object-curly-spacing": [
+          "error",
+          "always"
+        ],
+        "eqeqeq": [
+          "error",
+          "always"
+        ],
+        "padded-blocks": [
+          "error",
+          { "blocks": "never"}
+        ],
+        "keyword-spacing": [
+          "error",
+          { "before": true, "after": true }
+        ]
+    }
+}

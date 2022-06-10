@@ -47,9 +47,7 @@ export const deleteList = async (req, res) => {
   const { id } = req.params;
 
   try{
-
     const result = await WordList.deleteOne({ _id: id });
-    console.log(result);
 
     if(!result) return res.status(404).send("No list found with that id.");
 
