@@ -56,7 +56,7 @@ export const addToList = async (req, res) => {
 
     const updateList = await result.save();
 
-    res.status(200).json({ message: "Word successfully added to the list." });
+    res.status(200).json({ message: "Word successfully added to the list.", result });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong while adding a word to the list: ", error});
   }

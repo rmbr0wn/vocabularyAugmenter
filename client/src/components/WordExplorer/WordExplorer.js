@@ -20,7 +20,7 @@ export default function WordExplorer () {
   const [searchWord, setSearchWord] = useState("");
   const [thesaurusResponse, setThesaurusResponse] = useState(initialState);
   const [listDropdownVisible, setListDropdownVisible] = useState(false);
-  const [listNames, setListNames] = useState("");
+  const [listNames, setListNames] = useState([]);
   const [listDropdownButtonText, setListDropdownButtonText] = useState("+ Add to list");
   const [addWordResponse, setAddWordResponse] = useState("");
   const regularUser = JSON.parse(localStorage.getItem("account"));
@@ -117,7 +117,7 @@ export default function WordExplorer () {
 
       if (!unmounted) setListNames(fetchData);
     }
-    
+
     queryListNames();
 
     return () => {

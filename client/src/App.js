@@ -3,12 +3,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
 import { Provider } from "react-redux";
 
-import Navbar from "./components/Navbar";
-import HomePage from "./components/HomePage";
+import Navbar from "./components/Navigation/Navbar";
+import HomePage from "./components/Home/HomePage";
 import Auth from "./components/Auth/Auth";
 import Profile from "./components/Profile/Profile";
 import WordExplorer from "./components/WordExplorer/WordExplorer";
 import ListsPage from "./components/Lists/ListsPage";
+import QuizPage from "./components/Quizzes/QuizPage";
 import store from "./reducers/store.js";
 
 function App () {
@@ -23,6 +24,7 @@ function App () {
               <Route path="/profile" element={<Profile/>}/>
               <Route path="/explore" element={<WordExplorer/>}/>
               <Route path="/lists" element={<ListsPage/>}/>
+              <Route path="/quizzes" element={<QuizPage/>}/>
             </Routes>
           </div>
         </BrowserRouter>

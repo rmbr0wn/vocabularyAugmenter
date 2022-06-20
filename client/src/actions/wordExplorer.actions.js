@@ -36,11 +36,13 @@ export const getListNames = (email) => async () => {
   }
 };
 
-export const addToList = (newWord, listId) => async () => {
+export const addToList = (newWord, listId) => async (dispatch) => {
   try {
     const payload = { newWord, listId };
 
     const { data } = await instance.put("/explore/add-word", payload);
+
+    dispatch({ type: "UPDATE_LIST", data });
 
     return data;
   } catch (error) {

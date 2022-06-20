@@ -21,43 +21,43 @@
     ],
     "rules": {
         "linebreak-style": [
-            "error",
+            "warn",
             "unix"
         ],
         "quotes": [
-            "error",
+            "warn",
             "double"
         ],
         "semi": [
-            "error",
+            "warn",
             "always"
         ],
         "comma-dangle": [
-            "error",
+            "warn",
             "never"
         ],
         "space-in-parens": [
-          "error",
+          "warn",
           "never"
         ],
         "space-before-blocks": [
-          "error",
+          "warn",
           "always"
         ],
         "space-before-function-paren": [
-          "error",
+          "warn",
           "always"
         ],
         "spaced-comment": [
-          "error",
+          "warn",
           "always"
         ],
         "brace-style": [
-          "error",
+          "warn",
           "1tbs"
         ],
         "object-curly-spacing": [
-          "error",
+          "warn",
           "always"
         ],
         "eqeqeq": [
@@ -65,12 +65,15 @@
           "always"
         ],
         "padded-blocks": [
-          "error",
+          "warn",
           { "blocks": "never"}
         ],
         "keyword-spacing": [
-          "error",
+          "warn",
           { "before": true, "after": true }
+        ],
+        "no-unused-vars": [
+          "warn"
         ]
     }
 }
