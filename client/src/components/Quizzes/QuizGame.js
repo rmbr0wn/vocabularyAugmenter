@@ -1,109 +1,102 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
-const QuizGame = ({ quizSettings, wordBank, setWordBank, setQuizQuestions }) => {
-  const [possibleAnswers, setPossibleAnswers] = useState([]);
+const QuizGame = (props) => {
+  const [currentQuestionDisplay, setCurrentQuestionDisplay] = useState(null);
+  const [nextQuestionAvailable, setNextQuestionAvailable] = useState(false);
+  const [questionNumber, setQuestionNumber] = useState(0);
+  const [gameFinished, setGameFinished] = useState(false);
 
-  function populateWordBank () {
-    let wordArray = [];
+  function exitQuiz () {
+    props.setQuizScore(0);
+    props.navigate("/");
+    return;
+  }
 
-    if (quizSettings.length <= 0) {
-      console.log("Need to add lists.");
-      return;
-    }
+  function createQuestionPanel (answerArray, prompt, correctKey) {
+    setNextQuestionAvailable(false);
 
-    for(let i = 0; i < quizSettings.lists.length; i++){
-      for(let j = 0; j < quizSettings.lists[i].words.length; j++){
-        let wordDefinitionPair = {
-          word: quizSettings.lists[i].words[j].wordName,
-          definition: quizSettings.lists[i].words[j].definition
-         }
-         wordArray.push(wordDefinitionPair);
+    let panelArray = [];
+    let questionPrompt = React.createElement(
+      "p",
+      {
+        key: "p" + correctKey
+      },
+      prompt);
+
+    panelArray.push(questionPrompt);
+
+    function checkAnswer (e) {
+      let answer = parseInt(e.target.attributes.answernumber.value);
+
+      if (answer === correctKey) {
+        props.setQuizScore(props.quizScore + 1);
       }
+
+      setNextQuestionAvailable(true);
     }
-    setWordBank(wordArray);
-  }
 
-  function getRandomIndices(wordBankSize, numberOfChoices) {
-    let indexArray = [];
+    for (let i = 0; i < answerArray.length; i++) {
+      let answerType = (props.quizMode === "Word2Def") ? answerArray[i].word : answerArray[i].definition;
+      let answerOption = React.createElement(
+        "button",
+        {
+          key: answerArray[i].key,
+          answernumber: answerArray[i].key,
+          onClick: checkAnswer
+        },
+        answerType);
 
-    while (indexArray.length < numberOfChoices) {
-      let newIndex = Math.floor(Math.random() * wordBankSize);
-      // console.log(newIndex);
-      // console.log(indexArray.length);
-
-      if (indexArray.includes(newIndex)) {
-        continue;
-      }
-      // console.log(indexArray.length);
-      indexArray.push(newIndex);
+      panelArray.push(answerOption);
     }
-    return indexArray;
+
+    setCurrentQuestionDisplay(panelArray);
   }
 
-  async function createPossibleAnswers () {
-    populateWordBank();
-    // let temp = await wordBank;
-    console.log(wordBank);
-    //
-    // let wordBankSize = wordBank.length;
-    // let numberOfChoices = 4;
-    // let questionArray = [];
-    // let randomIndices = getRandomIndices(wordBankSize, numberOfChoices);
-    //
-    // for (let j = 0; j < numberOfChoices; j++){
-    //   let quizChoice = {
-    //     word: wordBank[randomIndices[j]].word,
-    //     key: j,
-    //     definition: wordBank[randomIndices[j]].definition
-    //   };
-    //   questionArray.push(quizChoice);
-    // }
-    //
-    // console.log(questionArray);
-    // console.log(possibleAnswers);
-    // setPossibleAnswers(questionArray);
-    // console.log(possibleAnswers);
-    // return questionArray;
-  }
+  useEffect(() => {
+    if (questionNumber >= props.quizQuestions.length) {
+      setGameFinished(true);
+    } else {
+      createQuestionPanel(
+        props.quizQuestions[questionNumber].answers,
+        props.quizQuestions[questionNumber].prompt,
+        props.quizQuestions[questionNumber].correctKey);
+    }
+  }, [questionNumber]);
 
-  async function questionCreation () {
-    createPossibleAnswers();
-    // let wordChoices = await possibleAnswers;                      // THIS IS AN ISSUE
-    // console.log(wordChoices);
-    // let index = Math.floor(Math.random() * wordChoices.length);
-    // let questionAnswer = wordChoices[index];
-    //
-    //
-    // let quizQuestion = {
-    //   answers: wordChoices,
-    //   definition: questionAnswer.definition,
-    //   correctKey: questionAnswer.key
-    // }
-    // console.log(wordChoices);
-    // console.log(quizQuestion);
-
+  function displayNextQuestion () {
+    setQuestionNumber(questionNumber + 1);
+    setNextQuestionAvailable(false);
   }
 
   return (
-    <div>
-      <button onClick={questionCreation}> Start </button>
+    <div className="quiz-panel-container">
+      { gameFinished ?
+        <div className="quiz-game-finished">
+          <p> All done! You got {props.quizScore}/{props.quizQuestions.length} correct. </p>
+        </div>
+        :
+        <div className="quiz-game-display">
+          { currentQuestionDisplay }
+          { nextQuestionAvailable ?
+            <div>
+            <button onClick={displayNextQuestion}> Next </button>
+            </div>
+            : null
+          }
+        </div>
+      }
+      <button onClick={exitQuiz}> Exit Quiz </button>
     </div>
-
   );
 };
 
 QuizGame.propTypes = {
-  quizSettings: PropTypes.object,
-  setWordBank: PropTypes.func,
-  wordBank: PropTypes.array,
-  setQuizQuestions: PropTypes.func,
-  // optionsVisible: PropTypes.bool,
-  // addToRight: PropTypes.func,
-  // removeFromRight: PropTypes.func,
-  // setNumberOfQuestions: PropTypes.func,
-  // saveChanges: PropTypes.func,
-  // setQuizMode: PropTypes.func
+  navigate: PropTypes.func,
+  quizQuestions: PropTypes.array,
+  quizMode: PropTypes.string,
+  quizScore: PropTypes.number,
+  setQuizScore: PropTypes.func
 };
 
 export default QuizGame;

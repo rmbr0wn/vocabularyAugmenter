@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-import "./list-style.css"
+import "./list-style.css";
 
-const ListSelection = ({ leftLists, rightLists, addToRight, removeFromRight }) => {
+const ListSelection = (props) => {
   let uniqueKeyNum = 0;
 
   const CreateListEntry = (list, side, listId) => {
@@ -21,7 +21,7 @@ const ListSelection = ({ leftLists, rightLists, addToRight, removeFromRight }) =
       "button",
       {
         id: listId,
-        onClick: (side === "Left") ? addToRight : removeFromRight,
+        onClick: (side === "Left") ? props.addToRight : props.removeFromRight,
         key: (side === "Left") ? listId + "-btnLeft" : listId + (uniqueKeyNum+=1) + "-btnRight"
       },
       buttonText);
@@ -37,13 +37,13 @@ const ListSelection = ({ leftLists, rightLists, addToRight, removeFromRight }) =
       listItemArray);
 
     return listDiv;
-  }
+  };
 
   const DisplayLeft = (lists) => {
     let leftArray = [];
 
     if (!lists || lists.length === 0) {
-      leftArray.push("No lists to be found.");
+      leftArray.push("No lists remaining.");
       return leftArray;
     }
 
@@ -74,10 +74,10 @@ const ListSelection = ({ leftLists, rightLists, addToRight, removeFromRight }) =
   return (
     <div className="list-selection-container">
       <div className="left-list-container">
-        {DisplayLeft(leftLists)}
+        {DisplayLeft(props.leftLists)}
       </div>
       <div className="right-list-container">
-        {DisplayRight(rightLists)}
+        {DisplayRight(props.rightLists)}
       </div>
     </div>
 
@@ -88,7 +88,7 @@ ListSelection.propTypes = {
   leftLists: PropTypes.array,
   rightLists: PropTypes.array,
   addToRight: PropTypes.func,
-  removeFromRight: PropTypes.func,
+  removeFromRight: PropTypes.func
 };
 
 export default ListSelection;

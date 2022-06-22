@@ -9,7 +9,7 @@ import Auth from "./components/Auth/Auth";
 import Profile from "./components/Profile/Profile";
 import WordExplorer from "./components/WordExplorer/WordExplorer";
 import ListsPage from "./components/Lists/ListsPage";
-import QuizPage from "./components/Quizzes/QuizPage";
+import QuizHome from "./components/Quizzes/QuizHome";
 import store from "./reducers/store.js";
 
 function App () {
@@ -24,7 +24,7 @@ function App () {
               <Route path="/profile" element={<Profile/>}/>
               <Route path="/explore" element={<WordExplorer/>}/>
               <Route path="/lists" element={<ListsPage/>}/>
-              <Route path="/quizzes" element={<QuizPage/>}/>
+              <Route path="/quizzes" element={<QuizHome/>}/>
             </Routes>
           </div>
         </BrowserRouter>
