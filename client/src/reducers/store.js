@@ -6,3 +6,7 @@ import { reducers } from "./index.reducer";
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
 
 export default store;
+
+if (window.Cypress) {
+  window.store = store;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -11,6 +11,7 @@ export default function Auth () {
   const [signedUp, setSignedUp] = useState(true);
   const [formData, setFormData] = useState(initialState);
   const [errors, setErrors] = useState({});
+  const signupPassword = useRef(null);
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -128,7 +129,7 @@ export default function Auth () {
         break;
 
       case "confirmPassword": {
-        let formPassword = document.getElementById("signupPassword").value;
+        let formPassword = signupPassword.current.value;
 
         if (formPassword) {
           if (value === formPassword) {
@@ -186,6 +187,7 @@ export default function Auth () {
 
   function switchFormType () {
     setSignedUp(!signedUp);
+    setFormData(initialState);
   }
 
   async function googleSuccess (res) {
@@ -214,6 +216,7 @@ export default function Auth () {
       googleSuccess={googleSuccess}
       googleFailure={googleFailure}
       onClick={switchFormType}
+      signupPasswordRef={signupPassword}
     />
   );
 }

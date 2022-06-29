@@ -3,20 +3,20 @@ import PropTypes from "prop-types";
 
 import AddToList from "./AddToList";
 
-const ThesaurusContainer = ({ thesaurusResponse, onClick, buttonText, dropdownVisibility, listDisplay, lists, response }) => (
+const ThesaurusContainer = (props) => (
   <div id="thesaurus-response-container">
     <AddToList
-    word={thesaurusResponse.word}
-    onClick={onClick}
-    buttonText={buttonText}
-    dropdownVisibility={dropdownVisibility}
-    listDisplay={listDisplay}
-    lists={lists}
-    response={response}
+    word={props.thesaurusResponse.word}
+    onClick={props.onClick}
+    buttonText={props.buttonText}
+    dropdownVisibility={props.dropdownVisibility}
+    listDisplay={props.listDisplay}
+    lists={props.lists}
+    response={props.response}
     />
-    <h3> Definition <i>({thesaurusResponse.partOfSpeech})</i>: </h3>
-    <p> {thesaurusResponse.definition} </p>
-    <p> &apos{thesaurusResponse.exampleSentence ? thesaurusResponse.exampleSentence : "No example found." }&apos </p>
+    <h3> Definition <i>({props.thesaurusResponse.partOfSpeech})</i>: </h3>
+    <p> {props.thesaurusResponse.definition} </p>
+    <p> &apos{props.thesaurusResponse.exampleSentence ? props.thesaurusResponse.exampleSentence : "No example found." }&apos </p>
     <h3> Related Words: </h3>
         <div>
           <ul id="related-words-ul"> </ul>

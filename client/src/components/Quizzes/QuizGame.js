@@ -80,7 +80,7 @@ const QuizGame = (props) => {
           { currentQuestionDisplay }
           { nextQuestionAvailable ?
             <div>
-            <button onClick={displayNextQuestion}> Next </button>
+              <button onClick={displayNextQuestion}> Next </button>
             </div>
             : null
           }

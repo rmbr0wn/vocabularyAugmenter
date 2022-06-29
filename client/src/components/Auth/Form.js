@@ -2,23 +2,23 @@ import React from "react";
 import { GoogleLogin } from "react-google-login";
 import PropTypes from "prop-types";
 
-const Form = ({ signedUp, onSubmit, onChange, errors, googleSuccess, googleFailure, onClick }) => (
+const Form = (props) => (
   <div>
-    <h3> {signedUp ? "Sign In" : "Sign up"} </h3>
-    <form onSubmit={onSubmit}>
-      {signedUp ?
+    <h3> {props.signedUp ? "Sign In" : "Sign up"} </h3>
+    <form onSubmit={props.onSubmit}>
+      {props.signedUp ?
         <div className="form-container-sign-in">
           <div className="form-field">
             <label>E-mail: </label>
             <input type="email"
               required
               name="loginEmail"
-              onChange={onChange}
+              onChange={props.onChange}
               placeholder="E-mail"
               id="loginEmail"
             />
             {
-              errors.loginEmail && <h3 className="form-error-message">{errors.loginEmail}</h3>
+              props.errors.loginEmail && <h3 className="form-error-message">{props.errors.loginEmail}</h3>
             }
           </div>
           <div className="form-field">
@@ -26,12 +26,12 @@ const Form = ({ signedUp, onSubmit, onChange, errors, googleSuccess, googleFailu
             <input type="password"
               required
               name="loginPassword"
-              onChange={onChange}
+              onChange={props.onChange}
               placeholder="Password"
               id="loginPassword"
             />
             {
-              errors.loginPassword && <h3 className="form-error-message">{errors.loginPassword}</h3>
+              props.errors.loginPassword && <h3 className="form-error-message">{props.errors.loginPassword}</h3>
             }
             <div className="form-button-container">
               <input type="submit" value="Log In" id="loginButton"/>
@@ -42,15 +42,15 @@ const Form = ({ signedUp, onSubmit, onChange, errors, googleSuccess, googleFailu
               render={(renderProps) => (
                 <button onClick={renderProps.onClick} disabled={renderProps.disabled}>Google Login</button>
               )}
-              onSuccess={googleSuccess}
-              onFailure={googleFailure}
+              onSuccess={props.googleSuccess}
+              onFailure={props.googleFailure}
               buttonText="Login"
               cookiePolicy={"single_host_origin"}
               />
             </div>
           </div>
           <div>
-            <button type="button" onClick={onClick}> Create New Account </button>
+            <button type="button" onClick={props.onClick}> Create New Account </button>
           </div>
         </div>
         :
@@ -60,12 +60,11 @@ const Form = ({ signedUp, onSubmit, onChange, errors, googleSuccess, googleFailu
             <input type="text"
               required
               name="username"
-              onChange={onChange}
-              defaultValue=""
+              onChange={props.onChange}
               placeholder="Username"
             />
             {
-              errors.username && <h3 className="form-error-message">{errors.username}</h3>
+              props.errors.username && <h3 className="form-error-message">{props.errors.username}</h3>
             }
           </div>
           <div className="form-field">
@@ -73,11 +72,11 @@ const Form = ({ signedUp, onSubmit, onChange, errors, googleSuccess, googleFailu
             <input type="email"
               required
               name="email"
-              onChange={onChange}
+              onChange={props.onChange}
               placeholder="E-mail"
             />
             {
-              errors.email && <h3 className="form-error-message">{errors.email}</h3>
+              props.errors.email && <h3 className="form-error-message">{props.errors.email}</h3>
             }
           </div>
           <div className="form-field">
@@ -85,12 +84,13 @@ const Form = ({ signedUp, onSubmit, onChange, errors, googleSuccess, googleFailu
             <input type="password"
               required
               name="password"
-              onChange={onChange}
+              onChange={props.onChange}
               placeholder="Password"
               id="signupPassword"
+              ref={props.signupPasswordRef}
             />
             {
-              errors.password && <h3 className="form-error-message">{errors.password}</h3>
+              props.errors.password && <h3 className="form-error-message">{props.errors.password}</h3>
             }
           </div>
           <div className="form-field">
@@ -98,20 +98,20 @@ const Form = ({ signedUp, onSubmit, onChange, errors, googleSuccess, googleFailu
             <input type="password"
               required
               name="confirmPassword"
-              onChange={onChange}
+              onChange={props.onChange}
               placeholder="Confirm password"
               id="signupConfirmPassword"
             />
             {
-              errors.confirmPassword && <h3 className="form-error-message">{errors.confirmPassword}</h3>
+              props.errors.confirmPassword && <h3 className="form-error-message">{props.errors.confirmPassword}</h3>
             }
           </div>
           <div className="form-button-container">
-            <input type="submit"/>
+            <input type="submit" name="submitQuery"/>
           </div>
           <div>
             <label>Already have an account?  </label>
-            <button type="button" onClick={onClick}> Sign in </button>
+            <button type="button" onClick={props.onClick}> Sign in </button>
           </div>
         </div>
       }
@@ -126,7 +126,8 @@ Form.propTypes = {
   errors: PropTypes.object,
   googleSuccess: PropTypes.func,
   googleFailure: PropTypes.func,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  signupPasswordRef: PropTypes.object
 };
 
 export default Form;

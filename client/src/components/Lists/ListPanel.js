@@ -1,31 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const ListPanel = ({ list, editingPayload, handlers }) => (
+const ListPanel = (props) => (
     <div className="list-panel">
-      {editingPayload.id === list._id && editingPayload.beingEdited === true ?
+      {props.editingPayload.id === props.list._id && props.editingPayload.beingEdited === true ?
         <div>
-          <form onSubmit={handlers.handleSubmit} listid={list._id}>
-            <input type="text" className="edit-list-name" defaultValue={list.name} onChange={handlers.handleChange}/>
-            <button type="button" onClick={handlers.deleteList} listid={list._id}> Delete List </button>
-            <h3 className="edit-list-tags"> {list.tags} </h3>
+          <form onSubmit={props.handlers.handleSubmit} listid={props.list._id}>
+            <input type="text" className="edit-list-name" name="editNameInput" defaultValue={props.list.name} onChange={props.handlers.handleChange}/>
+            <button type="button" onClick={props.handlers.deleteList} listid={props.list._id}> Delete List </button>
+            <h3 className="edit-list-tags"> {props.list.tags} </h3>
             <h5 className="edit-list-words">
-              {objectsToArray(list.words, handlers.deleteWord, list._id, editingPayload)}
+              {objectsToArray(props.list.words, props.handlers.deleteWord, props.list._id, props.editingPayload)}
             </h5>
-            <h6 className="temp-params"> {list.email} , {list.private.toString()} </h6>
+            <h6 className="temp-params"> {props.list.email} , {props.list.private.toString()} </h6>
             <input type="submit" value="Save Changes"/>
-            <button type="button" onClick={handlers.toggleEditing} listid={list._id}> Cancel </button>
+            <button type="button" onClick={props.handlers.toggleEditing} listid={props.list._id}> Cancel </button>
           </form>
         </div>
         :
         <div>
-          <button type="button" onClick={handlers.toggleEditing} listid={list._id}> Edit </button>
-          <h4 className="list-panel-name"> {list.name} </h4>
-          <h3 className="list-panel-tags"> {list.tags} </h3>
+          <button type="button" onClick={props.handlers.toggleEditing} listid={props.list._id} className="edit-btn"> Edit </button>
+          <h4 className="list-panel-name"> {props.list.name} </h4>
+          <h3 className="list-panel-tags"> {props.list.tags} </h3>
           <h5 className="list-panel-words">
-            {objectsToArray(list.words, handlers.deleteWord, list._id, editingPayload.beingEdited)}
+            {objectsToArray(props.list.words, props.handlers.deleteWord, props.list._id, props.editingPayload.beingEdited)}
           </h5>
-          <h6 className="temp-params"> {list.email} , {list.private.toString()} </h6>
+          <h6 className="temp-params"> {props.list.email} , {props.list.private.toString()} </h6>
         </div>
       }
     </div>

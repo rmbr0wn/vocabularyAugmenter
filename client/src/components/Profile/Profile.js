@@ -31,6 +31,7 @@ export default function ProfilePage () {
     let changeUsernameError = changeUsernameRequest?.response.data.message;
 
     if (changeUsernameError) {
+      console.log(changeUsernameError)
       setError({ username: changeUsernameError });
       setUpdateSuccessful("");
     }
@@ -40,6 +41,8 @@ export default function ProfilePage () {
       let fetchedMessage = JSON.parse(localStorage.getItem(storageType)).message;
       setUpdateSuccessful(fetchedMessage);
     }
+
+    setAllowUsernameChange(false);
     navigate("/profile");
   }
 
@@ -52,7 +55,7 @@ export default function ProfilePage () {
 
   function showInputField () {
     setUpdateSuccessful("");
-    setError("");
+    setError({ username: "" });
     setAllowUsernameChange(!allowUsernameChange);
   }
 
@@ -84,7 +87,6 @@ export default function ProfilePage () {
     return (
       <EditProfile
         onSubmit={handleSubmit}
-        user={googleUser}
         name={displayedUsername}
         onClick={showInputField}
         allowChange={allowUsernameChange}
