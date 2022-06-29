@@ -12,8 +12,8 @@ const initialSettings = { lists: [], questionTotal: 5, mode: "Word2Def" };
 export default function QuizHome () {
   const storedLists = useSelector((state) => state.listsReducer);
   const [leftLists, setLeftLists] = useState(null);
-  const [optionsVisible, setOptionsVisible] = useState(false);
   const [rightLists, setRightLists] = useState(initialSettings.lists);
+  const [optionsVisible, setOptionsVisible] = useState(false);
   const [numberOfQuestions, setNumberOfQuestions] = useState(initialSettings.questionTotal);
   const [quizSettings, setQuizSettings] = useState(initialSettings);
   const [quizMode, setQuizMode] = useState(initialSettings.mode);

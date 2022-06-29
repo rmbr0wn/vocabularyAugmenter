@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const AddToList = ({ word, onClick, buttonText, dropdownVisibility, listDisplay, lists, response }) => (
+const AddToList = (props) => (
   <div className="add-to-list-container">
-      <h2> {word} </h2>
+      <h2> {props.word} </h2>
       <div className="list-dropdown">
-        <button type="button" onClick={onClick}> {buttonText} </button>
-        {dropdownVisibility ?
+        <button type="button" onClick={props.onClick}> {props.buttonText} </button>
+        {props.dropdownVisibility ?
           <div className="dropdown-content">
-            {listDisplay(lists)}
-            {response}
+            {props.listDisplay(props.lists)}
+            {props.response}
           </div>
           :
           null

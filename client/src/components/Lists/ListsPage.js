@@ -127,7 +127,13 @@ export default function ListsPage () {
     return (
       <div>
         <h1> Welcome to the Lists page! </h1>
-        <ListCreation onSubmit={handleSubmit} titlePrompt={createListPrompt} onChange={handleChange} onClick={switchListPrompt} message={responseMessages.createList} />
+        <ListCreation
+          onSubmit={handleSubmit}
+          titlePrompt={createListPrompt}
+          onChange={handleChange}
+          onClick={switchListPrompt}
+          message={responseMessages.createList}
+        />
         <div id="lists-display-container">
           {displayUserLists(storedLists.listsData)}
         </div>
