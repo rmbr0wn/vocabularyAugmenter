@@ -127,8 +127,8 @@ export default function QuizHome () {
             possibleWords={[]}
             toggleOptions={toggleOptionsDisplay}
             optionsVisible={optionsVisible}
-            addToRight={addToRightList}
-            removeFromRight={removeFromRightList}
+            addToRightList={addToRightList}
+            removeFromRightList={removeFromRightList}
             setNumberOfQuestions={setNumberOfQuestions}
             saveChanges={saveChanges}
             setQuizMode={setQuizMode}

@@ -6,13 +6,13 @@ import AddToList from "./AddToList";
 const ThesaurusContainer = (props) => (
   <div id="thesaurus-response-container">
     <AddToList
-    word={props.thesaurusResponse.word}
-    onClick={props.onClick}
-    buttonText={props.buttonText}
-    dropdownVisibility={props.dropdownVisibility}
-    listDisplay={props.listDisplay}
-    lists={props.lists}
-    response={props.response}
+      word={props.thesaurusResponse.word}
+      toggleListDropdown={props.toggleListDropdown}
+      listDropdownButtonText={props.listDropdownButtonText}
+      listDropdownVisible={props.listDropdownVisible}
+      listDisplay={props.listDisplay}
+      listNames={props.listNames}
+      addWordResponse={props.addWordResponse}
     />
     <h3> Definition <i>({props.thesaurusResponse.partOfSpeech})</i>: </h3>
     <p> {props.thesaurusResponse.definition} </p>
@@ -35,12 +35,12 @@ const ThesaurusContainer = (props) => (
 
 ThesaurusContainer.propTypes = {
   thesaurusResponse: PropTypes.object,
-  onClick: PropTypes.func,
-  buttonText: PropTypes.string,
-  dropdownVisibility: PropTypes.bool,
+  toggleListDropdown: PropTypes.func,
+  listDropdownButtonText: PropTypes.string,
+  listDropdownVisible: PropTypes.bool,
   listDisplay: PropTypes.func,
-  lists: PropTypes.array,
-  response: PropTypes.string
+  listNames: PropTypes.array,
+  addWordResponse: PropTypes.string
 };
 
 export default ThesaurusContainer;

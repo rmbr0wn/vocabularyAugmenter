@@ -6,7 +6,7 @@ import { queryThesaurus, getListNames, addToList } from "../../actions/wordExplo
 import SearchBar from "./SearchBar";
 import ThesaurusContainer from "./ThesaurusContainer";
 
-const initialState = {
+const initialResponseState = {
   word: "",
   partOfSpeech: "",
   definition: "",
@@ -16,13 +16,22 @@ const initialState = {
   antonyms: ""
 };
 
+// const initialWordPropList = {
+//   relatedWords: [],
+//   synonyms: [],
+//   antonyms: []
+// }
+
 export default function WordExplorer () {
   const [searchWord, setSearchWord] = useState("");
-  const [thesaurusResponse, setThesaurusResponse] = useState(initialState);
+  const [thesaurusResponse, setThesaurusResponse] = useState(initialResponseState);
   const [listDropdownVisible, setListDropdownVisible] = useState(false);
   const [listNames, setListNames] = useState([]);
   const [listDropdownButtonText, setListDropdownButtonText] = useState("+ Add to list");
   const [addWordResponse, setAddWordResponse] = useState("");
+
+  // const [searchedWordPropList, setSearchedWordPropList] = useState(initialWordPropList);
+
   const regularUser = JSON.parse(localStorage.getItem("account"));
   const googleUser = JSON.parse(localStorage.getItem("profile"));
   const userEmail = (googleUser) ? googleUser?.result.email : regularUser?.result.email;
@@ -62,10 +71,13 @@ export default function WordExplorer () {
     if (!propertyList) return;
 
     document.getElementById(htmlId).innerHTML = "";
+    // setSearchedWordPropList(initialWordPropList);
 
     if (propertyList.length === 0) {
       let node = document.createElement("li");
       let notFound = document.createTextNode(`No ${propertyType} found.`);
+      // let notFound = React.createElement("p", {}, `No ${propertyType} found.`);
+      // let node = React.createElement("li", {}, notFound);
 
       node.appendChild(notFound);
       document.getElementById(htmlId).appendChild(node);
@@ -162,18 +174,18 @@ export default function WordExplorer () {
     <div id="word-explorer-container">
       <h1> You are on the Word Explorer component!</h1>
       <div id="search-bar-container">
-        <SearchBar onSubmit={handleSubmit} onChange={handleChange} />
+        <SearchBar handleSubmit={handleSubmit} handleChange={handleChange} />
       </div>
       {(thesaurusResponse.word !== "" & !thesaurusResponse.error) ?
         <div>
           <ThesaurusContainer
             thesaurusResponse={thesaurusResponse}
-            onClick={toggleListDropdown}
-            buttonText={listDropdownButtonText}
-            dropdownVisibility={listDropdownVisible}
+            toggleListDropdown={toggleListDropdown}
+            listDropdownButtonText={listDropdownButtonText}
+            listDropdownVisible={listDropdownVisible}
             listDisplay={userListDisplay}
-            lists={listNames}
-            response={addWordResponse}
+            listNames={listNames}
+            addWordResponse={addWordResponse}
           />
         </div>
         :

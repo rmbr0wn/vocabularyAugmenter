@@ -15,7 +15,7 @@ const initialResponseState = {
 export default function ListsPage () {
   const [createListPrompt, setCreateListPrompt] = useState(false);
   const [newListTitle, setNewListTitle] = useState("");
-  const [editPayload, setEditPayload] = useState({ beingEdited: false, id: "" });
+  const [editingPayload, setEditingPayload] = useState({ beingEdited: false, id: "" });
   const [updatedListName, setUpdatedListName] = useState("");
   const [responseMessages, setResponseMessages] = useState(initialResponseState);
   const regularUser = JSON.parse(localStorage.getItem("account"));
@@ -77,7 +77,7 @@ export default function ListsPage () {
     for (let i = 0; i < list.length; i++) {
       let myPanel = <ListPanel
         list={list[i]}
-        editingPayload={editPayload}
+        editingPayload={editingPayload}
         handlers={panelHandlers}
         key={list[i]._id}
         />;
@@ -87,8 +87,8 @@ export default function ListsPage () {
   }
 
   async function toggleEditing (e) {
-    setEditPayload({
-      beingEdited: !editPayload.beingEdited,
+    setEditingPayload({
+      beingEdited: !editingPayload.beingEdited,
       id: e.target.attributes.listid.value
     });
   }
@@ -128,11 +128,11 @@ export default function ListsPage () {
       <div>
         <h1> Welcome to the Lists page! </h1>
         <ListCreation
-          onSubmit={handleSubmit}
-          titlePrompt={createListPrompt}
-          onChange={handleChange}
-          onClick={switchListPrompt}
-          message={responseMessages.createList}
+          handleSubmit={handleSubmit}
+          createListPrompt={createListPrompt}
+          handleChange={handleChange}
+          switchListPrompt={switchListPrompt}
+          responseMessage={responseMessages.createList}
         />
         <div id="lists-display-container">
           {displayUserLists(storedLists.listsData)}

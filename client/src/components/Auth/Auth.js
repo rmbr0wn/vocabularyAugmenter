@@ -210,13 +210,13 @@ export default function Auth () {
   return (
     <Form
       signedUp={signedUp}
-      onSubmit={handleSubmit}
-      onChange={handleChange}
+      handleSubmit={handleSubmit}
+      handleChange={handleChange}
       errors={errors}
       googleSuccess={googleSuccess}
       googleFailure={googleFailure}
-      onClick={switchFormType}
-      signupPasswordRef={signupPassword}
+      switchFormType={switchFormType}
+      signupPassword={signupPassword}
     />
   );
 }

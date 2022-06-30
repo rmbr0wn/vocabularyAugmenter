@@ -21,7 +21,7 @@ const ListSelection = (props) => {
       "button",
       {
         id: listId,
-        onClick: (side === "Left") ? props.addToRight : props.removeFromRight,
+        onClick: (side === "Left") ? props.addToRightList : props.removeFromRightList,
         key: (side === "Left") ? listId + "-btnLeft" : listId + (uniqueKeyNum+=1) + "-btnRight"
       },
       buttonText);
@@ -87,8 +87,8 @@ const ListSelection = (props) => {
 ListSelection.propTypes = {
   leftLists: PropTypes.array,
   rightLists: PropTypes.array,
-  addToRight: PropTypes.func,
-  removeFromRight: PropTypes.func
+  addToRightList: PropTypes.func,
+  removeFromRightList: PropTypes.func
 };
 
 export default ListSelection;
