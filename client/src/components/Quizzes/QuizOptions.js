@@ -25,8 +25,8 @@ const QuizOptions = (props) => {
           <ListSelection
             leftLists={props.leftLists}
             rightLists={props.rightLists}
-            addToRight={props.addToRight}
-            removeFromRight={props.removeFromRight}
+            addToRightList={props.addToRightList}
+            removeFromRightList={props.removeFromRightList}
           />
         </div>
         :
@@ -44,8 +44,8 @@ QuizOptions.propTypes = {
   rightLists: PropTypes.array,
   toggleOptions: PropTypes.func,
   optionsVisible: PropTypes.bool,
-  addToRight: PropTypes.func,
-  removeFromRight: PropTypes.func,
+  addToRightList: PropTypes.func,
+  removeFromRightList: PropTypes.func,
   setNumberOfQuestions: PropTypes.func,
   setQuizMode: PropTypes.func,
   saveChanges: PropTypes.func

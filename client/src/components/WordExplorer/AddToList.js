@@ -5,11 +5,11 @@ const AddToList = (props) => (
   <div className="add-to-list-container">
       <h2> {props.word} </h2>
       <div className="list-dropdown">
-        <button type="button" onClick={props.onClick}> {props.buttonText} </button>
-        {props.dropdownVisibility ?
+        <button type="button" onClick={props.toggleListDropdown}> {props.listDropdownButtonText} </button>
+        {props.listDropdownVisible ?
           <div className="dropdown-content">
-            {props.listDisplay(props.lists)}
-            {props.response}
+            {props.listDisplay(props.listNames)}
+            {props.addWordResponse}
           </div>
           :
           null
@@ -20,12 +20,12 @@ const AddToList = (props) => (
 
 AddToList.propTypes = {
   word: PropTypes.string,
-  onClick: PropTypes.func,
-  buttonText: PropTypes.string,
-  dropdownVisibility: PropTypes.bool,
+  toggleListDropdown: PropTypes.func,
+  listDropdownButtonText: PropTypes.string,
+  listDropdownVisible: PropTypes.bool,
   listDisplay: PropTypes.func,
-  lists: PropTypes.array,
-  response: PropTypes.string
+  listNames: PropTypes.array,
+  addWordResponse: PropTypes.string
 };
 
 export default AddToList;

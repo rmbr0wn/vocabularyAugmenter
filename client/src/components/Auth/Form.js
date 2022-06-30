@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 const Form = (props) => (
   <div>
     <h3> {props.signedUp ? "Sign In" : "Sign up"} </h3>
-    <form onSubmit={props.onSubmit}>
+    <form onSubmit={props.handleSubmit}>
       {props.signedUp ?
         <div className="form-container-sign-in">
           <div className="form-field">
@@ -13,7 +13,7 @@ const Form = (props) => (
             <input type="email"
               required
               name="loginEmail"
-              onChange={props.onChange}
+              onChange={props.handleChange}
               placeholder="E-mail"
               id="loginEmail"
             />
@@ -26,7 +26,7 @@ const Form = (props) => (
             <input type="password"
               required
               name="loginPassword"
-              onChange={props.onChange}
+              onChange={props.handleChange}
               placeholder="Password"
               id="loginPassword"
             />
@@ -50,7 +50,7 @@ const Form = (props) => (
             </div>
           </div>
           <div>
-            <button type="button" onClick={props.onClick}> Create New Account </button>
+            <button type="button" onClick={props.switchFormType}> Create New Account </button>
           </div>
         </div>
         :
@@ -60,7 +60,7 @@ const Form = (props) => (
             <input type="text"
               required
               name="username"
-              onChange={props.onChange}
+              onChange={props.handleChange}
               placeholder="Username"
             />
             {
@@ -72,7 +72,7 @@ const Form = (props) => (
             <input type="email"
               required
               name="email"
-              onChange={props.onChange}
+              onChange={props.handleChange}
               placeholder="E-mail"
             />
             {
@@ -84,10 +84,10 @@ const Form = (props) => (
             <input type="password"
               required
               name="password"
-              onChange={props.onChange}
+              onChange={props.handleChange}
               placeholder="Password"
               id="signupPassword"
-              ref={props.signupPasswordRef}
+              ref={props.signupPassword}
             />
             {
               props.errors.password && <h3 className="form-error-message">{props.errors.password}</h3>
@@ -98,7 +98,7 @@ const Form = (props) => (
             <input type="password"
               required
               name="confirmPassword"
-              onChange={props.onChange}
+              onChange={props.handleChange}
               placeholder="Confirm password"
               id="signupConfirmPassword"
             />
@@ -111,7 +111,7 @@ const Form = (props) => (
           </div>
           <div>
             <label>Already have an account?  </label>
-            <button type="button" onClick={props.onClick}> Sign in </button>
+            <button type="button" onClick={props.switchFormType}> Sign in </button>
           </div>
         </div>
       }
@@ -121,13 +121,13 @@ const Form = (props) => (
 
 Form.propTypes = {
   signedUp: PropTypes.bool,
-  onSubmit: PropTypes.func,
-  onChange: PropTypes.func,
+  handleSubmit: PropTypes.func,
+  handleChange: PropTypes.func,
   errors: PropTypes.object,
   googleSuccess: PropTypes.func,
   googleFailure: PropTypes.func,
-  onClick: PropTypes.func,
-  signupPasswordRef: PropTypes.object
+  switchFormType: PropTypes.func,
+  signupPassword: PropTypes.object
 };
 
 export default Form;

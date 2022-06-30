@@ -86,13 +86,13 @@ export default function ProfilePage () {
 
     return (
       <EditProfile
-        onSubmit={handleSubmit}
-        name={displayedUsername}
-        onClick={showInputField}
-        allowChange={allowUsernameChange}
+        handleSubmit={handleSubmit}
+        displayedUsername={displayedUsername}
+        showInputField={showInputField}
+        allowUsernameChange={allowUsernameChange}
         error={error}
-        onChange={handleChange}
-        success={updateSuccessful}
+        handleChange={handleChange}
+        updateSuccessful={updateSuccessful}
       />
     );
 }
