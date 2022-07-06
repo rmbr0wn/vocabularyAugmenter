@@ -8,6 +8,9 @@ const listsReducer = (state = { listsData: null }, action) => {
       return { ...state, listsData: state.listsData.filter((list) => list._id !== action.data.id) };
     case "UPDATE_LIST":
       return { ...state, listsData: state.listsData.map((list) => (list._id === action.data.result._id ? action.data.result : list)) };
+    case "LOGOUT":
+      localStorage.clear();
+      return { ...state, listsData: null };
     default:
       return state;
   }

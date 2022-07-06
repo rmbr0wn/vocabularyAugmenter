@@ -1,3 +1,7 @@
+import { TextEncoder, TextDecoder } from "util";
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";

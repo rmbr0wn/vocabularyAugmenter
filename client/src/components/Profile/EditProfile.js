@@ -7,10 +7,7 @@ const EditProfile = (props) => (
         <div className="profile-welcome">
           <h2> Welcome to your profile {props.displayedUsername}!</h2>
           {
-            props.updateSuccessful && <h3 className="form-success-message">{props.updateSuccessful}</h3>
-          }
-          {
-            props.error.username && <h3 className="form-error-message">{props.error.username}</h3>
+            props.responseMessage && <h3 className="form-response-message">{props.responseMessage}</h3>
           }
           <button type="button" onClick={props.showInputField}> Change Username </button>
           {props.allowUsernameChange?
@@ -34,9 +31,8 @@ EditProfile.propTypes = {
   displayedUsername: PropTypes.string,
   showInputField: PropTypes.func,
   allowUsernameChange: PropTypes.bool,
-  error: PropTypes.object,
   handleChange: PropTypes.func,
-  updateSuccessful: PropTypes.string
+  responseMessage: PropTypes.string
 };
 
 export default EditProfile;

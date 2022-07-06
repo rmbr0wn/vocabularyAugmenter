@@ -44,7 +44,13 @@ export default function ListsPage () {
     let createListRequest = await dispatch(createList(newListTitle, userEmail));
 
     switchListPrompt();
-    setResponseMessages({ ...responseMessages, createList: createListRequest.message });
+
+    // Checking if there is an error or success code & parsing the value accordingly
+    if (createListRequest.response) {
+        setResponseMessages({ ...responseMessages, createList: createListRequest.response.data.message });
+    } else {
+      setResponseMessages({ ...responseMessages, createList: createListRequest.message });
+    }
   }
 
   function handleChange (e) {
@@ -56,6 +62,7 @@ export default function ListsPage () {
   function switchListPrompt () {
     setCreateListPrompt(!createListPrompt);
     setResponseMessages({ ...responseMessages, createList: "" });
+    setNewListTitle("");
   }
 
   function displayUserLists (list) {

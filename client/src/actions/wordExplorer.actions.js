@@ -25,10 +25,12 @@ export const queryThesaurus = (word) => async () => {
   }
 };
 
-export const getListNames = (email) => async () => {
+export const getListNames = (email) => async (dispatch) => {
   try {
     const { data } = await instance.get("/explore/list-names", {
       params: { email: email } });
+
+    dispatch({ type: "GET_LISTS", data });
 
     return data;
   } catch (error) {
@@ -60,11 +62,13 @@ function parseDesiredData (queryResult) {
   let wordName = queryResult[0].hwi.hw;
   let partOfSpeech = queryResult[0].fl;
   let definition = baseQuery.dt[0][1];   // // NOTE: This only gets ONE definition
+  definition = definition.replace(new RegExp("{it}", "g"), "");
+  definition = definition.replace(new RegExp("{/it}", "g"), "");
 
   let exampleSentence = baseQuery?.dt[1] ? baseQuery?.dt[1][1][0].t : null;
   if (exampleSentence) {
-    exampleSentence = exampleSentence.replace("{it}", "");
-    exampleSentence = exampleSentence.replace("{/it}", "");
+    exampleSentence = exampleSentence.replace(new RegExp("{it}", "g"), "");
+    exampleSentence = exampleSentence.replace(new RegExp("{/it}", "g"), "");
   }
 
   let relatedWordList = baseQuery?.rel_list;
