@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { queryThesaurus, getListNames, addToList } from "../../actions/wordExplorer.actions.js";
 import SearchBar from "./SearchBar";
@@ -16,12 +16,6 @@ const initialResponseState = {
   antonyms: ""
 };
 
-// const initialWordPropList = {
-//   relatedWords: [],
-//   synonyms: [],
-//   antonyms: []
-// }
-
 export default function WordExplorer () {
   const [searchWord, setSearchWord] = useState("");
   const [thesaurusResponse, setThesaurusResponse] = useState(initialResponseState);
@@ -29,21 +23,19 @@ export default function WordExplorer () {
   const [listNames, setListNames] = useState([]);
   const [listDropdownButtonText, setListDropdownButtonText] = useState("+ Add to list");
   const [addWordResponse, setAddWordResponse] = useState("");
-
-  // const [searchedWordPropList, setSearchedWordPropList] = useState(initialWordPropList);
-
   const regularUser = JSON.parse(localStorage.getItem("account"));
   const googleUser = JSON.parse(localStorage.getItem("profile"));
   const userEmail = (googleUser) ? googleUser?.result.email : regularUser?.result.email;
   const dispatch = useDispatch();
+  const storedLists = useSelector((state) => state.listsReducer);
   let navigate = useNavigate();
 
-  useEffect(() => {
-    if (!regularUser && !googleUser) {
-      navigate("/");
-      return;
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!regularUser && !googleUser) {
+  //     navigate("/");
+  //     return;
+  //   }
+  // }, []);
 
   async function handleSubmit (e) {
     e.preventDefault();
@@ -51,47 +43,13 @@ export default function WordExplorer () {
     let thesaurusQuery = await dispatch(queryThesaurus(searchWord));
 
     setThesaurusResponse(thesaurusQuery);
+    setAddWordResponse("");
   }
 
   function handleChange (e) {
     e.persist();
 
     setSearchWord(e.target.value);
-  }
-
-  useEffect(() => {
-    if (thesaurusResponse.word !== "") {
-      displayThesaurusResults(thesaurusResponse.relatedWords, "related words", "related-words-ul");
-      displayThesaurusResults(thesaurusResponse.synonyms, "synonyms", "synonyms-ul");
-      displayThesaurusResults(thesaurusResponse.antonyms, "antonyms", "antonyms-ul");
-    }
-  }, [thesaurusResponse]);
-
-  async function displayThesaurusResults (propertyList, propertyType, htmlId) {
-    if (!propertyList) return;
-
-    document.getElementById(htmlId).innerHTML = "";
-    // setSearchedWordPropList(initialWordPropList);
-
-    if (propertyList.length === 0) {
-      let node = document.createElement("li");
-      let notFound = document.createTextNode(`No ${propertyType} found.`);
-      // let notFound = React.createElement("p", {}, `No ${propertyType} found.`);
-      // let node = React.createElement("li", {}, notFound);
-
-      node.appendChild(notFound);
-      document.getElementById(htmlId).appendChild(node);
-
-      return;
-    }
-
-    for (let i = 0; i < propertyList.length; i++) {
-      let node = document.createElement("li");
-      let word = document.createTextNode(propertyList[i]);
-
-      node.appendChild(word);
-      document.getElementById(htmlId).appendChild(node);
-    }
   }
 
   const handleUnload = () => {
@@ -123,11 +81,21 @@ export default function WordExplorer () {
   useEffect(() => {
     let unmounted = false;
 
-    async function queryListNames () {
-      let fetchUserLists = await dispatch(getListNames(userEmail));
-      const fetchData = await fetchUserLists;
+    if (!regularUser && !googleUser) {
+      navigate("/");
+      return;
+    }
 
-      if (!unmounted) setListNames(fetchData);
+    async function queryListNames () {
+      if (!storedLists.listsData && userEmail) {
+        let fetchUserLists = await dispatch(getListNames(userEmail));
+        const fetchData = await fetchUserLists;
+        let formattedNames = parseListNames(fetchData.result);
+
+        if (!unmounted) setListNames(formattedNames);
+      } else {
+        setListNames(parseListNames(storedLists.listsData));
+      }
     }
 
     queryListNames();
@@ -136,6 +104,16 @@ export default function WordExplorer () {
       unmounted = true;
     };
   }, []);
+
+  function parseListNames (listsObject) {
+    let returnArray = [];
+    for(let i = 0; i < listsObject.length; i++){
+      let userList = { id: listsObject[i]._id.toString(), name: listsObject[i].name};
+      returnArray.push(userList);
+    }
+
+    return returnArray;
+  }
 
   function userListDisplay (list) {
     let returnArr = [];

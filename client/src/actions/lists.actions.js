@@ -18,6 +18,7 @@ export const getUserLists = (userEmail) => async (dispatch) => {
     const { data } = await instance.get("/lists/view-lists", {
       params: { email: userEmail }
     });
+
     dispatch({ type: "GET_LISTS", data });
 
     return data;

@@ -5,7 +5,6 @@ import { generateGoogleProfile, generateGoogleUsername, getGoogleProfile } from 
 
 export default function HomePage () {
   const [profileChecked, setProfileChecked] = useState(false);
-  const [displayedName, setDisplayedName] = useState(null);
   const user = JSON.parse(localStorage.getItem("account"));
   const googleProfile = JSON.parse(localStorage?.getItem("profile"));
   const dispatch = useDispatch();
@@ -43,6 +42,6 @@ export default function HomePage () {
     return (
       <div>
         <p> You are on the home page!</p>
-      </div>    
+      </div>
     );
 }

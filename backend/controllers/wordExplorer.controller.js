@@ -29,20 +29,12 @@ export const getThesaurusWord = async (req, res) => {
 export const getListNames = async (req, res) => {
   const { email } = req.query;
 
-  try {
+  try{
     const result = await WordList.find({ email }).exec();
 
-    if(!result || result.length === 0) return null;
-
-    let returnArray = [];
-    for(let i = 0; i < result.length; i++){
-      let userList = { id: result[i]._id.toString(), name: result[i].name};
-      returnArray.push(userList);
-    }
-
-    res.status(200).send(returnArray);
+    res.status(200).json({ message: "Lists successfully returned.", result: result });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong with fetching the user's list names: ", error});
+    res.status(500).json({ message: "Something went wrong with getUserLists: ", error });
   }
 }
 

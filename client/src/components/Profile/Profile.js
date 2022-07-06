@@ -15,31 +15,22 @@ export default function ProfilePage () {
   const [displayedUsername, setDisplayedUsername] = useState(initialUsername);
   const [allowUsernameChange, setAllowUsernameChange] = useState(false);
   const [newUsername, setNewUsername] = useState(initialState);
-  const [updateSuccessful, setUpdateSuccessful] = useState("");
-  const [error, setError] = useState(initialState);
+  const [responseMessage, setResponseMessage] = useState("");
   let navigate = useNavigate();
 
   async function handleSubmit (e) {
     e.preventDefault();
     let userType = (googleUser) ? "Google" : "Regular";
     let userEmail = (googleUser) ? googleUser.result.email : regularUser.result.email;
-    let storageType = (googleUser) ? "profile" : "account";
 
-    let changeUsernameRequest = await dispatch(
-      changeUsername(newUsername, userType, userEmail)
-    );
-    let changeUsernameError = changeUsernameRequest?.response.data.message;
+    let nameChange = await dispatch(changeUsername(newUsername, userType, userEmail));
+    let nameChangeSuccess = nameChange.message;
 
-    if (changeUsernameError) {
-      console.log(changeUsernameError)
-      setError({ username: changeUsernameError });
-      setUpdateSuccessful("");
-    }
-
-    if (!changeUsernameError) {
-      setError({ username: "" });
-      let fetchedMessage = JSON.parse(localStorage.getItem(storageType)).message;
-      setUpdateSuccessful(fetchedMessage);
+    // nameChange.response means that there is an error message instead of success
+    if (nameChange.response) {
+      setResponseMessage(nameChange.response.data.message);
+    } else {
+      setResponseMessage(nameChangeSuccess);
     }
 
     setAllowUsernameChange(false);
@@ -54,16 +45,15 @@ export default function ProfilePage () {
   }
 
   function showInputField () {
-    setUpdateSuccessful("");
-    setError({ username: "" });
+    setResponseMessage("");
     setAllowUsernameChange(!allowUsernameChange);
   }
 
   function validate (username) {
     if (username.length < 4) {
-      setError({ username: "The new username must be 4 characters or longer." });
+      setResponseMessage("The new username must be 4 characters or longer.");
     } else {
-      setError({ username: "" });
+      setResponseMessage("");
     }
   }
 
@@ -90,9 +80,8 @@ export default function ProfilePage () {
         displayedUsername={displayedUsername}
         showInputField={showInputField}
         allowUsernameChange={allowUsernameChange}
-        error={error}
         handleChange={handleChange}
-        updateSuccessful={updateSuccessful}
+        responseMessage={responseMessage}
       />
     );
 }
