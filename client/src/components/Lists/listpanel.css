@@ -1,0 +1,68 @@
+.list-panel-name {
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 1em;
+}
+
+.word-definition {
+  font-weight: normal;
+  font-style: italic;
+}
+
+.list-panel-button-container {
+  height: auto;
+  text-align: center;
+}
+
+
+.delete-word-container {
+  display: inline-flex;
+  align-items: center;
+}
+
+.word-name {
+  padding-right: 1em;
+}
+
+.change-title-label {
+  font-weight: bold;
+}
+
+.edit-list-name {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 1em;
+  text-align: center;;
+}
+
+.delete-word-button {
+  text-align: center;
+  overflow: hidden;
+  padding: 0.3em;
+}
+
+.word-definition {
+  margin-top: 0;
+}
+
+.change-title-container {
+  text-align: center;
+}
+
+.list-panel-container {
+  border: 1px solid;
+  border-radius: 8px;
+  padding: 1.5em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+  width: auto;
+}
+
+.edit-list-name {
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+.list-panel-name-divider {
+  width: 50%;
+  margin-bottom: 1em;
+}

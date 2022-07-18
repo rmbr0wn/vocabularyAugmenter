@@ -5,8 +5,8 @@ import { getThesaurusWord, getListNames, addToList } from "../controllers/wordEx
 
 var router = express.Router();
 
-router.get(`/get-word`, auth, getThesaurusWord);
-router.get(`/list-names`, auth, getListNames);
-router.put(`/add-word`, auth, addToList);
+router.get(`/get-word`, getThesaurusWord);
+router.get(`/list-names`, getListNames);
+router.put(`/add-word`, addToList);
 
 export default router;

@@ -1,0 +1,31 @@
+.quiz-options-overall-container {
+  text-align: center;
+  height: auto;
+  margin-top: 1em;
+}
+
+.options-home-button-container {
+  text-align: center;
+  height: auto;
+}
+
+.inner-options-button {
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+}
+
+.quiz-option-selection-container {
+  margin-bottom: 1em;
+}
+
+.quiz-option-label {
+  text-align: center;
+}
+
+.quiz-option-dropdown {
+  text-align: center;
+}
+
+.inner-options-buttons-group {
+  margin-bottom: 1em;
+}

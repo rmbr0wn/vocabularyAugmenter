@@ -1,0 +1,59 @@
+.definition-container {
+  height: auto;
+  text-align: center;
+}
+
+.example-sentence-container {
+  height: auto;
+  text-align: center;
+}
+
+.outer-word-property-container {
+  display: grid;
+  grid-column-gap: 10%;
+  grid-row-gap: 10%;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  padding-left: 5%;
+  padding-right: 5%;
+  text-align: center;
+  height: auto;
+}
+
+.definition-and-example-container {
+  text-align: center;
+  display: table;
+  margin: auto;
+  margin-bottom: 1em;
+  border: none;
+  border-radius: 8px;
+  padding: 1.5em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+  width: auto;
+  height: auto;
+}
+
+.word-property-header {
+  text-align: center;
+}
+
+.word-property > p {
+  display: inline-block;
+  margin-right: 0.5em;
+  margin-top: 0;
+}
+
+.word-property-container {
+  margin: auto;
+  margin-bottom: 1em;
+  border: none;
+  border-radius: 8px;
+  padding: 1.5em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+}
+
+.property-container-divider {
+  margin-bottom: 1.5em;
+  width: 50%;
+  margin-top: 0.5em;
+}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { generateGoogleProfile, generateGoogleUsername, getGoogleProfile } from "../../actions/home.actions.js";
+import "./homepage.css";
 
 export default function HomePage () {
   const [profileChecked, setProfileChecked] = useState(false);
@@ -40,8 +41,9 @@ export default function HomePage () {
   }, [profileChecked]);
 
     return (
-      <div>
-        <p> You are on the home page!</p>
+      <div className="home-container">
+        <h1 className="welcome-header"> Welcome to the Vocabulary Augmenter! </h1>
+        <h2 className="information-header"> Click on &ldquo;Word Lists&rdquo; to get started. </h2>
       </div>
     );
 }

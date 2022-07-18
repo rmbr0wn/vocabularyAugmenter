@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
+import "./quizcreation.css";
+
 /* An infinite loop is thrown if the lists provided have a word total of less
  * than 4. This shouldn't happen since the input to this file will have been
  * sanitized (i.e.: ensuring that the total word count is >= 4 && no empty lists).
@@ -125,8 +127,8 @@ const QuizCreation = (props) => {
   }
 
   return (
-    <div>
-      <button onClick={generateQuiz} disabled={startDisabled}> Start </button>
+    <div className="start-quiz-container">
+      <button onClick={generateQuiz} disabled={startDisabled} className="form-button"> Start </button>
     </div>
   );
 };
@@ -135,7 +137,8 @@ QuizCreation.propTypes = {
   quizSettings: PropTypes.object,
   setQuizQuestions: PropTypes.func,
   setQuizStarted: PropTypes.func,
-  setErrorMessages: PropTypes.func
+  setErrorMessages: PropTypes.func,
+  optionsVisible: PropTypes.bool
 };
 
 export default QuizCreation;

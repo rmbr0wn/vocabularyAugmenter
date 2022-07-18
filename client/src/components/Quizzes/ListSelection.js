@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./list-style.css";
+import "./listselection.css";
 
 const ListSelection = (props) => {
   let uniqueKeyNum = 0;
@@ -43,7 +43,7 @@ const ListSelection = (props) => {
     let leftArray = [];
 
     if (!lists || lists.length === 0) {
-      leftArray.push("No lists remaining.");
+      leftArray.push("No lists to be found.");
       return leftArray;
     }
 
@@ -59,7 +59,7 @@ const ListSelection = (props) => {
     let rightArray = [];
 
     if (!lists || lists.length === 0) {
-      rightArray.push("No lists to be found.");
+      rightArray.push("No lists have been added yet.");
       return rightArray;
     }
 
@@ -74,9 +74,13 @@ const ListSelection = (props) => {
   return (
     <div className="list-selection-container">
       <div className="left-list-container">
+        <h2> Click on a &ldquo;+&rdquo; below to add a list for the quiz game! </h2>
+        <hr className="list-selection-hr"/>
         {DisplayLeft(props.leftLists)}
       </div>
       <div className="right-list-container">
+        <h2> The added lists for the quiz game: </h2>
+        <hr className="list-selection-hr"/>
         {DisplayRight(props.rightLists)}
       </div>
     </div>

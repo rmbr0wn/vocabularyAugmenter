@@ -5,11 +5,11 @@ import { createList, getUserLists, changeListName, deleteList, deleteWord } from
 
 var router = express.Router();
 
-router.post("/create-list", auth, createList);
-router.get("/view-lists", auth, getUserLists);
-router.put("/change-list-name", auth, changeListName);
-router.put("/delete-word", auth, deleteWord);
-router.delete("/:id", auth, deleteList);
+router.post("/create-list", createList);
+router.get("/view-lists", getUserLists);
+router.put("/change-list-name", changeListName);
+router.put("/delete-word", deleteWord);
+router.delete("/:id", deleteList);
 
 
 

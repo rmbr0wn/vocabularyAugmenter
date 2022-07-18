@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import "./displayresults.css";
+
 const DisplayResults = (props) => {
   let uniqueKeyNum = 0;
 
@@ -18,31 +20,51 @@ const DisplayResults = (props) => {
         {
           key: propertyType + (uniqueKeyNum+=1)
         },
-        item);
+        item + ",");
 
       propertyArray.push(arrayElement);
     });
+
+    let lastElement = propertyArray.pop().props.children;
+    lastElement = lastElement.split(",").join("");
+    propertyArray.push(lastElement);
 
     return propertyArray;
   };
 
   return (
     <div className="word-results-container">
-      <h3> Definition <i>({props.thesaurusResponse.partOfSpeech})</i>: </h3>
-      <p> {props.thesaurusResponse.definition} </p>
-      <p> {props.thesaurusResponse.exampleSentence ? props.thesaurusResponse.exampleSentence : "No example found." } </p>
-      <h3> Related Words: </h3>
-        <div className="word-property-container">
-          {DisplayWordProperties("related-words", props.thesaurusResponse.relatedWords)}
+      <div className="definition-and-example-container">
+        <div className="definition-container">
+          <h3> Definition <i>({props.thesaurusResponse.partOfSpeech})</i> </h3>
+          <hr className="property-container-divider"/>
+          <p> {props.thesaurusResponse.definition} </p>
         </div>
-      <h3> Synonyms: </h3>
+        {props.thesaurusResponse.exampleSentence ?
+          <div className="example-sentence-container">
+            <p className="example-sentence"> &ldquo;{props.thesaurusResponse.exampleSentence}&rdquo; </p>
+          </div>
+          :
+          null
+        }
+      </div>
+      <div className="outer-word-property-container">
         <div className="word-property-container">
-          {DisplayWordProperties("synonyms", props.thesaurusResponse.synonyms)}
+          <h3 className="word-property-header"> Related Words </h3>
+          <hr className="property-container-divider"/>
+          <div className="word-property"> {DisplayWordProperties("related-words", props.thesaurusResponse.relatedWords)} </div>
         </div>
-      <h3> Antonyms: </h3>
         <div className="word-property-container">
-          {DisplayWordProperties("antonyms", props.thesaurusResponse.antonyms)}
+          <h3 className="word-property-header"> Synonyms </h3>
+          <hr className="property-container-divider"/>
+          <div className="word-property"> {DisplayWordProperties("synonyms", props.thesaurusResponse.synonyms)} </div>
         </div>
+        <div className="word-property-container">
+          <h3 className="word-property-header"> Antonyms </h3>
+          <hr className="property-container-divider"/>
+          <div className="word-property"> {DisplayWordProperties("antonyms", props.thesaurusResponse.antonyms)} </div>
+        </div>
+      </div>
     </div>
 
   );

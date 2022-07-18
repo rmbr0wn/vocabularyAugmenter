@@ -3,13 +3,17 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import decode from "jwt-decode";
 
+import "./navbar.css";
+import "../../styles/formbuttons.css";
+
 export default function Navbar () {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("account")));
   const googleUser = useState(JSON.parse(localStorage.getItem("profile")));
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const defaultAvatar = "./icons/human-blob.png";
+  const defaultAvatar = "./icons/profile-avatar.png";
+  const siteLogo = "./VocabAugmenter.png";
 
   function logOut () {
     dispatch({ type: "LOGOUT" });
@@ -49,33 +53,38 @@ export default function Navbar () {
 
   return (
     <nav>
-      <div>
-        <ul>
+      <div className="nav-container">
+        <ul className="nav-link-list">
           <li>
-            <Link to='/'>Home</Link>
+            <img src={siteLogo} alt="0" width="100" height="100" className="nav-logo"/>
           </li>
           <li>
-            <Link to='/lists'>Word Lists</Link>
+            <Link to='/' className="nav-link nav-text-link">Home</Link>
           </li>
           <li>
-            <Link to='/explore'>Word Explorer</Link>
+            <Link to='/lists' className="nav-link nav-text-link">Word Lists</Link>
           </li>
           <li>
-            <Link to='/quizzes'>Quizzes</Link>
+            <Link to='/explore' className="nav-link nav-text-link">Word Explorer</Link>
+          </li>
+          <li>
+            <Link to='/quizzes' className="nav-link nav-text-link">Quizzes</Link>
           </li>
         </ul>
-        {user? (
-          <div>
-            <div>
-              <button onClick={logOut}> Logout</button>
+        { user? (
+          <div className="nav-button-container">
+            <div className="login-button-container">
+              <button onClick={logOut} className="form-button nav-link"> Logout</button>
             </div>
-            <Link to='/profile'>
-              <img src={defaultAvatar} alt="0" width="25" height="25"/>
-            </Link>
+            <div>
+              <Link to='/profile'>
+                <img src={defaultAvatar} alt="0" width="35" height="35" className="nav-avatar"/>
+              </Link>
+            </div>
           </div>
         ) : (
-          <div>
-            <button onClick={logIn}> Login/Signup </button>
+          <div className="nav-button-container login-button-container">
+            <button onClick={logIn} className="form-button nav-link"> Login/Signup </button>
           </div>
         )}
       </div>

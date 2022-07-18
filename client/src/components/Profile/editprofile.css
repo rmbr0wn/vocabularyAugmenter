@@ -1,0 +1,26 @@
+.profile-welcome-header, .profile-response-message {
+  text-align: center;
+}
+
+.edit-profile-form  {
+  display: table;
+  margin: auto;
+  border: none;
+  border-radius: 8px;
+  padding: 1.5em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+}
+
+.name-change-container {
+  display: table-row;
+}
+
+.profile-button-container {
+  margin: auto;
+  text-align: center;
+}
+
+.profile-button {
+  margin-left: 0.125em;
+  margin-right: 0.125em;
+}
