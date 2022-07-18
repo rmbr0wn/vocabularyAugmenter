@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { queryThesaurus, getListNames, addToList } from "../../actions/wordExplorer.actions.js";
 import SearchBar from "./SearchBar";
 import ThesaurusContainer from "./ThesaurusContainer";
+import "./wordexplorer.css";
 
 const initialResponseState = {
   word: "",
@@ -29,13 +30,6 @@ export default function WordExplorer () {
   const dispatch = useDispatch();
   const storedLists = useSelector((state) => state.listsReducer);
   let navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (!regularUser && !googleUser) {
-  //     navigate("/");
-  //     return;
-  //   }
-  // }, []);
 
   async function handleSubmit (e) {
     e.preventDefault();
@@ -150,7 +144,7 @@ export default function WordExplorer () {
 
   return (
     <div id="word-explorer-container">
-      <h1> You are on the Word Explorer component!</h1>
+      <h1 className="word-explorer-header"> Word Explorer </h1>
       <div id="search-bar-container">
         <SearchBar handleSubmit={handleSubmit} handleChange={handleChange} />
       </div>

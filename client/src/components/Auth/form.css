@@ -1,0 +1,52 @@
+.auth-form-container {
+  text-align: center;
+}
+
+.auth-form-button {
+  text-align: center;
+  overflow: hidden;
+  padding: 0.2em;
+}
+
+.auth-form-field {
+  display: table-row;
+}
+
+.auth-form {
+  display: table;
+  margin: auto;
+  border: none;
+  border-radius: 8px;
+  padding: 1.5em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+}
+
+.auth-form-field > label {
+  display: table-cell;
+  text-align: right;
+  padding-right: 0.1em;
+}
+
+.auth-form-field > input {
+  display: table-cell;
+  margin-bottom: 0.5em;
+}
+
+.horizontal-rounded-divider {
+  width: 75%;
+  color: #7D523B;
+  border: 1px solid;
+}
+
+.existing-account-text {
+  margin-top: 0.2em;
+  margin-bottom: 0.5em;
+}
+
+.form-field-container {
+  margin-bottom: 0.5em;
+}
+
+.form-button-container {
+  margin-bottom: 0.5em;
+}

@@ -1,0 +1,35 @@
+#create-new-list, #create-list-controls {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100vw;
+}
+
+#create-new-list, .add-list-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#create-list-controls {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.new-list-field {
+  font-size: 1.2em;
+  border: 1px solid #CC2792;
+  font-style: italic;
+  text-align: center;
+  width: 15%;
+}
+
+.new-list-button {
+  position: relative;
+  padding: 0.5em;
+  margin-top: 0.5em;
+}
+
+#create-list-button, .add-list-button-container {
+  margin-bottom: 1.5em;
+}

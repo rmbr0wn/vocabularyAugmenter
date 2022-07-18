@@ -1,0 +1,48 @@
+
+.nav-link-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  text-decoration: none;
+  float: left;
+  padding-top: 2em;
+}
+
+.nav-text-link {
+  padding-left: 6em;
+  padding-right: 6em;
+  color: #CC2792;
+  font-size: 1.25em;
+}
+
+.nav-container {
+  overflow: hidden;
+}
+
+nav {
+  background-color: transparent;
+}
+
+.nav-logo {
+  text-decoration: none;
+  float: left;
+  padding-top: none;
+}
+
+.nav-button-container {
+  position: relative;
+  left: 3em;
+}
+
+.login-button-container {
+  position: relative;
+  top: 1.8em;
+}
+
+.nav-avatar {
+  position: relative;
+  top: 2em;
+}

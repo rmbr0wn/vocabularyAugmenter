@@ -1,0 +1,54 @@
+.add-to-list-container {
+  height: auto;
+}
+
+.word-dropdown-content {
+  text-align: center;
+  display: table;
+  margin: auto;
+  margin-bottom: 1em;
+  border: none;
+  border-radius: 8px;
+  padding: 1.5em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+  width: auto;
+}
+
+#searched-word-header {
+  text-align: center;
+  font-style: italic;
+}
+
+.word-name-header {
+  text-align: center;
+}
+
+.explorer-list-names > a {
+  text-decoration: none;
+  margin-right: 1.0em;
+  border: 1px solid;
+  border-radius: 0.5em;
+  padding: 0.5em;
+}
+
+.explorer-list-names > a:hover {
+  background-color: grey;
+}
+
+.word-header-divider {
+  width: 15%;
+}
+
+.list-dropdown {
+  text-align: center;
+}
+
+.word-name-divider {
+  margin-bottom: 1.5em;
+  width: 50%;
+  margin-top: 0.5em;
+}
+
+.add-to-list-button {
+  margin-bottom: 1.5em;
+}

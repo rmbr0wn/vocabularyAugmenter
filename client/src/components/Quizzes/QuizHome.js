@@ -6,6 +6,7 @@ import QuizOptions from "./QuizOptions";
 import QuizCreation from "./QuizCreation";
 import QuizGame from "./QuizGame";
 import { getUserLists } from "../../actions/lists.actions.js";
+import "./quizhome.css";
 
 const initialSettings = { lists: [], questionTotal: 5, mode: "Word2Def" };
 
@@ -114,14 +115,14 @@ export default function QuizHome () {
         />
         :
         <div className="quiz-home">
-          <p> Click on &quot;Options&quot; to add lists for the Quiz Game! </p>
+          <h1 className="quiz-home-header"> Click on &quot;Options&quot; to add lists for the Quiz Game! </h1>
           <QuizCreation
             quizSettings={quizSettings}
             setQuizQuestions={setQuizQuestions}
             setQuizStarted={setQuizStarted}
             setErrorMessages={setErrorMessages}
+            optionsVisible={optionsVisible}
           />
-          { errorMessages && <h6> {errorMessages} </h6>}
           <QuizOptions
             rightLists={rightLists}
             possibleWords={[]}
@@ -134,6 +135,7 @@ export default function QuizHome () {
             setQuizMode={setQuizMode}
             leftLists={leftLists}
           />
+          { errorMessages && <h6 className="quiz-error-message"> {errorMessages} </h6>}
         </div>
       }
       </div>

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createList, getUserLists, changeListName, deleteList, deleteWord } from "../../actions/lists.actions.js";
 import ListPanel from "./ListPanel.js";
 import ListCreation from "./ListCreation.js";
+import "./listspage.css";
 
 const initialResponseState = {
   word: "",
@@ -132,8 +133,8 @@ export default function ListsPage () {
   }
 
     return (
-      <div>
-        <h1> Welcome to the Lists page! </h1>
+      <div className="lists-page-container">
+        <h1 className="welcome-h1"> Welcome to your lists! </h1>
         <ListCreation
           handleSubmit={handleSubmit}
           createListPrompt={createListPrompt}

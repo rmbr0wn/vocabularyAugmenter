@@ -2,36 +2,45 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import ListSelection from "./ListSelection";
+import "./quizoptions.css";
 
 const QuizOptions = (props) => {
   return (
-    <div className="quiz-options-container">
+    <div className="quiz-options-overall-container">
       { props.optionsVisible ?
-        <div>
-          <label htmlFor="number-questions"> Choose the number of questions: </label>
-          <select name="number-questions" id="number-questions" onChange={(e) => props.setNumberOfQuestions(e.target.value)}>
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-          </select>
-          <label htmlFor="mode-selection"> Choose the quiz mode: </label>
-          <select name="mode-selection" id="mode-selection" onChange={(e) => props.setQuizMode(e.target.value)}>
-            <option value="Word2Def">Match word to definition</option>
-            <option value="Def2Word">Match definition to word</option>
-          </select>
-          <button onClick={props.saveChanges}> Save Changes </button>
-          <button onClick={props.toggleOptions}> Close </button>
+        <div className="quiz-options-container">
+          <div className="inner-options-buttons-group">
+            <button onClick={props.saveChanges} className="form-button inner-options-button"> Save Changes </button>
+            <button onClick={props.toggleOptions} className="form-button inner-options-button"> Close </button>
+          </div>
+          <div className="options-selections-container">
+            <div className="quiz-option-selection-container">
+              <label htmlFor="number-questions" className="quiz-option-label"> Choose the number of questions: </label>
+              <select name="number-questions" id="number-questions" onChange={(e) => props.setNumberOfQuestions(e.target.value)} className="quiz-option-dropdown">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+              </select>
+            </div>
+            <div className="quiz-option-selection-container">
+              <label htmlFor="mode-selection" className="quiz-option-label"> Choose the quiz mode: </label>
+              <select name="mode-selection" id="mode-selection" onChange={(e) => props.setQuizMode(e.target.value)} className="quiz-option-dropdown">
+                <option value="Word2Def">Match word to definition</option>
+                <option value="Def2Word">Match definition to word</option>
+              </select>
+            </div>
+          </div>
           <ListSelection
-            leftLists={props.leftLists}
-            rightLists={props.rightLists}
-            addToRightList={props.addToRightList}
-            removeFromRightList={props.removeFromRightList}
+          leftLists={props.leftLists}
+          rightLists={props.rightLists}
+          addToRightList={props.addToRightList}
+          removeFromRightList={props.removeFromRightList}
           />
         </div>
         :
-        <div>
-          <button onClick={props.toggleOptions}> Options </button>
+        <div className="options-home-button-container">
+          <button onClick={props.toggleOptions} className="form-button"> Options </button>
         </div>
       }
     </div>
