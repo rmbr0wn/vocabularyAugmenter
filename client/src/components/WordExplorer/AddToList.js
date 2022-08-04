@@ -12,7 +12,7 @@ const AddToList = (props) => (
             <h3 className="word-name-header"> Add &ldquo;{props.word}&rdquo; to a list: </h3>
             <hr className="word-name-divider"/>
             <div className="explorer-list-names"> {props.listDisplay(props.listNames)} </div>
-            <p> {props.addWordResponse} </p>
+            <p className="add-word-response"> {props.addWordResponse} </p>
           </div>
           :
           null

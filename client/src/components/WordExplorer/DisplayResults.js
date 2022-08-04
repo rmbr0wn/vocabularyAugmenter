@@ -36,9 +36,9 @@ const DisplayResults = (props) => {
     <div className="word-results-container">
       <div className="definition-and-example-container">
         <div className="definition-container">
-          <h3> Definition <i>({props.thesaurusResponse.partOfSpeech})</i> </h3>
+          <h3 className="word-property-header"> Definition <i>({props.thesaurusResponse.partOfSpeech})</i> </h3>
           <hr className="property-container-divider"/>
-          <p> {props.thesaurusResponse.definition} </p>
+          <p className="word-response-definition"> {props.thesaurusResponse.definition} </p>
         </div>
         {props.thesaurusResponse.exampleSentence ?
           <div className="example-sentence-container">

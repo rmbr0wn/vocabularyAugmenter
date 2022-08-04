@@ -14,18 +14,47 @@
   margin-left: 0.5em;
 }
 
-.quiz-option-selection-container {
-  margin-bottom: 1em;
-}
-
 .quiz-option-label {
+  display: flex;
   text-align: center;
+  margin-right: 0.25em;
+  color: #98B06F;
 }
 
 .quiz-option-dropdown {
+  display: flex;
   text-align: center;
+  color: #29CCBF;
+  background-color: #262B31;
+  border-color: #29CCBF;
+  border-radius: 4px;
+  padding: 0.25em;
+  margin-top: -0.25em;
 }
 
 .inner-options-buttons-group {
   margin-bottom: 1em;
+}
+
+.quiz-option-selection-container {
+  display: flex;
+  margin: 1.5em;
+}
+
+.options-selection-container-wrapper {
+  margin-bottom: 1.5em;
+  width: fit-content;
+  border-style: groove;
+  border-color: #262B31;
+  border-radius: 8px;
+  border: 1px solid;
+  box-shadow: 0 0 10px #262B31;
+  background-color: #211C20;
+}
+
+.inner-options-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

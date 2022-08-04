@@ -6,7 +6,7 @@ export const generateGoogleProfile = async (req, res) => {
   try {
     const existingProfile = await GoogleProfile.find({ email }).exec();
 
-		if(existingProfile && existingProfile.length > 0) return;
+		if (existingProfile && existingProfile.length > 0) return;
 
     const result = await GoogleProfile.create({ username, email, googleId });
 
@@ -22,7 +22,7 @@ export const getGoogleProfile = async (req, res) => {
 	try {
     const existingProfile = await GoogleProfile.findOne(searchId).exec();
 
-		if(!existingProfile) return res.status(404).json({ message: "There is no profile associated with that id." });
+		if (!existingProfile) return res.status(404).json({ message: "There is no profile associated with that id." });
 
 		res.status(200).json({ result: existingProfile });
 	} catch (error) {

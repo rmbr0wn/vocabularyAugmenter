@@ -42,8 +42,14 @@ export default function HomePage () {
 
     return (
       <div className="home-container">
-        <h1 className="welcome-header"> Welcome to the Vocabulary Augmenter! </h1>
-        <h2 className="information-header"> Click on &ldquo;Word Lists&rdquo; to get started. </h2>
+        <div className="home-headers-container">
+          <h1 className="welcome-header"> Welcome to the Vocabulary Augmenter! </h1>
+          { user ?
+            <h2 className="information-header"> Click on &ldquo;Word Lists&rdquo; to get started. </h2>
+            :
+            <h2 className="information-header"> Click on &ldquo;Login/Signup&rdquo; in the top right to create an account. </h2>
+          }
+        </div>
       </div>
     );
 }

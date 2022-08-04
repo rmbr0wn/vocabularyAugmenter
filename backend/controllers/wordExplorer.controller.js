@@ -16,7 +16,7 @@ export const getThesaurusWord = async (req, res) => {
 
     const clientResponse = await axios.get(searchUrl);
 
-    if(!clientResponse) return res.status(404).json({
+    if (!clientResponse) return res.status(404).json({
       message: `The entered word '${word}' was not found. Please check the spelling.`
     });
 

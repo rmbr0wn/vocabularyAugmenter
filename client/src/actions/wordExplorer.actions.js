@@ -7,11 +7,13 @@ export const queryThesaurus = (word) => async () => {
     if (data.length === 0) {
       localStorage?.removeItem("thesaurus");
       let errorObj = { error: `No results found for '${word}'.` };
+
       return errorObj;
     }
 
     if (typeof data[0] !== "object") {
       let errorObj = { error: "Not currently handling suggested alternative words." };
+
       return errorObj;
     }
 
@@ -55,6 +57,7 @@ export const addToList = (newWord, listId) => async (dispatch) => {
 function parseDesiredData (queryResult) {
   if (queryResult === "Word is required.") {
     let errorObj = { error: "You must enter a word." };
+
     return errorObj;
   }
 
@@ -62,10 +65,12 @@ function parseDesiredData (queryResult) {
   let wordName = queryResult[0].hwi.hw;
   let partOfSpeech = queryResult[0].fl;
   let definition = baseQuery.dt[0][1];   // // NOTE: This only gets ONE definition
+
   definition = definition.replace(new RegExp("{it}", "g"), "");
   definition = definition.replace(new RegExp("{/it}", "g"), "");
 
   let exampleSentence = baseQuery?.dt[1] ? baseQuery?.dt[1][1][0].t : null;
+
   if (exampleSentence) {
     exampleSentence = exampleSentence.replace(new RegExp("{it}", "g"), "");
     exampleSentence = exampleSentence.replace(new RegExp("{/it}", "g"), "");
@@ -73,6 +78,7 @@ function parseDesiredData (queryResult) {
 
   let relatedWordList = baseQuery?.rel_list;
   let relatedWordArr = [];
+
   if (relatedWordList) {
     for (let i = 0; i < relatedWordList.length; i++) {
       for (let j = 0; j < relatedWordList[i].length; j++) {
@@ -83,6 +89,7 @@ function parseDesiredData (queryResult) {
 
   let synonymList = baseQuery.syn_list ? baseQuery.syn_list[0] : null;
   let synonymArr = [];
+
   if (synonymList) {
     for (let i = 0; i < synonymList.length; i++) {
       synonymArr.push(synonymList[i].wd);
@@ -91,6 +98,7 @@ function parseDesiredData (queryResult) {
 
   let antonymList = baseQuery?.ant_list;
   let antonymArr = [];
+  
   if (antonymList) {
     for (let i = 0; i < antonymList[0].length; i++) {
       antonymArr.push(antonymList[0][i].wd);

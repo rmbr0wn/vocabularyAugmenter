@@ -74,7 +74,7 @@ export default function QuizHome () {
     }
   }
 
-  // This function also adds the removed list back to the leftLists.
+  // This function also adds the removed right list back to the leftLists.
   function removeFromRightList (list) {
     const rightIndex = rightLists.findIndex(target => target._id === list.target.id);
 
@@ -115,7 +115,14 @@ export default function QuizHome () {
         />
         :
         <div className="quiz-home">
-          <h1 className="quiz-home-header"> Click on &quot;Options&quot; to add lists for the Quiz Game! </h1>
+          { optionsVisible ?
+            <h1 className="quiz-home-h1"> Customize the quiz by selecting the mode, length, and lists below! </h1>
+            :
+            <div className="quiz-home-header-container">
+              <h1 className="quiz-home-h1"> Click on &quot;Options&quot; to add lists for the Quiz Game! </h1>
+              <h2 className="quiz-home-h2"> Or click on &quot;Start&quot; if you&apos;re ready to begin. </h2>
+            </div>
+          }
           <QuizCreation
             quizSettings={quizSettings}
             setQuizQuestions={setQuizQuestions}
@@ -135,7 +142,10 @@ export default function QuizHome () {
             setQuizMode={setQuizMode}
             leftLists={leftLists}
           />
-          { errorMessages && <h6 className="quiz-error-message"> {errorMessages} </h6>}
+          { optionsVisible ?
+              null
+            :
+            errorMessages && <h3 className="quiz-error-message"> {errorMessages} </h3>}
         </div>
       }
       </div>

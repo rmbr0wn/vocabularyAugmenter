@@ -10,7 +10,7 @@ const EditProfile = (props) => (
         <div>
           {props.allowUsernameChange ?
             <div className="name-change-container">
-              <label> New Username: </label>
+              <label className="new-username-label"> New Username: </label>
               <input type="text"
               id="username-input"
               name="usernameInput"

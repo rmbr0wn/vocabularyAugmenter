@@ -7,20 +7,33 @@
   display: table;
   margin: auto;
   margin-bottom: 1em;
-  border: none;
+  border: 1px solid;
+  border-color: #29CCBF;
   border-radius: 8px;
   padding: 1.5em;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+  box-shadow: 0 0 10px #29CCBF;
   width: auto;
+  background-color: #211C20;
 }
 
 #searched-word-header {
   text-align: center;
   font-style: italic;
+  color: #211C20;
 }
 
 .word-name-header {
   text-align: center;
+  color: #98B06F;
+}
+
+.explorer-list-names {
+  display: grid;
+  grid-row-gap: 0.5em;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .explorer-list-names > a {
@@ -29,10 +42,13 @@
   border: 1px solid;
   border-radius: 0.5em;
   padding: 0.5em;
+  border-color: #29CCBF;
+  background-color: #262B31;
+  color: #29CCBF;
 }
 
 .explorer-list-names > a:hover {
-  background-color: grey;
+  background-color: #8FA1A9;
 }
 
 .word-header-divider {
@@ -47,8 +63,15 @@
   margin-bottom: 1.5em;
   width: 50%;
   margin-top: 0.5em;
+  color: #262B31;
 }
 
 .add-to-list-button {
   margin-bottom: 1.5em;
+}
+
+.add-word-response {
+  color: #98B06F;
+  margin-top: 1em;
+  margin-bottom: 0;
 }

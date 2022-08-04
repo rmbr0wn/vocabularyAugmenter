@@ -4,7 +4,7 @@ export const createList = async (req, res) => {
   const { listTitle, userEmail } = req.body;
 
   try {
-    if(listTitle.length < 1) return res.status(400).json({ message: "The list title cannot be empty." });
+    if (listTitle.length < 1) return res.status(400).json({ message: "The list title cannot be empty." });
 
     const result = await WordList.create({ name: listTitle, email: userEmail });
 
@@ -30,7 +30,7 @@ export const changeListName = async (req, res) => {
   const { newName, listId } = req.body;
 
   try{
-    if(!newName) return;
+    if (!newName) return;
 
     const result = await WordList.findById(listId);
 
@@ -49,7 +49,7 @@ export const deleteList = async (req, res) => {
   try{
     const result = await WordList.deleteOne({ _id: id });
 
-    if(!result) return res.status(404).send("No list found with that id.");
+    if (!result) return res.status(404).send("No list found with that id.");
 
     res.status(200).json({ message: "List successfully deleted.", id });
   } catch (error) {
@@ -63,10 +63,10 @@ export const deleteWord = async (req, res) => {
   try{
     const result = await WordList.findById(listId);
 
-    if(!result) return res.status(404).send("No list found with that id.");
+    if (!result) return res.status(404).send("No list found with that id.");
 
     var wordIndex = result.words.map(e => e.wordName).indexOf(word);
-    if(wordIndex > -1){
+    if (wordIndex > -1){
       result.words.splice(wordIndex, 1);
     }
 
