@@ -5,10 +5,13 @@
 .word-explorer-search-form {
   display: table;
   margin: auto;
-  border: none;
+  border: 4px solid;
+  border-style: groove;
   border-radius: 8px;
   padding: 1.5em;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+  background-color: #211C20;
+  border-color: #262B31;
 }
 
 .word-explorer-input-container {
@@ -19,10 +22,21 @@
   display: table-cell;
   text-align: right;
   padding-right: 0.3em;
+  color: #98B06F;
 }
 
 .word-explorer-input-field {
   display: table-cell;
+  background-color: #262B31;
+  border-color: #29CCBF;
+  color: #29CCBF;
+}
+
+.word-explorer-input-field:focus {
+  outline: none !important;
+  border: 1px solid;
+  box-shadow: 0 0 10px #29CCBF;
+  border-color: #29CCBF;
 }
 
 .word-explorer-button-container {

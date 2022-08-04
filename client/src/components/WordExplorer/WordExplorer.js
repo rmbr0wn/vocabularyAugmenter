@@ -162,7 +162,7 @@ export default function WordExplorer () {
         </div>
         :
         <div id="query-error-container">
-          <h2> {thesaurusResponse.error} </h2>
+          <h2 className="query-error-h2"> {thesaurusResponse.error} </h2>
         </div>
       }
     </div>

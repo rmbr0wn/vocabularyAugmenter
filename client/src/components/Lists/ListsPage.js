@@ -17,6 +17,7 @@ export default function ListsPage () {
   const [createListPrompt, setCreateListPrompt] = useState(false);
   const [newListTitle, setNewListTitle] = useState("");
   const [editingPayload, setEditingPayload] = useState({ beingEdited: false, id: "" });
+  const [viewingPayload, setViewingPayload] = useState({ beingViewed: false, id: " " });
   const [updatedListName, setUpdatedListName] = useState("");
   const [responseMessages, setResponseMessages] = useState(initialResponseState);
   const regularUser = JSON.parse(localStorage.getItem("account"));
@@ -46,7 +47,7 @@ export default function ListsPage () {
 
     switchListPrompt();
 
-    // Checking if there is an error or success code & parsing the value accordingly
+    // Check if there is an error or success code & parse the value accordingly
     if (createListRequest.response) {
         setResponseMessages({ ...responseMessages, createList: createListRequest.response.data.message });
     } else {
@@ -76,6 +77,7 @@ export default function ListsPage () {
 
     let panelHandlers = {
       toggleEditing: toggleEditing,
+      toggleViewing: toggleViewing,
       handleSubmit: listEditSubmitHandler,
       handleChange: listEditChangeHandler,
       deleteList: deleteListHandler,
@@ -86,6 +88,7 @@ export default function ListsPage () {
       let myPanel = <ListPanel
         list={list[i]}
         editingPayload={editingPayload}
+        viewingPayload={viewingPayload}
         handlers={panelHandlers}
         key={list[i]._id}
         />;
@@ -97,6 +100,13 @@ export default function ListsPage () {
   async function toggleEditing (e) {
     setEditingPayload({
       beingEdited: !editingPayload.beingEdited,
+      id: e.target.attributes.listid.value
+    });
+  }
+
+  async function toggleViewing (e) {
+    setViewingPayload({
+      beingViewed: !viewingPayload.beingViewed,
       id: e.target.attributes.listid.value
     });
   }
@@ -134,7 +144,9 @@ export default function ListsPage () {
 
     return (
       <div className="lists-page-container">
-        <h1 className="welcome-h1"> Welcome to your lists! </h1>
+        <div className="lists-header-container">
+          <h1 className="welcome-h1"> Welcome to your lists! </h1>
+        </div>
         <ListCreation
           handleSubmit={handleSubmit}
           createListPrompt={createListPrompt}

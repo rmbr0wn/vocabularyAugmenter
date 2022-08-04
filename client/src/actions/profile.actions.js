@@ -6,6 +6,7 @@ export const changeUsername = (newUsername, userType, userEmail) => async (dispa
     const { data } = await instance.put("/profile/change-name", formData);
 
     dispatch({ type: "CHANGE_USERNAME", data });
+    
     return data;
   } catch (error) {
     return error;

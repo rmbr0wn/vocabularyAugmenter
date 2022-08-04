@@ -13,7 +13,8 @@ const ListSelection = (props) => {
     let listName = React.createElement(
       "p",
       {
-        key: (side === "Left") ? listId + "-pLeft" : listId + (uniqueKeyNum+=1) + "-pRight"
+        key: (side === "Left") ? listId + "-pLeft" : listId + (uniqueKeyNum+=1) + "-pRight",
+        className: "list-selection-individual-name"
       },
       list.name);
 
@@ -22,7 +23,8 @@ const ListSelection = (props) => {
       {
         id: listId,
         onClick: (side === "Left") ? props.addToRightList : props.removeFromRightList,
-        key: (side === "Left") ? listId + "-btnLeft" : listId + (uniqueKeyNum+=1) + "-btnRight"
+        key: (side === "Left") ? listId + "-btnLeft" : listId + (uniqueKeyNum+=1) + "-btnRight",
+        className: "form-button"
       },
       buttonText);
 
@@ -32,7 +34,8 @@ const ListSelection = (props) => {
     let listDiv = React.createElement(
       "div",
       {
-        key: (side === "Left") ? listId + "-divLeft" : listId + (uniqueKeyNum+=1) + "-divRight"
+        key: (side === "Left") ? listId + "-divLeft" : listId + (uniqueKeyNum+=1) + "-divRight",
+        className: "left-list-individual-container"
       },
       listItemArray);
 
@@ -43,7 +46,14 @@ const ListSelection = (props) => {
     let leftArray = [];
 
     if (!lists || lists.length === 0) {
-      leftArray.push("No lists to be found.");
+      let noLists = React.createElement(
+        "p",
+        {
+          key: "noListsInRight",
+          className: "no-lists-text"
+        },
+        "No lists remaining, or none to be found.");
+      leftArray.push(noLists);
       return leftArray;
     }
 
@@ -59,7 +69,14 @@ const ListSelection = (props) => {
     let rightArray = [];
 
     if (!lists || lists.length === 0) {
-      rightArray.push("No lists have been added yet.");
+      let noLists = React.createElement(
+        "p",
+        {
+          key: "noListsInRight",
+          className: "no-lists-text"
+        },
+        "No lists have been added yet.");
+      rightArray.push(noLists);
       return rightArray;
     }
 
@@ -72,16 +89,20 @@ const ListSelection = (props) => {
   };
 
   return (
-    <div className="list-selection-container">
-      <div className="left-list-container">
-        <h2> Click on a &ldquo;+&rdquo; below to add a list for the quiz game! </h2>
+    <div id="list-selection-wrapper">
+      <div className="left-list-wrapper">
+        <h2 className="list-selection-header"> Click on a &ldquo;+&rdquo; below to add a list for the quiz game! </h2>
         <hr className="list-selection-hr"/>
-        {DisplayLeft(props.leftLists)}
+        <div className="quiz-lists-container">
+          {DisplayLeft(props.leftLists)}
+        </div>
       </div>
-      <div className="right-list-container">
-        <h2> The added lists for the quiz game: </h2>
+      <div className="right-list-wrapper">
+        <h2 className="list-selection-header"> The added lists for the quiz game: </h2>
         <hr className="list-selection-hr"/>
-        {DisplayRight(props.rightLists)}
+        <div className="quiz-lists-container">
+          {DisplayRight(props.rightLists)}
+        </div>
       </div>
     </div>
 

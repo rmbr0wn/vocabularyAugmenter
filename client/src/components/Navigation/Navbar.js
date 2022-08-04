@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import decode from "jwt-decode";
 
 import "./navbar.css";
-import "../../styles/formbuttons.css";
+import "../../styles/buttons.css";
 
 export default function Navbar () {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("account")));
@@ -12,8 +12,8 @@ export default function Navbar () {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const defaultAvatar = "./icons/profile-avatar.png";
-  const siteLogo = "./VocabAugmenter.png";
+  const defaultAvatar = "./icons/nav-avatar-icon.png";
+  const siteLogo = "./VocabularyAugmenterLogo.png";
 
   function logOut () {
     dispatch({ type: "LOGOUT" });
@@ -52,41 +52,46 @@ export default function Navbar () {
   }, []);
 
   return (
-    <nav>
+    <nav id="nav-bar">
       <div className="nav-container">
         <ul className="nav-link-list">
-          <li>
-            <img src={siteLogo} alt="0" width="100" height="100" className="nav-logo"/>
+          <li className="nav-logo-li">
+            <img src={siteLogo} alt="0" className="nav-logo"/>
           </li>
-          <li>
+          <li className="nav-route-li">
             <Link to='/' className="nav-link nav-text-link">Home</Link>
           </li>
-          <li>
+          <li className="nav-route-li">
             <Link to='/lists' className="nav-link nav-text-link">Word Lists</Link>
           </li>
-          <li>
+          <li className="nav-route-li">
             <Link to='/explore' className="nav-link nav-text-link">Word Explorer</Link>
           </li>
-          <li>
+          <li className="nav-route-li">
             <Link to='/quizzes' className="nav-link nav-text-link">Quizzes</Link>
           </li>
+          { user ? (
+            <li className="nav-button-li">
+              <div className="nav-button-container">
+                <div className="login-button-container">
+                  <button onClick={logOut} className="form-button nav-link login-logout-nav"> Logout</button>
+                </div>
+                <div className="profile-icon-container">
+                  <Link to='/profile'>
+                    <img src={defaultAvatar} alt="0" className="nav-avatar"/>
+                  </Link>
+                </div>
+              </div>
+            </li>
+          ) : (
+            <li className="nav-button-li">
+              <div className="nav-button-container login-button-container">
+                <button onClick={logIn} className="form-button nav-link login-logout-nav"> Login/Signup </button>
+              </div>
+            </li>
+          )
+          }
         </ul>
-        { user? (
-          <div className="nav-button-container">
-            <div className="login-button-container">
-              <button onClick={logOut} className="form-button nav-link"> Logout</button>
-            </div>
-            <div>
-              <Link to='/profile'>
-                <img src={defaultAvatar} alt="0" width="35" height="35" className="nav-avatar"/>
-              </Link>
-            </div>
-          </div>
-        ) : (
-          <div className="nav-button-container login-button-container">
-            <button onClick={logIn} className="form-button nav-link"> Login/Signup </button>
-          </div>
-        )}
       </div>
     </nav>
   );

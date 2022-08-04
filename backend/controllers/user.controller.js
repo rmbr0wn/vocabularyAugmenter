@@ -10,11 +10,11 @@ export const signIn = async (req, res) => {
 	try {
 		const existingAccount = await User.findOne({ email });
 
-		if(!existingAccount) return res.status(404).json({ message: "There is no account associated with that email." });
+		if (!existingAccount) return res.status(404).json({ message: "There is no account associated with that email." });
 
 		const isPasswordCorrect = await bcrypt.compare(password, existingAccount.password);
 
-		if(!isPasswordCorrect) return res.status(400).json({ message: "Invalid login credentials." });
+		if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid login credentials." });
 
 		const token = jwt.sign({ email: existingAccount.email, id: existingAccount._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
@@ -31,15 +31,15 @@ export const signUp = async (req, res) => {
 	try{
 		const existingAccount = await User.findOne({ email });
 
-		if(existingAccount) return res.status(400).json({ message: "An account with that email already exists." });
+		if (existingAccount) return res.status(400).json({ message: "An account with that email already exists." });
 
 		const usernameExists = await User.findOne({ username });
 
-		if(usernameExists) return res.status(400).json({ message: "That username is already taken." });
+		if (usernameExists) return res.status(400).json({ message: "That username is already taken." });
 
-		if(password !== confirmPassword) return res.status(400).json({ message: "The passwords don't match." });
+		if (password !== confirmPassword) return res.status(400).json({ message: "The passwords don't match." });
 
-		if(!username) return res.status(400).json({ message: "You must enter a username." });
+		if (!username) return res.status(400).json({ message: "You must enter a username." });
 
 		const hashedPassword = await bcrypt.hash(password, 12);
 		const result = await User.create({ email, password: hashedPassword, username: `${username}` });

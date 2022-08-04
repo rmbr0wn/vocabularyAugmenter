@@ -25,16 +25,25 @@
   display: table;
   margin: auto;
   margin-bottom: 1em;
-  border: none;
+  border: 4px solid;
+  border-style: groove;
+  border-color: #262B31;
   border-radius: 8px;
   padding: 1.5em;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
   width: auto;
   height: auto;
+  background-color: #211C20;
 }
 
 .word-property-header {
   text-align: center;
+  color: #98B06F;
+}
+
+.word-property, .word-response-definition, .example-sentence {
+  height: auto;
+  color: #98B06F;
 }
 
 .word-property > p {
@@ -46,14 +55,18 @@
 .word-property-container {
   margin: auto;
   margin-bottom: 1em;
-  border: none;
+  border: 4px solid;
+  border-style: groove;
+  border-color: #262B31;
   border-radius: 8px;
   padding: 1.5em;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+  background-color: #211C20;
 }
 
 .property-container-divider {
   margin-bottom: 1.5em;
   width: 50%;
   margin-top: 0.5em;
+  color: #A5ACBB;
 }

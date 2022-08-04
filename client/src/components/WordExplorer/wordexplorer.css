@@ -3,5 +3,22 @@
 }
 
 #query-error-container {
+  height: auto;
   text-align: center;
+}
+
+.word-explorer-header {
+  margin-top: 0;
+  color: #211C20;
+}
+
+#word-explorer-container {
+  background-color: #98B06F;
+  height: auto;
+  padding-bottom: 3em;
+  padding-top: 3em;
+}
+
+.query-error-h2 {
+  color: #211C20;
 }

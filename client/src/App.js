@@ -16,7 +16,7 @@ function App () {
   return (
     <Provider store={store}>
         <BrowserRouter>
-          <div>
+          <div id="app-page-container">
             <Navbar />
             <Routes>
               <Route path="/" exact element={<HomePage/>}/>

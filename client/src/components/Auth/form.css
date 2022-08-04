@@ -1,24 +1,28 @@
 .auth-form-container {
   text-align: center;
+  background-color: #98B06F;
+  padding-top: 5em;
 }
 
 .auth-form-button {
   text-align: center;
   overflow: hidden;
-  padding: 0.2em;
+  padding: 0.5em;
 }
 
 .auth-form-field {
   display: table-row;
+  margin-bottom: 0.5em;
 }
 
 .auth-form {
   display: table;
   margin: auto;
-  border: none;
+  border: 5px solid;
   border-radius: 8px;
   padding: 1.5em;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+  background-color: #211C20;
 }
 
 .auth-form-field > label {
@@ -27,20 +31,34 @@
   padding-right: 0.1em;
 }
 
-.auth-form-field > input {
+.auth-form-input {
   display: table-cell;
   margin-bottom: 0.5em;
+  background-color: #262B31;
+  border-color: #262B31;
+  color: #29CCBF;
+  padding: 0.5em;
+}
+
+.auth-form-input:focus {
+  outline: none !important;
+  border: 1px solid;
+  box-shadow: 0 0 10px #29CCBF;
 }
 
 .horizontal-rounded-divider {
   width: 75%;
   color: #7D523B;
   border: 1px solid;
+  color: #98B06F;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 .existing-account-text {
   margin-top: 0.2em;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.75em;
+  color: #98B06F;
 }
 
 .form-field-container {
@@ -49,4 +67,14 @@
 
 .form-button-container {
   margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
+
+.auth-form-h1 {
+  margin-top: 0;
+  color: #211C20;
+}
+
+.auth-form-label {
+  color: #98B06F;
 }

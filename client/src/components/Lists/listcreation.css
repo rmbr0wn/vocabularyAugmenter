@@ -4,16 +4,39 @@
   width: 100vw;
 }
 
+#create-new-list > h5 {
+  margin-top: 0;
+}
+
 #create-new-list, .add-list-button-container {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+#create-new-list {
+  flex-direction: column;
+}
+
 #create-list-controls {
   display: flex;
   align-items: center;
   flex-direction: column;
+  width: fit-content;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1);
+  border: 2px solid;
+  border-radius: 8px;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 1em;
+  margin-bottom: 2em;
+  background-color: #211C20;
+  border-color: #211C20;
+}
+
+.new-list-label {
+  color: #98B06F;
+  margin-bottom: 0.25em;
 }
 
 .new-list-field {
@@ -21,15 +44,44 @@
   border: 1px solid #CC2792;
   font-style: italic;
   text-align: center;
-  width: 15%;
+  width: auto;
+  background-color: #262B31;
+  border-color: #29CCBF;
+  color: #29CCBF;
+}
+
+.new-list-field:focus {
+  outline: none !important;
+  border: 1px solid;
+  box-shadow: 0 0 10px #29CCBF;
 }
 
 .new-list-button {
   position: relative;
   padding: 0.5em;
   margin-top: 0.5em;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
 }
 
 #create-list-button, .add-list-button-container {
   margin-bottom: 1.5em;
+}
+
+.create-list-input-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+}
+
+.welcome-h1 {
+  color: #211C20;
+  font-size: 2.5em;
+}
+
+.return-messages {
+  color: #211C20;
+  font-size: 1.2em;
 }

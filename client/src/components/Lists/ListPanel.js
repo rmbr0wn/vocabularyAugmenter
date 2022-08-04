@@ -22,16 +22,27 @@ const ListPanel = (props) => (
           </form>
         </div>
         :
-        <div className="unedited-list-container" visibility="hidden">
-          <h4 className="list-panel-name"> {props.list.name} </h4>
-          <hr className="list-panel-name-divider"/>
-          <div className="list-panel-button-container">
-            <button type="button" onClick={props.handlers.toggleEditing} listid={props.list._id} className="edit-btn form-button"> Edit </button>
+        <div className="unedited-list-container">
+          <div className="always-visible-panel-section">
+            <h4 className="list-panel-name"> {props.list.name} </h4>
+            <hr className="list-panel-name-divider"/>
+            <div className="list-panel-button-container">
+              <button type="button" onClick={props.handlers.toggleViewing} listid={props.list._id} className="edit-btn form-button">
+                {props.viewingPayload.id === props.list._id && props.viewingPayload.beingViewed ? "Close" : "View"}
+              </button>
+              <button type="button" onClick={props.handlers.toggleEditing} listid={props.list._id} className="edit-btn form-button"> Edit </button>
+            </div>
+            <h3 className="list-panel-tags"> {props.list.tags} </h3>
           </div>
-          <h3 className="list-panel-tags"> {props.list.tags} </h3>
-          <h5 className="list-panel-words">
-            {objectsToArray(props.list.words, props.handlers.deleteWord, props.list._id, props.editingPayload.beingEdited)}
-          </h5>
+          {props.viewingPayload.id === props.list._id && props.viewingPayload.beingViewed === true ?
+            <div className="list-panel-words-container">
+              <h5 className="list-panel-words">
+              {objectsToArray(props.list.words, props.handlers.deleteWord, props.list._id, props.editingPayload.beingEdited)}
+              </h5>
+            </div>
+            :
+            null
+          }
         </div>
       }
     </div>
@@ -61,15 +72,10 @@ function objectsToArray (wordObjectList, deleteHandler, listId, editingPayload) 
       {wordName}{editingPayload.beingEdited && editingPayload.id === listId ? deleteButton : null}
     </div>;
 
-
     // Currently only pushing the name, PoS and definition of the word
     individualWordArray.push(
-      // editingPayload.beingEdited && editingPayload.id === listId ? deleteButton : null,
-      // wordName,
       nameAndButton,
-      wordDefinition,
-    //   wordObjectList[i].relatedWords ? wordObjectList[i].relatedWords : null,
-    //   wordObjectList[i].synonyms ? wordObjectList[i].synonyms : null
+      wordDefinition
     );
     listOfWords.push(individualWordArray);
   }
@@ -79,6 +85,7 @@ function objectsToArray (wordObjectList, deleteHandler, listId, editingPayload) 
 ListPanel.propTypes = {
   list: PropTypes.object,
   editingPayload: PropTypes.object,
+  viewingPayload: PropTypes.object,
   handlers: PropTypes.object
 };
 

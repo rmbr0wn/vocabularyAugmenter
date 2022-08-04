@@ -1,0 +1,22 @@
+.form-button {
+  background-color: #262B31;
+  font-size: 1.1em;
+  border: none;
+  padding: 0.7em;
+  color: #29CCBF;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 0.5em;
+  border-style: solid;
+  border-width: 2px;
+}
+
+.form-button:hover {
+  background-color: #8FA1A9;
+}
+
+.form-button:disabled {
+  background-color: #293236;
+  color: #10514C;
+  cursor: not-allowed;
+}

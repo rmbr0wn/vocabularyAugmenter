@@ -2,37 +2,39 @@ import React from "react";
 import { GoogleLogin } from "react-google-login";
 import PropTypes from "prop-types";
 
-import "../../styles/formbuttons.css";
+import "../../styles/buttons.css";
 import "./form.css";
 
 const Form = (props) => (
   <div className="auth-form-container">
-    <h1> {props.signedUp ? "Sign In" : "Sign Up"} </h1>
+    <h1 className="auth-form-h1"> {props.signedUp ? "Sign In" : "Sign Up"} </h1>
     <form onSubmit={props.handleSubmit} className="auth-form">
       {props.signedUp ?
         <div className="form-container-sign-in">
           <div className="form-field-container">
             <div className="auth-form-field">
-              <label>E-mail: </label>
+              <label className="auth-form-label">E-mail: </label>
               <input type="email"
                 required
                 name="loginEmail"
                 onChange={props.handleChange}
                 placeholder="E-mail"
                 id="loginEmail"
+                className="auth-form-input"
               />
               {
                 props.errors.loginEmail && <h3 className="form-error-message">{props.errors.loginEmail}</h3>
               }
             </div>
             <div className="auth-form-field">
-              <label>Password: </label>
+              <label className="auth-form-label">Password: </label>
               <input type="password"
                 required
                 name="loginPassword"
                 onChange={props.handleChange}
                 placeholder="Password"
                 id="loginPassword"
+                className="auth-form-input"
               />
               {
                 props.errors.loginPassword && <h3 className="form-error-message">{props.errors.loginPassword}</h3>
@@ -61,31 +63,33 @@ const Form = (props) => (
         :
         <div className="form-container-sign-up">
           <div className="auth-form-field">
-            <label>Username: </label>
+            <label className="auth-form-label">Username: </label>
             <input type="text"
               required
               name="username"
               onChange={props.handleChange}
               placeholder="Username"
+              className="auth-form-input"
             />
             {
               props.errors.username && <h3 className="form-error-message">{props.errors.username}</h3>
             }
           </div>
           <div className="auth-form-field">
-            <label>Email: </label>
+            <label className="auth-form-label">Email: </label>
             <input type="email"
               required
               name="email"
               onChange={props.handleChange}
               placeholder="E-mail"
+              className="auth-form-input"
             />
             {
               props.errors.email && <h3 className="form-error-message">{props.errors.email}</h3>
             }
           </div>
           <div className="auth-form-field">
-            <label>Password: </label>
+            <label className="auth-form-label">Password: </label>
             <input type="password"
               required
               name="password"
@@ -93,19 +97,21 @@ const Form = (props) => (
               placeholder="Password"
               id="signupPassword"
               ref={props.signupPassword}
+              className="auth-form-input"
             />
             {
               props.errors.password && <h3 className="form-error-message">{props.errors.password}</h3>
             }
           </div>
           <div className="auth-form-field">
-            <label>Confirm Password: </label>
+            <label className="auth-form-label">Confirm Password: </label>
             <input type="password"
               required
               name="confirmPassword"
               onChange={props.handleChange}
               placeholder="Confirm password"
               id="signupConfirmPassword"
+              className="auth-form-input"
             />
             {
               props.errors.confirmPassword && <h3 className="form-error-message">{props.errors.confirmPassword}</h3>
