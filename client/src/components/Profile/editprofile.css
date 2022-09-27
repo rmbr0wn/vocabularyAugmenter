@@ -1,6 +1,8 @@
 .profile-welcome-header, .profile-response-message {
   text-align: center;
   color: #211C20;
+  font-family: Verdana;
+  font-size: 2em;
 }
 
 .edit-profile-form  {

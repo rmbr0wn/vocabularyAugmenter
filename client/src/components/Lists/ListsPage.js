@@ -71,7 +71,8 @@ export default function ListsPage () {
     let myArr = [];
 
     if (!list || list.length === 0) {
-      myArr.push("No lists to be found.");
+      let text = <p id="no-lists-found-p"> No lists to be found. Create one to get started. </p>;
+      myArr.push(text);
       return myArr;
     }
 
@@ -154,8 +155,16 @@ export default function ListsPage () {
           switchListPrompt={switchListPrompt}
           responseMessage={responseMessages.createList}
         />
-        <div id="lists-display-container">
-          {displayUserLists(storedLists.listsData)}
+        <div id="lists-display-container-wrapper">
+          {!storedLists.listsData || storedLists?.listsData.length === 0 ?
+            <div id="no-lists-container">
+              <p id="no-lists-found-p"> No lists to be found. Create one to get started. </p>
+            </div>
+            :
+            <div id="existing-lists-display-container">
+              {displayUserLists(storedLists.listsData)}
+            </div>
+          }
         </div>
       </div>
     );

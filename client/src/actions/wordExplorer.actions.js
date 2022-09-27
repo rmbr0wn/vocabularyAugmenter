@@ -12,7 +12,7 @@ export const queryThesaurus = (word) => async () => {
     }
 
     if (typeof data[0] !== "object") {
-      let errorObj = { error: "Not currently handling suggested alternative words." };
+      let errorObj = { error: "Unable to find the requested word, please try a different one." };
 
       return errorObj;
     }
@@ -98,7 +98,7 @@ function parseDesiredData (queryResult) {
 
   let antonymList = baseQuery?.ant_list;
   let antonymArr = [];
-  
+
   if (antonymList) {
     for (let i = 0; i < antonymList[0].length; i++) {
       antonymArr.push(antonymList[0][i].wd);
