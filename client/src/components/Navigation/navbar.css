@@ -6,6 +6,8 @@
 
 .nav-text-link {
   text-decoration: none;
+  font-family: Roboto;
+  font-size: 1.25em;
   color: #98B06F;
 }
 

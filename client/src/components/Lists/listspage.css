@@ -1,9 +1,11 @@
 .welcome-h1 {
   text-align: center;
   margin-top: 0;
+  font-family: Verdana;
+  font-size: 3em;
 }
 
-#lists-display-container {
+#existing-lists-display-container {
   display: grid;
   grid-column-gap: 2%;
   grid-row-gap: 2%;
@@ -24,4 +26,15 @@
 .lists-header-container {
   height: auto;
   padding-top: 3em;
+}
+
+#no-lists-container {
+  display: flex;
+  justify-content: center;
+}
+
+#no-lists-found-p {
+  font-weight: bold;
+  font-family: Verdana;
+  font-size: 1.3em;
 }

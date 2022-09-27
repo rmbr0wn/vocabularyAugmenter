@@ -39,6 +39,8 @@
 .word-property-header {
   text-align: center;
   color: #98B06F;
+  font-family: Verdana;
+  font-size: 1.3em;
 }
 
 .word-property, .word-response-definition, .example-sentence {
