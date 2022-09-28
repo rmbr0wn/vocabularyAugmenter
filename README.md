@@ -5,7 +5,7 @@
 
 This is a vocabulary enhancement app that allows users to create word lists and then test themselves using a custom quizzing system.
 <p align="center">
-  <img src="./client/public/VocabularyAugmenterLogo.png" style="width: 200px; height: 200px;"/>
+  <img src="./client/public/icons/VocabularyAugmenterLogo.png" style="width: 200px; height: 200px;"/>
 </p>
 <p>Note: The .env file has been removed, so the code will not work properly if pulled.</p>
 
