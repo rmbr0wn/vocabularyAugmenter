@@ -13,7 +13,7 @@ export default function Navbar () {
   const navigate = useNavigate();
   const location = useLocation();
   const defaultAvatar = "./icons/nav-avatar-icon.png";
-  const siteLogo = "./VocabularyAugmenterLogo.png";
+  const siteLogo = "./icons/VocabularyAugmenterLogo.png";
 
   function logOut () {
     dispatch({ type: "LOGOUT" });

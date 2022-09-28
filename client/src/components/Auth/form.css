@@ -82,3 +82,8 @@
 .auth-form-label {
   color: #98B06F;
 }
+
+.form-error-message {
+  color: #F58A8A;
+  text-align: center;
+}

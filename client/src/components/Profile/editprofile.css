@@ -2,7 +2,14 @@
   text-align: center;
   color: #211C20;
   font-family: Verdana;
-  font-size: 2em;
+}
+
+.profile-welcome-header {
+  font-size: 2.5em;
+}
+
+.profile-response-message {
+  color: #800000;
 }
 
 .edit-profile-form  {
@@ -33,6 +40,7 @@
 
 #profile-container {
   padding-top: 5em;
+  background-color: #98b06f;
 }
 
 .new-username-label {
