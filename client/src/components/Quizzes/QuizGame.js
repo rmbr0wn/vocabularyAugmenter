@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import "./quizgame.css";
 
 const QuizGame = (props) => {
-  const [currentQuestionDisplay, setCurrentQuestionDisplay] = useState(null);
   const [nextQuestionAvailable, setNextQuestionAvailable] = useState(false);
   const [questionNumber, setQuestionNumber] = useState(0);
   const [gameFinished, setGameFinished] = useState(false);
@@ -64,7 +63,7 @@ const QuizGame = (props) => {
           e.target.style.color = "#73D216";
           props.setQuizScore(props.quizScore + 1);
       } else if (answer !== correctKey) {
-          e.target.style.color = "#EF2929";         
+          e.target.style.color = "#EF2929";
           setCorrectedAnswer((props.quizMode === "Word2Def") ? answerArray[correctKey].word : answerArray[correctKey].definition);
       }
 
@@ -81,7 +80,7 @@ const QuizGame = (props) => {
           key: answerArray[i].key,
           answernumber: answerArray[i].key,
           onClick: checkAnswer,
-          className: "quiz-game-answer-button form-button",
+          className: "quiz-game-answer-button form-button"
         },
         answerType);
 

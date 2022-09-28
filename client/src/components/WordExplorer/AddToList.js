@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./addtolist.css"
+import "./addtolist.css";
 
 const AddToList = (props) => (
   <div className="add-to-list-container">

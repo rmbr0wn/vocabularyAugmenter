@@ -23,7 +23,7 @@ const Form = (props) => (
                 className="auth-form-input"
               />
               {
-                props.errors.loginEmail && <h3 className="form-error-message">{props.errors.loginEmail}</h3>
+
               }
             </div>
             <div className="auth-form-field">
@@ -36,9 +36,10 @@ const Form = (props) => (
                 id="loginPassword"
                 className="auth-form-input"
               />
-              {
-                props.errors.loginPassword && <h3 className="form-error-message">{props.errors.loginPassword}</h3>
-              }
+              </div>
+              <div>
+                {props.errors.loginEmail && <h3 className="form-error-message">{props.errors.loginEmail}</h3>}
+                {props.errors.loginPassword && <h3 className="form-error-message">{props.errors.loginPassword}</h3>}
               </div>
             </div>
             <div className="form-button-container">
@@ -71,9 +72,7 @@ const Form = (props) => (
               placeholder="Username"
               className="auth-form-input"
             />
-            {
-              props.errors.username && <h3 className="form-error-message">{props.errors.username}</h3>
-            }
+
           </div>
           <div className="auth-form-field">
             <label className="auth-form-label">Email: </label>
@@ -84,9 +83,7 @@ const Form = (props) => (
               placeholder="E-mail"
               className="auth-form-input"
             />
-            {
-              props.errors.email && <h3 className="form-error-message">{props.errors.email}</h3>
-            }
+
           </div>
           <div className="auth-form-field">
             <label className="auth-form-label">Password: </label>
@@ -99,9 +96,7 @@ const Form = (props) => (
               ref={props.signupPassword}
               className="auth-form-input"
             />
-            {
-              props.errors.password && <h3 className="form-error-message">{props.errors.password}</h3>
-            }
+
           </div>
           <div className="auth-form-field">
             <label className="auth-form-label">Confirm Password: </label>
@@ -113,9 +108,12 @@ const Form = (props) => (
               id="signupConfirmPassword"
               className="auth-form-input"
             />
-            {
-              props.errors.confirmPassword && <h3 className="form-error-message">{props.errors.confirmPassword}</h3>
-            }
+          </div>
+          <div>
+            { props.errors.username && <h3 className="form-error-message">{props.errors.username}</h3> }
+            { props.errors.email && <h3 className="form-error-message">{props.errors.email}</h3> }
+            { props.errors.password && <h3 className="form-error-message">{props.errors.password}</h3> }
+            { props.errors.confirmPassword && <h3 className="form-error-message">{props.errors.confirmPassword}</h3> }
           </div>
           <div className="form-button-container">
             <button type="submit" name="submitQuery" className="form-button auth-form-button"> Submit </button>

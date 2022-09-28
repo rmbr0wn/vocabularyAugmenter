@@ -101,8 +101,8 @@ export default function WordExplorer () {
 
   function parseListNames (listsObject) {
     let returnArray = [];
-    for(let i = 0; i < listsObject.length; i++){
-      let userList = { id: listsObject[i]._id.toString(), name: listsObject[i].name};
+    for (let i = 0; i < listsObject.length; i++) {
+      let userList = { id: listsObject[i]._id.toString(), name: listsObject[i].name };
       returnArray.push(userList);
     }
 
