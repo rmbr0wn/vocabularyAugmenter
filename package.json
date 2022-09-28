@@ -1,7 +1,7 @@
 {
   "name": "vocabulary-augmenter",
   "version": "1.0.0",
-  "description:" "A website designed to enhance your english vocabulary",
+  "description": "A website designed to enhance your english vocabulary",
   "main:" "backend/server.js",
   "dependencies": {
     "atom": "^1.4.1",
