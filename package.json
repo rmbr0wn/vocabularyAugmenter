@@ -9,6 +9,7 @@
   "dependencies": {
     "atom": "^1.4.1",
     "bcryptjs": "^2.4.3",
+    "chalk": "^5.0.1",
     "eslint": "^8.17.0",
     "jsonwebtoken": "^8.5.1",
     "optionator": "^0.9.1"
