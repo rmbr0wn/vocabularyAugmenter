@@ -6,6 +6,7 @@ import { signIn, signUp } from "../../actions/auth.actions.js";
 import Form from "./Form.js";
 
 const initialState = { username: "", email: "", password: "", confirmPassword: "" };
+const initialErrors = { loginEmail: "", loginPassword: "", username: "", email: "", password: "", confirmPassword: "" };
 
 export default function Auth () {
   const [signedUp, setSignedUp] = useState(true);
@@ -188,6 +189,7 @@ export default function Auth () {
   function switchFormType () {
     setSignedUp(!signedUp);
     setFormData(initialState);
+    setErrors(initialErrors);
   }
 
   async function googleSuccess (res) {

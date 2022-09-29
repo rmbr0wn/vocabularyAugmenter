@@ -1,10 +1,24 @@
 {
+  "name": "vocabulary-augmenter",
+  "version": "1.0.0",
+  "description": "A website designed to enhance your english vocabulary",
+  "main": "backend/server.js",
+  "engines": {
+    "node": "16.15.1"
+  },
   "dependencies": {
     "atom": "^1.4.1",
     "bcryptjs": "^2.4.3",
+    "chalk": "^5.0.1",
     "eslint": "^8.17.0",
     "jsonwebtoken": "^8.5.1",
-    "optionator": "^0.9.1"
+    "optionator": "^0.9.1",
+    "axios": "^0.27.2",
+    "cors": "^2.8.5",
+    "dotenv": "^14.3.2",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.8",
+    "multer": "^1.4.4"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
@@ -16,8 +30,6 @@
     "babel-jest": "^28.1.1",
     "cheerio": "^1.0.0-rc.3",
     "cypress": "^10.2.0",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.6",
     "jest": "^28.1.1",
     "jest-environment-jsdom": "^28.1.1"
   },
