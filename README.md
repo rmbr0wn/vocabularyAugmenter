@@ -8,7 +8,7 @@ This is a vocabulary enhancement app that allows users to create word lists and 
   <img src="./client/public/icons/VocabularyAugmenterLogo.png" style="width: 200px; height: 200px;"/>
 </p>
 <p>Note: The .env file has been removed, so the code will not work properly if pulled.</p>
-
+<a href="https://vocabularyaugmenter.herokuapp.com/"> Click here to visit the live site. </a>
 
 
 ## Examples
