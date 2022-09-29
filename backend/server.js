@@ -22,7 +22,7 @@ const port = process.env.PORT || 5000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 var corsOptions = {
-    origin: ['http://localhost:5000', 'https://vocabularyaugmenter.herokuapp.com'],
+    origin: ['http://localhost:5000', 'http://localhost:5000/user/sign-in', 'https://vocabularyaugmenter.herokuapp.com'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'] };
 
